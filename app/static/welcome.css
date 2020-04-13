@@ -1,0 +1,252 @@
+html {
+  scroll-behavior: smooth;
+}
+
+nav .right {
+  padding-right: 2%;
+}
+
+#landingPage {
+  background-color: #191919;
+}
+
+#landingPage .container {
+  height: 100vh;
+}
+
+.row {
+  width: 100%;
+  font-family: 'Lato', sans-serif;
+}
+
+.row #loginBlock {
+  margin-top: 5%;
+}
+
+.row h3 {
+  font-weight: 800;
+  color: #ffffff;
+}
+
+input.sign-in, input.sign-up, input.reset-login {
+  color: #ffffff;
+}
+
+input.sign-in:focus, input.sign-up:focus, input.reset-login:focus {
+  border-bottom: 1px solid #F85E5E !important;
+  -webkit-box-shadow: 0 1px 0 0 #F85E5E !important;
+          box-shadow: 0 1px 0 0 #F85E5E !important;
+}
+
+[id="sign-in"]:checked ~ input.sign-in,
+[id="sign-up"]:checked ~ input.sign-up,
+[id="reset-login"]:checked ~ input.reset-login {
+  max-height: 35px;
+  margin: 15px 0px;
+}
+
+fieldset {
+  border: none;
+  color: #ffffff;
+}
+
+img {
+  width: 250px;
+  height: 250px;
+}
+
+label {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  font-weight: 800;
+  cursor: pointer;
+  -webkit-transition: 300ms ease;
+  transition: 300ms ease;
+  width: calc(100% / 3 - 4px);
+}
+
+label[for="sign-in"],
+label[for="sign-up"],
+label[for="reset-login"] {
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  padding: 0 20px 20px 0;
+}
+
+[id="sign-in"]:checked ~ label[for="sign-in"],
+[id="sign-up"]:checked ~ label[for="sign-up"],
+[id="reset-login"]:checked ~ label[for="reset-login"] {
+  color: #F85E5E;
+  font-style: italic;
+}
+
+[id="sign-in"]:checked ~ label[for="sign-in"]::after,
+[id="sign-up"]:checked ~ label[for="sign-up"]::after,
+[id="reset-login"]:checked ~ label[for="reset-login"]::after {
+  content: '';
+  width: 20%;
+  position: absolute;
+  left: 50px;
+  bottom: -0.5px;
+  border: 0.5px solid #F85E5E;
+}
+
+.button {
+  width: 250px;
+  padding: 3px;
+  height: 40px;
+  border-radius: 0;
+  color: white;
+  border: 1.5px solid white;
+  background: transparent;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.button::before {
+  font-size: 16px;
+}
+
+.button:hover {
+  color: #F85E5E;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-color: #F85E5E;
+  cursor: pointer;
+}
+
+nav {
+  background-color: #191919 !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+nav ul li.active {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+nav ul li.active a:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+nav ul li.active a {
+  color: #F85E5E;
+}
+
+nav ul li:not(.active) a:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
+  -webkit-transform: translateY(-2.5px);
+          transform: translateY(-2.5px);
+  -webkit-transition: ease 350ms;
+  transition: ease 350ms;
+  color: #F85E5E;
+}
+
+nav a {
+  font-size: 16px !important;
+}
+
+.pageSection {
+  padding: 3vh 0 10vh 0;
+}
+
+.pageSection h3 {
+  padding: 0 0 10vh 0;
+}
+
+/* ABOUT PAGE */
+#aboutPage {
+  font-family: 'Lato', sans-serif;
+}
+
+#aboutPage .valign-wrapper {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#aboutPage .col {
+  padding-top: 5px;
+}
+
+#aboutPage #plusSign {
+  padding: 5vh 0 5vh 0;
+}
+
+#aboutPage p {
+  font-size: 17.5px;
+}
+
+#aboutPage p#note {
+  font-size: 14px;
+}
+
+/* MEET THE DEVS PAGE */
+#devPage {
+  font-family: 'Lato', sans-serif;
+}
+
+#devPage img {
+  height: 250px;
+  width: 250px;
+  border-radius: 2%;
+}
+
+#devPage h6 {
+  color: #666666;
+}
+
+#devPage #socialIcons {
+  padding: 0 0 5vh 0;
+}
+
+#devPage #socialIcons i {
+  font-size: 20px;
+  padding: 0 5px 0 5px;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+}
+
+#devPage #socialIcons i:hover {
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+}
+
+#devPage #socialIcons .fa-linkedin {
+  color: #007bb5;
+}
+
+#devPage #socialIcons .fa-user-circle {
+  color: #F85E5E;
+}
+
+footer {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+}
+
+footer p {
+  letter-spacing: 2px;
+}
+
+.back-to-top a {
+  color: black;
+}
+
+.back-to-top i {
+  position: fixed;
+  bottom: -21px;
+  right: -10.5px;
+  padding: 20px;
+}
+
+.back-to-top i:hover {
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+  -webkit-transition: ease 350ms;
+  transition: ease 350ms;
+}
+/*# sourceMappingURL=welcome.css.map */
