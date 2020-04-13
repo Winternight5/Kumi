@@ -40,10 +40,10 @@
               <ul class="search-list collection display-none"></ul>
             </div>
             <ul class="navbar-list right">
-              <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
+              <!--<li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
               <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
               <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
-              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-7.png')}}" alt="avatar"><i></i></span></a></li>
+              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-7.png')}}" alt="avatar"><i></i></span></a></li>-->
               <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>
             </ul>
             <!-- notifications-dropdown-->
@@ -175,6 +175,8 @@
         <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="index.html"><img class="hide-on-med-and-down" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><img class="show-on-medium-and-down hide-on-med-and-up" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><span class="logo-text hide-on-med-and-down">Kumi</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
       </div>
       <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
+        <li class="bold"><a class="waves-effect" href="#"><i><span class="avatar-status"><img src="{{url_for('static', filename='images/avatar/avatar-7.png')}}" alt="avatar"></span></i><span class="menu-title" data-i18n="Support">Tai Huynh</span></a>
+        </li>
         <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">settings_input_svideo</i><span class="menu-title" data-i18n="Dashboard">Dashboard</span><span class="badge badge pill orange float-right mr-10">3</span></a>
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
@@ -225,12 +227,18 @@
         </li>
         <li class="navigation-header"><a class="navigation-header-text">Misc </a><i class="navigation-header-icon material-icons">more_horiz</i>
         </li>
-        <li class="bold"><a class="waves-effect waves-cyan " href="https://pixinvent.com/materialize-material-design-admin-template/documentation/index.html" target="_blank"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings">Settings</span></a>
+        
+        <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">settings_input_svideo</i><span class="menu-title" data-i18n="Dashboard">Options</span></a>
+          <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                <li class="bold"><a class="waves-effect waves-cyan " href="https://pixinvent.com/materialize-material-design-admin-template/documentation/index.html" target="_blank"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings">Settings</span></a></li>
+                <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="#" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
+                <li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);" data-target="theme-cutomizer-out"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
+            </ul>
+          </div>
         </li>
-        <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="#" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a>
-        </li>
-        <li class="bold"><a class="waves-effect waves-cyan " href="#"><i class="material-icons">help_outline</i><span class="menu-title" data-i18n="Support">Support</span></a>
-        </li>
+        
+        <li><a class="grey-text text-darken-1" href="user-login.html"><i class="material-icons">keyboard_tab</i><span class="menu-title" data-i18n="Support">Logout<span></a></li>
       </ul>
       <div class="navigation-background"></div><a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
     </aside>
