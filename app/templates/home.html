@@ -105,7 +105,7 @@
     </style>
   </head>
   <!-- END: Head-->
-  <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns  app-page " data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
+  <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns app-page black" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
 
     <!-- BEGIN: Header-->
     <header class="page-topbar" id="header">
@@ -244,7 +244,7 @@
 
 
     <!-- BEGIN: SideNav-->
-    <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
+    <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-active-square">
       <div class="brand-sidebar">
         <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="/"><img class="hide-on-med-and-down" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><img class="show-on-medium-and-down hide-on-med-and-up" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><span class="logo-text hide-on-med-and-down">Kumi</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
       </div>
@@ -394,9 +394,9 @@
                   <div class="col media-image online pr-0">
                     <img src="{{url_for('static', filename='images/user/7.jpg')}}" alt="" class="circle z-depth-2 responsive-img">
                   </div>
-                  <div class="col">
-                    <p class="m-0 blue-grey-text text-darken-4 font-weight-700">Alice Hawker</p>
-                    <p class="m-0 chat-text truncate">Kumi Front-End Developer</p>
+                  <div class="col chat-content-header">
+                    <p class="m-0 font-weight-700">Alice Hawker</p>
+                    <p class="m-0 truncate" style="font-size: x-small">Kumi Front-End Developer</p>
                   </div>
                 </div>
                 <span class="option-icon">
@@ -985,7 +985,7 @@
             </div>
             <div class="input-field col s12">
                <div class="switch">
-                  Menu Dark
+                  Dark Mode
                   <label class="float-right"
                      ><input class="menu-dark-checkbox" type="checkbox" checked /> <span class="lever ml-0"></span
                   ></label>
@@ -993,7 +993,7 @@
             </div>
             <div class="input-field col s12">
                <div class="switch">
-                  Menu Collapsed
+                  Collapse Menu
                   <label class="float-right"
                      ><input class="menu-collapsed-checkbox" type="checkbox"/> <span class="lever ml-0"></span
                   ></label>
