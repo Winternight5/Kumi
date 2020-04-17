@@ -7,7 +7,7 @@
     <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google.">
     <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template, eCommerce dashboard, analytic dashboard">
     <meta name="author" content="ThemeSelect">
-    <title>Chat | Materialize - Material Design Admin Template</title>
+    <title>Kumi Team Messenger</title>
     <link rel="apple-touch-icon" href="{{url_for('static', filename='images/apple-touch-icon-152x152.png')}}">
     <link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon-32x32.png')}}">
     <!-- FontAwesome -->
@@ -33,7 +33,7 @@
     <!-- BEGIN: Header-->
     <header class="page-topbar" id="header">
       <div class="navbar navbar-fixed"> 
-        <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark gradient-45deg-indigo-purple no-shadow">
+        <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark no-shadow">
           <div class="nav-wrapper">
             <div class="header-search-wrapper hide-on-med-and-down"><i class="material-icons">search</i>
               <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Search" data-search="template-list">
@@ -46,33 +46,33 @@
               <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-7.png')}}" alt="avatar"><i></i></span></a></li>-->
               <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>
             </ul>
-            <!-- notifications-dropdown-->
-            <ul class="dropdown-content" id="notifications-dropdown">
-              <li>
-                <h6>NOTIFICATIONS<span class="new badge">5</span></h6>
+            <!-- attachment-dropdown-->
+            <ul class="dropdown-content black-text" id="attachment-dropdown" style="min-width: 250px;">
+              <li><a class="black-text" href="#"><span class="material-icons icon-bg-circle blue small">attachment</span> Attach a File</a>
               </li>
               <li class="divider"></li>
-              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle cyan small">add_shopping_cart</span> A new order has been placed!</a>
-                <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>
+              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">insert_drive_file</span> System File</a>
               </li>
-              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle red small">stars</span> Completed the task</a>
-                <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>
+              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">camera</span> Camera</a>
               </li>
-              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle teal small">settings</span> Settings updated</a>
-                <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>
+              <li><a class="grey-text" href="#!"><span class="icon-bg-circle cyan small"><i class="fab fa-google-drive"></i></span> Google Drive</a>
               </li>
-              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">today</span> Director meeting started</a>
-                <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>
+              <li><a class="grey-text" href="#!"><span class="icon-bg-circle black small"><i class="fab fa-github"></i></span> GitHub</a>
               </li>
-              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">trending_up</span> Generate monthly report</a>
-                <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
+              <li><a class="grey-text" href="#!"><span class="icon-bg-circle blue small"><i class="fab fa-dropbox"></i></span> DropBox</a>
               </li>
             </ul>
             <!-- profile-dropdown-->
             <ul class="dropdown-content" id="profile-dropdown">
-              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons">event_available</i> Online</a></li>
-              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons">event_busy</i> Busy</a></li>
-              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons">event</i> Away</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons green-text">fiber_manual_record</i> Online</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons red-text">fiber_manual_record</i> Busy</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons yellow-text">fiber_manual_record</i> Away</a></li>
+            </ul>
+            <!-- emoji-dropdown-->
+            <ul class="dropdown-content" id="emoji-dropdown">
+              <li><a class="grey-text text-darken-1" href="#">&#128540;</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons red-text">fiber_manual_record</i> Busy</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons yellow-text">fiber_manual_record</i> Away</a></li>
             </ul>
           </div>
           <nav class="display-none search-sm">
@@ -169,7 +169,7 @@
     <!-- BEGIN: SideNav-->
     <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
       <div class="brand-sidebar">
-        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="index.html"><img class="hide-on-med-and-down" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><img class="show-on-medium-and-down hide-on-med-and-up" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><span class="logo-text hide-on-med-and-down">Kumi</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
+        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="/"><img class="hide-on-med-and-down" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><img class="show-on-medium-and-down hide-on-med-and-up" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/><span class="logo-text hide-on-med-and-down">Kumi</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
       </div>
       <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
         <li class="bold"><a class="waves-effect profile-button" href="#" data-target="profile-dropdown"><i><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-7.png')}}" alt="avatar"><i></i></span></i><span class="menu-title" data-i18n="Support">Tai Huynh</span></a>
@@ -204,7 +204,7 @@
         </li>-->
         <li class="navigation-header"><a class="navigation-header-text">Channels</a><i class="navigation-header-icon material-icons">more_horiz</i>
         </li>
-        <li class="active bold"><a class="waves-effect waves-cyan" href="#"><i class="material-icons">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">#Home</span></a>
+        <li class="bold"><a class="waves-effect waves-cyan" href="#"><i class="material-icons">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">#Home</span></a>
         </li>
         
         <li class="navigation-header"><a class="navigation-header-text">Direct Message</a><i class="navigation-header-icon material-icons">more_horiz</i>
@@ -231,7 +231,7 @@
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
                 <li class="bold"><a class="waves-effect waves-cyan " href="https://pixinvent.com/materialize-material-design-admin-template/documentation/index.html" target="_blank"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings">Settings</span></a></li>
                 <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="#" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
-                <li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);" data-target="theme-cutomizer-out"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
+                <li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
             </ul>
           </div>
         </li>
@@ -245,7 +245,7 @@
     <!-- BEGIN: Page Main-->
     <div id="main">
       <div class="row">
-        <div class="content-wrapper-before gradient-45deg-indigo-purple"></div>
+        <div class="content-wrapper-before"></div>
         <div class="col s12">
           <div class="container">
             <div class="chat-application">
@@ -396,9 +396,12 @@
               <!-- Chat footer <-->
               <div class="chat-footer">
                 <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input">
-                  <i class="material-icons mr-2">face</i>
-                  <i class="material-icons mr-2">attachment</i>
-                  <input type="text" placeholder="Type message here.." class="message mb-0">
+                  <i class="mr-2"><a class="waves-effect waves-block waves-light chat-input-tool" href="javascript:void(0);" id="emoji-button"><i class="material-icons mr-2">face</i></a></i>
+                  <i class="mr-2"><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="attachment-dropdown"><i class="material-icons mr-2">attachment</i></a></i>
+                  <i class="mr-2"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_bold</i></a></i>
+                  <i class="mr-2"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_italic</i></a></i>
+                  <i class="mr-2"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_underlined</i></a></i>
+                  <input type="text" placeholder="Type message here.." class="message mb-0 " id="chat-input" name="chat-input">
                   <a class="btn waves-effect waves-light send" onclick="enter_chat();">Send</a>
                 </form>
               </div>
@@ -847,16 +850,15 @@
 <div id="theme-cutomizer-out" class="theme-cutomizer sidenav row">
    <div class="col s12">
       <a class="sidenav-close" href="#!"><i class="material-icons">close</i></a>
-      <h5 class="theme-cutomizer-title">Theme Customizer</h5>
-      <p class="medium-small">Customize & Preview in Real Time</p>
+      <h5 class="theme-cutomizer-title">Theme</h5>
       <div class="menu-options">
-         <h6 class="mt-6">Menu Options</h6>
          <hr class="customize-devider" />
+         <h6 class="mt-6">Colors:</h6>
          <div class="menu-options-form row">
             <div class="input-field col s12 menu-color mb-0">
-               <p class="mt-0">Menu Color</p>
                <div class="gradient-color center-align">
-                  <span class="menu-color-option gradient-45deg-indigo-blue" data-color="gradient-45deg-indigo-blue"></span>
+                  <span class="menu-color-option gradient-45deg-indigo-blue"
+                     data-color="gradient-45deg-indigo-blue"></span>
                   <span
                      class="menu-color-option gradient-45deg-purple-deep-orange"
                      data-color="gradient-45deg-purple-deep-orange"
@@ -946,7 +948,7 @@
                <div class="switch">
                   Menu Dark
                   <label class="float-right"
-                     ><input class="menu-dark-checkbox" type="checkbox"/> <span class="lever ml-0"></span
+                     ><input class="menu-dark-checkbox" type="checkbox" checked /> <span class="lever ml-0"></span
                   ></label>
                </div>
             </div>
@@ -960,13 +962,14 @@
             </div>
             <div class="input-field col s12">
                <div class="switch">
-                  <p class="mt-0">Menu Selection</p>
+                  <p class="mt-0">Menu Type</p>
                   <label>
                      <input
                         class="menu-selection-radio with-gap"
                         value="sidenav-active-square"
                         name="menu-selection"
                         type="radio"
+                        checked
                      />
                      <span>Square</span>
                   </label>
@@ -987,80 +990,18 @@
             </div>
          </div>
       </div>
-      <h6 class="mt-6">Navbar Options</h6>
-      <hr class="customize-devider" />
-      <div class="navbar-options row">
-         <div class="input-field col s12 navbar-color mb-0">
-            <p class="mt-0">Navbar Color</p>
-            <div class="gradient-color center-align">
-               <span class="navbar-color-option gradient-45deg-indigo-blue" data-color="gradient-45deg-indigo-blue"></span>
-               <span
-                  class="navbar-color-option gradient-45deg-purple-deep-orange"
-                  data-color="gradient-45deg-purple-deep-orange"
-               ></span>
-               <span
-                  class="navbar-color-option gradient-45deg-light-blue-cyan"
-                  data-color="gradient-45deg-light-blue-cyan"
-               ></span>
-               <span class="navbar-color-option gradient-45deg-purple-amber" data-color="gradient-45deg-purple-amber"></span>
-               <span
-                  class="navbar-color-option gradient-45deg-purple-deep-purple"
-                  data-color="gradient-45deg-purple-deep-purple"
-               ></span>
-               <span
-                  class="navbar-color-option gradient-45deg-deep-orange-orange"
-                  data-color="gradient-45deg-deep-orange-orange"
-               ></span>
-               <span class="navbar-color-option gradient-45deg-green-teal" data-color="gradient-45deg-green-teal"></span>
-               <span
-                  class="navbar-color-option gradient-45deg-indigo-light-blue"
-                  data-color="gradient-45deg-indigo-light-blue"
-               ></span>
-               <span class="navbar-color-option gradient-45deg-red-pink" data-color="gradient-45deg-red-pink"></span>
-            </div>
-            <div class="solid-color center-align">
-               <span class="navbar-color-option red" data-color="red"></span>
-               <span class="navbar-color-option purple" data-color="purple"></span>
-               <span class="navbar-color-option pink" data-color="pink"></span>
-               <span class="navbar-color-option deep-purple" data-color="deep-purple"></span>
-               <span class="navbar-color-option cyan" data-color="cyan"></span>
-               <span class="navbar-color-option teal" data-color="teal"></span>
-               <span class="navbar-color-option light-blue" data-color="light-blue"></span>
-               <span class="navbar-color-option amber darken-3" data-color="amber darken-3"></span>
-               <span class="navbar-color-option brown darken-2" data-color="brown darken-2"></span>
-            </div>
-         </div>
-         <div class="input-field col s12">
-            <div class="switch">
-               Navbar Dark
-               <label class="float-right"
-                  ><input class="navbar-dark-checkbox" type="checkbox"/> <span class="lever ml-0"></span
-               ></label>
-            </div>
-         </div>
-         <div class="input-field col s12">
-            <div class="switch">
-               Navbar Fixed
-               <label class="float-right"
-                  ><input class="navbar-fixed-checkbox" type="checkbox" checked/> <span class="lever ml-0"></span
-               ></label>
-            </div>
-         </div>
-      </div>
    </div>
 </div>
 <!--/ Theme Customizer -->
-
-
     <!-- END: Footer-->
-    <!-- BEGIN THEME  JS-->
+    
+    <!-- BEGIN JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@2.12.1/dist/index.min.js"></script>
     <script src="{{url_for('static', filename='js/vendors.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/plugins.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/search.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/customizer.min.js')}}"></script>
-    <!-- END THEME  JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
     <script src="{{url_for('static', filename='js/app-chat.min.js')}}"></script>
-    <!-- END PAGE LEVEL JS-->
+    <!-- END JS-->
   </body>
 </html>
