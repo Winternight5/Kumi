@@ -332,7 +332,6 @@
 	overflow: hidden;
 	height: calc(100vh - 260px);
 	padding: 1rem;
-	background: url(../images/bg/shattered.png)
 }
 
 .chat-application .app-chat .chat-content .chat-content-area .chat-area .chats {
@@ -448,7 +447,7 @@
 .chat-application .app-chat .chat-content .chat-content-area .chat-area .chats .chat .chat-body .chat-text p {
 	max-width: 400px;
 	padding: .5rem 1rem;
-	color: #757575;
+	color: #000;
 	border-radius: 5px;
 	background-color: #fff;
 	box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, .14)
