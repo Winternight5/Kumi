@@ -4853,9 +4853,9 @@ nav.display-none.search-sm .nav-wrapper form .input-field i {
 		line-height: 39px
 	}
 	.notification-button i {
-		font-size: 29px;
+		/*font-size: 29px;
 		position: relative;
-		top: 12px
+		 top: 12px */
 	}
 	.search-button i {
 		position: relative;
