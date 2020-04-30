@@ -837,7 +837,7 @@
                 socket.emit('text', {
                     msg: e
                 });
-
+                /*
                 var t = '';
                 
                 if (lastMsg == current_user) {
@@ -849,7 +849,7 @@
                 }
                 
                 $(".message").val("");
-                scrollToBottom(current_user);
+                scrollToBottom(current_user);*/
 	        }
         }
 
@@ -860,7 +860,7 @@
                         '<div class="chat-body"><div class="chat-text replied"><p>' + data.msg + '</p></div></div></div>';
                     $("#chat-area").append(t);
                 scrollToBottom(data.user_id);
-            }else if (current_user == data.user_id && data.self) {
+            } else if (current_user == data.user_id) {
                 t = '<div class="chat chat-right"><div class="chat-body"><div class="chat-text"><p>' + data.msg + '</p></div></div></div>';
                 $("#chat-area").append(t);
                 scrollToBottom(data.user_id);
