@@ -360,14 +360,15 @@ def logout():
 @app.route('/db')
 @login_required
 def showdb():
-    if current_user.email == "admin":
+    if current_user.email == "admin" or current_user.id == 2:
         Users = User.query.all()
         Posts = Post.query.order_by(Post.id.desc()).all()
         Friends = Friend.query.all()
+        Channels = Channel.query.all()
         for post in Posts:
             post.body = post.body[0:100]
 
-        return render_template('result.html', Users=Users, Posts=Posts, friends=Friends)
+        return render_template('result.html', Users=Users, Posts=Posts, friends=Friends, channels=Channels)
 
     return redirect(url_for('index'))
 # -------------------------------------------------------------------------------------------------------------------------
