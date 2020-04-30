@@ -3,3 +3,4 @@
 requirements_old.txt
 _test_main.py
 app/templates/post.html
+app.db
