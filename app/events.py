@@ -1,8 +1,11 @@
 import os
 from flask import current_app as app
-from flask import session, json, request
+from flask import session, json, request, jsonify
 from flask_socketio import emit, join_room, leave_room
+from flask_login import current_user
 from . import routes, socketio
+from . import db
+from .models import User, Post, Friend, Channel
 	
 clients = []
 datas = {}
@@ -28,7 +31,7 @@ def clearDatas(currentRoom):
     datas[currentRoom] = {}
     datas[currentRoom]['d'] = []
     
-@socketio.on('joined', namespace='/')
+@socketio.on('joined', namespace='/home')
 def joined(data):
     '''
     New User Joined
@@ -37,22 +40,52 @@ def joined(data):
     Add user to the room array.
     '''
     global rooms
+    members = []
     currentRoom = session.get('room')
-    clients.append(request.namespace + str(currentRoom))
+    clients.append(str(current_user.id))
     
     join_room(currentRoom)
-    rooms[currentRoom] = str(sum(1 for i in clients if i == request.namespace + currentRoom))
-	
-    #updateRooms()
-    #emit('count', {
-    #    'count': getValues(rooms),
-	#	'rooms': getKeys(rooms)
-    #}, broadcast=True)
-    print('clients: '+str(rooms))
+    rooms[currentRoom] = str(sum(1 for i in clients if i == currentRoom))
+
+    channel_id = Channel.query.filter_by(b64name=currentRoom).first()
+    session['channel_id'] = channel_id
+
+    for member in User.query.filter(User.id.in_(clients)).all():
+        temp = {}
+        temp['id'] = member.id
+        temp['status'] = member.status
+        temp['online_status'] = routes.online_status(member.status)
+        members.append(temp)
+
+    emit('status', {
+        'users': members,
+        'count': len(clients),
+        'clients': [int(i) for i in clients]
+    }, broadcast=True)
+    print('Rooms: '+str(rooms))
     print('clients list: '+str(clients))
     print('--------------------------------------------------------------------------')
-    
-@socketio.on('disconnect', namespace='/')
+
+@socketio.on('update_stats', namespace='/home')
+def update_stats():
+    '''
+    Update User Stats
+    '''
+    currentRoom = session.get('room')
+    members = []
+
+    data = {}
+    data['id'] = current_user.id
+    data['status'] = current_user.status
+    data['online_status'] = routes.online_status(current_user.status)
+
+    emit('status', {
+        'users': [data],
+        'count': len(clients),
+        'clients': [int(i) for i in clients]
+    }, broadcast=True)
+
+@socketio.on('disconnect', namespace='/home')
 def disconnect():
     '''
     User Disconnected
@@ -63,19 +96,79 @@ def disconnect():
     global rooms
     currentRoom = session.get('room')
     
-    clients.remove(request.namespace + str(currentRoom))
-    rooms[currentRoom] = str(sum(1 for i in clients if i == request.namespace + currentRoom))
+    clients.remove(str(current_user.id))
+    rooms[currentRoom] = str(sum(1 for i in clients if i == currentRoom))
+
+    users = {
+            'id':current_user.id,
+            'status': 3,
+            'online_status': 'off',
+        }
 
     leave_room(currentRoom)
     #updateRooms()
-    emit('count', {
-        'count': getValues(rooms),
-		'rooms': getKeys(rooms)
+    emit('status', {
+        'users': [users],
+        'count': len(clients),
+        'clients': [int(i) for i in clients]
     }, broadcast=True)
-    print('clients: '+str(rooms))
+    print('Rooms: '+str(rooms))
     print('clients list: '+str(clients))
-	
-@socketio.on('drawing', namespace='/')
+    print('--------------------------------------------------------------------------')
+
+@socketio.on('channel', namespace='/home')
+def changeChannel(data):
+    '''
+    User Change Channel
+    ---------------
+
+    Remove the user from the room
+    And join a new room.
+    '''
+    oldRoom = session.get('room')
+    leave_room(oldRoom)
+    
+    currentRoom = session['room'] = data['id']
+
+    channelCheck = Channel.query.filter_by(b64name=currentRoom).first()
+    print(channelCheck)
+    if (channelCheck is None):
+        newChannel = Channel(b64name=currentRoom,
+                       owner_id=current_user.id)
+        db.session.add(newChannel)
+        db.session.commit()
+    
+    channel_id = Channel.query.filter_by(b64name=currentRoom).first()
+    session['channel_id'] = channel_id
+
+    join_room(currentRoom)
+
+@socketio.on('text', namespace='/home')
+def text(data):
+    '''
+    Text Messaging Feature
+    ---------------
+
+    Save current user text data into memory and emit data to all users in the room.
+    '''
+    currentRoom = session.get('room')
+    currentChannel = session.get('channel_id')
+
+    newPost = Post(b64name=currentRoom, 
+                   body=data['msg'], 
+                   user_id=current_user.id,
+                   channel_id=currentChannel.id)
+    db.session.add(newPost)
+    db.session.commit()
+
+    print(currentChannel.id)
+    emit('message', {
+        'msg': data['msg'],
+        'user_id': current_user.id,
+        'imgUrl': current_user.imgUrl
+    }, room=currentRoom)
+
+@socketio.on('drawing', namespace='/home')
 def drawing(data):
     '''
     Drawing Feature
@@ -88,7 +181,7 @@ def drawing(data):
     datas[currentRoom]['d'].append(data)
     emit('drawing', data, room=currentRoom)
 	
-@socketio.on('fill', namespace='/')
+@socketio.on('fill', namespace='/home')
 def fill(data):
     '''
     Fill Feature
@@ -103,7 +196,7 @@ def fill(data):
         'color': data['color']
     }, room=currentRoom)	
     
-@socketio.on('img', namespace='/')
+@socketio.on('img', namespace='/home')
 def loadImg(data):
     '''
     Image Feature
@@ -116,7 +209,7 @@ def loadImg(data):
     datas[currentRoom]['i'] = data
     emit('img', data, room=currentRoom)
 
-@socketio.on('new', namespace='/')
+@socketio.on('new', namespace='/home')
 def new(data):
     '''
     New Canvas
@@ -128,7 +221,7 @@ def new(data):
     clearDatas(currentRoom)
     emit('new', {}, room=currentRoom)	
     
-@socketio.on('save', namespace='/')
+@socketio.on('save', namespace='/home')
 def save(newdata):
     '''
     Save Feature

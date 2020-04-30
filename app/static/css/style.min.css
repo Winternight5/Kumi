@@ -4242,8 +4242,8 @@ li.home:before {
 }
 
 .avatar-status.avatar-50 i {
-	right: -1px;
-	bottom: 21px;
+	right: -2px;
+	top: 0px;
 	width: 12px!important;
 	height: 12px!important
 }
@@ -5476,13 +5476,13 @@ screen and (-ms-high-contrast:none) and (min-width:993px) {
 	height: 100vh
 }
 
-#slide-out-right.sidenav #messages {
+#slide-out-right.sidenav .messages {
 	position: relative;
 	height: calc(100vh - 54px);
 	padding: .7rem
 }
 
-#slide-out-right.sidenav #messages .header-search-input {
+#slide-out-right.sidenav .messages .header-search-input {
 	width: 86%;
 	height: 2.8rem;
 	margin: 1rem;
@@ -5492,12 +5492,12 @@ screen and (-ms-high-contrast:none) and (min-width:993px) {
 	background-color: #eee
 }
 
-#slide-out-right.sidenav #messages .collection .collection-item,
-#slide-out-right.sidenav #messages .collection ul.collection {
+#slide-out-right.sidenav .messages .collection .collection-item,
+#slide-out-right.sidenav .messages .collection ul.collection {
 	border: none
 }
 
-#slide-out-right.sidenav #messages .collection ul.collection li {
+#slide-out-right.sidenav .messages .collection ul.collection li {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -5506,17 +5506,17 @@ screen and (-ms-high-contrast:none) and (min-width:993px) {
 	cursor: pointer
 }
 
-#slide-out-right.sidenav #messages .collection ul.collection li .user-content {
+#slide-out-right.sidenav .messages .collection ul.collection li .user-content {
 	margin-top: .4em;
 	margin-left: 1rem
 }
 
-#slide-out-right.sidenav #messages .collection ul.collection li .secondary-content {
+#slide-out-right.sidenav .messages .collection ul.collection li .secondary-content {
 	top: 1.6rem;
 	color: #c5cae9
 }
 
-#slide-out-right.sidenav #messages .collection ul.collection li:hover {
+#slide-out-right.sidenav .messages .collection ul.collection li:hover {
 	background-color: #f5f5f5
 }
 

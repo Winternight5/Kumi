@@ -1,277 +1,204 @@
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Import Material Google Icon Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize.css CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Custom Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Raleway:400,700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.css')}}">
 
-  <!-- Custom Written CSS-->
-  <link href="{{url_for('static', filename='welcome.css')}}" type="text/css" rel="stylesheet" />
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <!-- Import Material Google Icon Fonts -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Custom Google Fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Raleway:400,700&display=swap" rel="stylesheet">
-  <!-- Materialize.css CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <title>Sidenote: Welcome!</title>
-</head>
-
-<body>
-  <!-- navbar implementation-->
-  <header>
-    <a id="top"></a>
-    <div class="hide-on-med-and-down">
-      <nav>
-        <ul class="right">
-          <li class="active"><a href="#top">Home</a></li>
-          <li><a href="#aboutPage">About</a></li>
-          <li><a href="#devPage">Meet the Developers</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <!-- end of nav bar implementation-->
-
-  <!-- HOME/LANDING PAGE -->
-  <section id="landingPage" class="">
-    <div class="container valign-wrapper">
-      <div class="row">
-        <!-- left half -->
-        <div class="center col s12 m6">
-          <h3 class=""><i>Welcome to Sidenote</i></h3>
-          <img id="logo" class="hide-on-med-and-down" src="../static/images/logo_transparent.png">
-        </div>
-
-        <!-- right half -->
-        <div id="loginBlock" class="col s12 m6">
-          <div class="center-align">
-            <form method="post" action="" novalidate>
-              <fieldset>
-                <!-- the value attribute will be sent to the server-->
-                <input id="sign-in" type="radio" name="login-option" value="sign-in" checked />
-                <input id="sign-up" type="radio" name="login-option" value="sign-up" />
-                <input id="reset-login" type="radio" name="login-option" value="reset-login" />
-
-                <!-- radio options and their labels-->
-                <label for="sign-in">Sign In</label>
-                <label for="sign-up">Sign Up</label>
-                <label for="reset-login">Reset</label>
-
-                <!-- the name attribute will also be sent to the server later on-->
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul class="">
-                  {% for message in messages %}
-                  <li>{{ message }}</li>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
-
-                {{ form.hidden_tag() }}
-                {{ form.firstname(class="sign-up",  placeholder="First Name") }}
-                {% for error in form.firstname.errors %}
-                <span class="error">[{{ error }}]</span>
-                {% endfor %}
-                {{ form.lastname(class="sign-up",  placeholder="Last Name") }}
-                {% for error in form.lastname.errors %}
-                <span class="error">[{{ error }}]</span>
-                {% endfor %}
-                {{ form.email(class="sign-in sign-up reset-login", placeholder="E-mail") }}
-                {% for error in form.email.errors %}
-                <span class="error">[{{ error }}]</span>
-                {% endfor %}
-                {{ form.password(class="sign-in sign-up",  placeholder="Password") }}
-                {% for error in form.password.errors %}
-                <span class="error">[{{ error }}]</span>
-                {% endfor %}
-                {{ form.password2(class="sign-up",  placeholder="Repeat Password") }}
-                {% for error in form.password2.errors %}
-                <span class="error">[{{ error }}]</span>
-                {% endfor %}
-                <br>{{ form.submit(class="button") }}
-              </fieldset>
-            </form>
-          </div>
-        </div>
-        <div class="back-to-top hide-on-small-only">
-          <a href="#top"><i class="fas fa-angle-up fa-4x"></i></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT PAGE -->
-  <section id="aboutPage" class="pageSection">
-    <div class="container">
-      <h3 class="center">What is Sidenote?</h3>
-      <div class="row valign-wrapper">
-        <div class="col s12 m5 center-align">
-          <img class="resoponsive-img" src="../static/images/floatingiPhone.png">
-        </div>
-        <div id="plusSign" class="col s12 m1 center-align">
-          <i class="fas fa-plus"></i>
-        </div>
-        <div class="col s12 m5 center-align">
-          <img class="responsive-img" src="../static/images/checkList.png">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s12">
-          <p><b>Sidenote</b> is a note-taking app, a todo list app, and a drawing app <b>all in
-              one.</b> Though simple, the application's main features were designed to be extremely powerful. Enabling
-            users to
-            easily append tasks onto various to-do lists, or even take notes with the liberty of
-            typing or writing (if on a tablet/mobile device), <b>Sidenote</b> makes managing your tasks a breeze. It
-            even includes
-            the ability to share notes/todo lists among peers via their email addresses. Upon registration, users will
-            be able to immediately begin tracking
-            their daily tasks, taking miscellaneous notes, and sharing them with colleagues throughout the day. With our
-            sleek, easy-to-navigate user interface, <b>Sidenote</b> makes organizing your life a fun, elegant
-            experience.
-          </p>
-          <p>
-            <b>Sidenote</b> runs on a
-            Python-Flask server-side program that retrieves data from a PostgreSQL database
-            to keep track of user data. We utilized standard tools such as Git as a version control system and
-            Travis CI as a continuous integration service. Real time editing of notes/todo lists
-            was made possible
-            through the integration of websockets.
-          </p>
-          <p id="note">
-            <b>Sidenote</b> was built with technologies such as: Python, Flask, JavaScript, AJAX, Socket.io,
-            HTML, CSS/SCSS, Materialize.css, Travis CI, and Heroku.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MEET THE DEVS -->
-  <section id="devPage" class="pageSection">
-    <h3 class="center">Meet the Developers <i class="fab fa-connectdevelop"></i></h3>
-    <div class="row">
-      <div class="col s12 m3 center-align">
-        <img class="responsive-img" src="../static/images/dev_portraits/tai.jpg">
-        <h5>Tai Huynh</h5>
-        <h6><i>Project Manager</i></h6>
-        <p>Took on a bulk of the backend/functionalities as well as facilitating the product's direction all while
-          keeping the team ahead of schedule.</p>
-        <div id="socialIcons">
-          <a href="http://www.taihuynh.info/"><i class="fas fa-user-circle"></i></a>
-          <a href="https://www.linkedin.com/in/tai-huynh-09132957/"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-      <div class="col s12 m3 center-align">
-        <img class="responsive-img" src="../static/images/dev_portraits/william.jpg">
-        <h5>William Nguyen</h5>
-        <h6><i>Frontend Engineer</i></h6>
-        <p>Collaborated on frontend, particularly the branding of the project and the structure of the frontend as a
-          whole.</p>
-        <div id="socialIcons">
-          <a href="https://www.williamtn.com/"><i class="fas fa-user-circle"></i></a>
-          <a href="https://www.linkedin.com/in/williamnguyen214/"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-      <div class="col s12 m3 center-align">
-        <img class="responsive-img" src="../static/images/dev_portraits/brian.jpg">
-        <h5>Brian Tamsing</h5>
-        <h6><i>UI/UX Engineer</i></h6>
-        <p>Collaborated on frontend, specializing in creating a unique, simple, and elegant user experience.</p>
-        <div id="socialIcons">
-          <a href="https://www.linkedin.com/in/brian-tamsing/"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-      <div class="col s12 m3 center-align">
-        <img class="responsive-img" src="../static/images/dev_portraits/nate.jpg">
-        <h5>Nathanael Garza</h5>
-        <h6><i>Devops/Infrastucture Engineer</i></h6>
-        <p>Contributed to backend as well as taking on a bulk of the testing which allowed for
-          continuous integration & development.</p>
-        <div id="socialIcons">
-          <a href="https://www.linkedin.com/in/nathanaelrgarza/"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container center-align">
-      <p>Sidenote 2019 &copy;</p>
-    </div>
-  </footer>
-
-  <!--start of Script insertions -->
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <!--inserting jQuery from the Google CDN -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- Custom JS written by Brian -->
-  <script src="{{url_for('static', filename='welcomeFadeInAnimation.js')}}"></script>
-
-  <!-- alters the display of the login form-->
-  <script>
-    $(document).ready(function () {
-      $('input[type=radio]').on('change', function () {
-        displayNone();
-        $("." + $(this).val()).animate({ height: "toggle", opacity: "toggle" }, 850);
-        applyButtonText($(this));
-      })
-
-      // Hide all input fields
-      displayNone();
-
-      // Only show Sign-In class
-      $('.sign-in').css('display', 'block');
-
-      // functions
-      function displayNone() {
-        $('.sign-in, .sign-up, .reset-login').css('display', 'none');
-      }
-
-      // applies the apprproiate "submit" text based upon the selected radio/login option
-      function applyButtonText(loginOption) {
-        $submitButton = $(".button");
-
-        switch (loginOption.attr("id")) {
-          case "sign-in": $submitButton.val("Sign In");
-            break;
-          case "sign-up": $submitButton.val("Sign Up");
-            break;
-          case "reset-login": $submitButton.val("Reset Password");
-            break;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Home - Kumi Team Messenger: Team 10</title>
+    <link rel="apple-touch-icon" href="{{url_for('static', filename='images/apple-touch-icon-152x152.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon-32x32.png')}}">
+    <style>
+        .tabs .indicator {
+            background-color: #0d47a1;
         }
-      }
 
-    });
-  </script>
-
-  <script>
-    $(document).ready(function () {
-      $(".back-to-top a").hide();
-      $(window).on("scroll", function () {
-        if (81 < $(window).scrollTop()) {
-          $(".back-to-top a").fadeIn(1750);
+        body {
+            align-items: center;
         }
-        else {
-          $(".back-to-top").css(
-            {
-              "color": "rgb(25,25,25)",
-              "transition": "300ms ease"
+
+        .container {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+            .container .row {
+                margin: 0 auto;
             }
-          );
-          $(".back-to-top a").fadeOut(450);
-        }
-      })
-    });
-  </script>
 
+        /* label focus color */
+        .input-field input[type=text]:focus + label, .input-field input[type=password]:focus + label {
+            color: #2196f3;
+        }
+        /* label underline focus color */
+        .input-field input[type=text]:focus, .input-field input[type=password]:focus {
+            border-bottom: 1px solid #2196f3;
+            box-shadow: 0 1px 0 0 #2196f3;
+        }
+    </style>
+</head>    
+<body>
+    <div class="container">
+        <div class="row valign-wrapper">
+            <div class="col s12 l4 offset-m2 valign hide-on-small-only">
+                <div class="card animated zoomIn">
+                    <div class="card-image center-align">
+                        <img src="{{url_for('static', filename='images/logo_transparent.png')}}">
+                    </div>
+                    <div class="card-action center-align">
+                        blah blah blah
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 l4 valign">
+                <div class="card animated zoomIn">
+                    <form method="post" action="/login" novalidate>
+                        <div class="card-image center-align hide-on-large-only">
+                            <img src="{{url_for('static', filename='images/logo_transparent.png')}}">
+                        </div>
+                        <div class="card-content white-text center-align">
+                            <span class="card-title black-text">
+                                Team 10<br />
+                                <!-- radio options and their labels-->
+                                <label id="label-si" for="sign-in" class="radio-label waves-effect waves-light btn-flat blue white-text"><input id="sign-in" type="radio" name="login-option" value="sign-in" checked />Sign In</label>
+                                {% if data and data.email %}<label id="label-su" for="sign-up" class="radio-label waves-effect waves-light btn-flat"><input id="sign-up" type="radio" name="login-option" value="sign-up" />Sign Up</label>{% endif %}
+                                <label id="label-rl" for="reset-login" class="radio-label waves-effect waves-light btn-flat"><input id="reset-login" type="radio" name="login-option" value="reset-login" />Reset</label>
+                            </span>
+                            <div class="center-align indigo-text">
+                                <fieldset>
+                                    <!-- the value attribute will be sent to the server-->
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    <ul class="">
+                                        {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {% endwith %}
+
+                                    {{ form.hidden_tag() }}
+                                    <div class="input-field col s12 sign-in sign-up reset-login">
+                                        {{ form.email(id="email") }}
+                                        <label for="email">Email</label>
+                                        {% for error in form.email.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="input-field col s12 sign-up">
+                                        {{ form.firstname(id="firstname") }}
+                                        <label for="firstname">First Name</label>
+                                        {% for error in form.firstname.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="input-field col s12 sign-up">
+                                        {{ form.lastname(id="lastname") }}
+                                        <label for="lastname">Last Name</label>
+                                        {% for error in form.lastname.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="input-field col s12 sign-in sign-up">
+                                        {{ form.password(id="password1") }}
+                                        <label for="password1">Password</label>
+                                        {% for error in form.password.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="input-field col s12 sign-up">
+                                        {{ form.password2( id="password2") }}
+                                        <label for="password2">Re-Enter Password</label>
+                                        {% for error in form.password2.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="card-action center-align">
+                            <input class="waves-effect waves-light btn-flat blue white-text" id="submit" name="submit" type="submit" value="Sign In">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!--inserting jQuery from the Google CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        /* Materialize components initialization */
+
+
+        /* Script initialization */
+        $(document).ready(function () {
+            /* Init functions at start */
+
+            // Hide all input fields
+            $('.sign-in, .sign-up, .reset-login').css('display', 'none');
+
+            // Only show Sign-In class
+            $('.sign-in').css('display', 'block');
+
+            // Radio options update
+            $('input[type=radio]').on('change', function () {
+                var currentSelection = $(this).val()
+                $('.sign-in, .sign-up, .reset-login').slideUp(function () {
+                    $("." + currentSelection).slideDown(1000);
+                });
+
+                if ($(this).prop('checked')) {
+                    $('input[type=radio]').parent('label').removeClass('blue').removeClass('white-text');
+                    $(this).parent('label').addClass('blue').addClass('white-text');
+                    $('html, body').animate({
+                        scrollTop: $("#submit").offset().top
+                    }, 2000);
+                }
+                applyButtonText($(this));
+            })
+
+            // applies the apprproiate "submit" text based upon the selected radio/login option
+            function applyButtonText(loginOption) {
+                $submitButton = $("#submit");
+                $("#email").prop('disabled', false).val('');
+                $("#email + label").css('display', 'block');
+
+                switch (loginOption.attr("id")) {
+                    case "sign-in":
+                        $submitButton.val("Sign In");
+                        break;
+                    case "sign-up":
+                        $submitButton.val("Sign Up");
+                        $("#email + label").css('display', 'none');
+                        $("#email").prop('disabled', true).val("{% if data and data.email %}{{ data.email | safe }}{% endif %}");
+                        break;
+                    case "reset-login":
+                        $submitButton.val("Reset Password");
+                        break;
+                }
+            }
+        });
+    </script>
 </body>
+    
 
 </html>

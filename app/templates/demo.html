@@ -1,0 +1,1096 @@
+﻿<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Kumi Team Messenger, It's modern, responsive and based on Material Design by Google.">
+    <meta name="author" content="ThemeSelect">
+    <title>Kumi Team Messenger</title>
+    <link rel="apple-touch-icon" href="{{url_for('static', filename='images/apple-touch-icon-152x152.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon-32x32.png')}}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Import Material Google Icon Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Custom Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Raleway:400,700&display=swap" rel="stylesheet">
+    <!-- Materialize.css CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> 
+    <!-- Page Level CSS
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/materialize.min.css')}}">-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/app-chat.min.css')}}">
+    <!-- Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/custom.css')}}">
+    <style>
+        .chat-area {
+            background-image: url({{url_for('static', filename='images/bg/shattered.png')}})
+        }
+        .bg-image-arches {
+            background-color: #ff8a65;
+            background-image: url({{url_for('static', filename='images/bg/arches.png')}})
+        }
+        .bg-image-brick-wall-dark {
+            background-color: #9e9e9e;
+            background-image: url({{url_for('static', filename='images/bg/brick-wall-dark.png')}})
+        }
+        .bg-image-gradient-squares {
+            background-color: #a1887f;
+            background-image: url({{url_for('static', filename='images/bg/gradient-squares.png')}})
+        }
+        .bg-image-foggy-birds {
+            background-color: #01579b;
+            background-image: url({{url_for('static', filename='images/bg/foggy-birds.png')}})
+        }
+        .bg-image-swirl {
+            background-color: #607d8b;
+            background-image: url({{url_for('static', filename='images/bg/swirl.png')}})
+        }
+        .bg-image-hexellence {
+            background-color: #a1887f;
+            background-image: url({{url_for('static', filename='images/bg/hexellence.png')}})
+        }
+        .bg-image-inspiration-geometry {
+            background-color: #616161;
+            background-image: url({{url_for('static', filename='images/bg/inspiration-geometry.png')}})
+        }
+        .bg-image-shattered {
+            background-image: url({{url_for('static', filename='images/bg/shattered.png')}})
+        }
+        .bg-image-flowers {
+            background-color: #ab47bc;
+            background-image: url({{url_for('static', filename='images/bg/flowers.png')}})
+        }
+        
+        .bg-image-light-wool {
+            background-color: #aed581;
+            background-image: url({{url_for('static', filename='images/bg/light-wool.png')}})
+        }
+        .bg-image-gray-floral {
+            background-color: #e57373  ;
+            background-image: url({{url_for('static', filename='images/bg/gray-floral.png')}})
+        }
+        .bg-image-beige-paper {
+            background-color: #b3e5fc ;
+            background-image: url({{url_for('static', filename='images/bg/beige-paper.png')}})
+        }
+        .bg-image-padded-light {
+            background-color: #8d6e63;
+            background-image: url({{url_for('static', filename='images/bg/padded-light.png')}})
+        }
+        .bg-image-pool-table {
+            background-color: #1b5e20;
+            background-image: url({{url_for('static', filename='images/bg/pool-table.png')}})
+        }
+        .bg-image-skulls {
+            background-color: #757575;
+            background-image: url({{url_for('static', filename='images/bg/skulls.png')}})
+        }
+        .bg-image-xv {
+            background-color: #00695c;
+            background-image: url({{url_for('static', filename='images/bg/xv.png')}})
+        }
+        .bg-image-type {
+            background-color: #b2ebf2 ;
+            background-image: url({{url_for('static', filename='images/bg/type.png')}})
+        }
+        .bg-image-purty-wood {
+            background-color: #d7ccc8       ;
+            background-image: url({{url_for('static', filename='images/bg/purty-wood.png')}})
+        }
+        
+        .span-time  {
+            text-align: center;
+        }
+        
+        .span-time-right  {
+            position: relative;
+            top: -14px;
+            right: 30px;
+        }
+        
+        .chat-body:hover .span-time {
+            visibility: visible;
+        }
+    </style>
+  </head>
+  <!-- END: Head-->
+  <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns app-page black" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
+
+    <!-- BEGIN: Header-->
+    <header class="page-topbar" id="header">
+      <div class="navbar navbar-fixed"> 
+        <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark no-shadow">
+          <div class="nav-wrapper">
+            <div class="header-search-wrapper hide-on-med-and-down"><i class="material-icons">search</i>
+              <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Search" data-search="template-list">
+              <ul class="search-list collection display-none"></ul>
+            </div>
+            <ul class="navbar-list right">
+                <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="activity" data-target="slide-out-right"><i class="material-icons">assignment<small class="notification-badge orange">2</small></i></a></li>
+                <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="messages" data-target="slide-out-right"><i class="material-icons">people<small class="notification-badge orange">1</small></i></a></li>
+                <li><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
+              <!--
+              <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+              <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
+              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
+              <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
+            </ul>
+            <!-- attachment-dropdown-->
+            <ul class="dropdown-content black-text" id="attachment-dropdown" style="min-width: 250px;">
+              <li><a class="black-text" href="#"><span class="material-icons icon-bg-circle blue small">attachment</span> Attach a File</a>
+              </li>
+              <li class="divider"></li>
+              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">insert_drive_file</span> System File</a>
+              </li>
+              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">camera</span> Camera</a>
+              </li>
+              <li><a class="grey-text" href="#!"><span class="icon-bg-circle cyan small"><i class="fab fa-google-drive"></i></span> Google Drive</a>
+              </li>
+              <li><a class="grey-text" href="#!"><span class="icon-bg-circle black small"><i class="fab fa-github"></i></span> GitHub</a>
+              </li>
+              <li><a class="grey-text" href="#!"><span class="icon-bg-circle blue small"><i class="fab fa-dropbox"></i></span> DropBox</a>
+              </li>
+            </ul>
+            <!-- profile-dropdown-->
+            <ul class="dropdown-content" id="profile-dropdown">
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons green-text">fiber_manual_record</i> Online</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons red-text">fiber_manual_record</i> Busy</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons yellow-text">fiber_manual_record</i> Away</a></li>
+            </ul>
+            <!-- profile-dropdown-->
+            <ul class="dropdown-content" id="chat-options-dropdown" style="min-width: 250px;">
+              <li><a class="black-text" href="#"><span class="material-icons">format_bold</span> Bold</a></li>
+              <li><a class="black-text" href="#"><span class="material-icons">format_italic</span> Italic</a></li>
+              <li><a class="black-text" href="#"><span class="material-icons">format_underlined</span> Underline</a></li>
+              <li class="divider"></li>
+              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">insert_drive_file</span> Device File</a></li>
+              <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">camera</span> Camera</a></li>
+              <li><a class="black-text" href="#!"><span class="icon-bg-circle cyan small"><i class="fab fa-google-drive"></i></span> Google Drive</a></li>
+              <li><a class="black-text" href="#!"><span class="icon-bg-circle black small"><i class="fab fa-github"></i></span> GitHub</a></li>
+              <li><a class="black-text" href="#!"><span class="icon-bg-circle blue small"><i class="fab fa-dropbox"></i></span> DropBox</a>
+            </ul>
+            <!-- emoji-dropdown-->
+            <ul class="dropdown-content" id="emoji-dropdown">
+              <li><a class="grey-text text-darken-1" href="#">&#128540;</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons red-text">fiber_manual_record</i> Busy</a></li>
+              <li><a class="grey-text text-darken-1" href="#"><i class="material-icons yellow-text">fiber_manual_record</i> Away</a></li>
+            </ul>
+          </div>
+          <nav class="display-none search-sm">
+            <div class="nav-wrapper">
+              <form id="navbarForm">
+                <div class="input-field search-input-sm">
+                  <input class="search-box-sm mb-0" type="search" required="" id="search" placeholder="Explore Materialize" data-search="template-list">
+                  <label class="label-icon" for="search"><i class="material-icons search-sm-icon">search</i></label><i class="material-icons search-sm-close">close</i>
+                  <ul class="search-list collection search-list-sm display-none"></ul>
+                </div>
+              </form>
+            </div>
+          </nav>
+        </nav>
+      </div>
+    </header>
+    <!-- END: Header-->
+    <ul class="display-none" id="default-search-main">
+      <li class="auto-suggestion-title"><a class="collection-item" href="#">
+          <h6 class="search-title">FILES</h6></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img src="{{url_for('static', filename='images/icon/pdf-image.png')}}" width="24" height="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">Two new item submitted</span><small class="grey-text">Marketing Manager</small></div>
+            </div>
+            <div class="status"><small class="grey-text">17kb</small></div>
+          </div></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img src="{{url_for('static', filename='images/icon/doc-image.png')}}" width="24" height="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">52 Doc file Generator</span><small class="grey-text">FontEnd Developer</small></div>
+            </div>
+            <div class="status"><small class="grey-text">550kb</small></div>
+          </div></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img src="{{url_for('static', filename='images/icon/xls-image.png')}}" width="24" height="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">25 Xls File Uploaded</span><small class="grey-text">Digital Marketing Manager</small></div>
+            </div>
+            <div class="status"><small class="grey-text">20kb</small></div>
+          </div></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img src="{{url_for('static', filename='images/icon/jpg-image.png')}}" width="24" height="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">Anna Strong</span><small class="grey-text">Web Designer</small></div>
+            </div>
+            <div class="status"><small class="grey-text">37kb</small></div>
+          </div></a></li>
+      <li class="auto-suggestion-title"><a class="collection-item" href="#">
+          <h6 class="search-title">MEMBERS</h6></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" width="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">John Doe</span><small class="grey-text">UI designer</small></div>
+            </div>
+          </div></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-8.png')}}" width="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">Michal Clark</span><small class="grey-text">FontEnd Developer</small></div>
+            </div>
+          </div></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-10.png')}}" width="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">Milena Gibson</span><small class="grey-text">Digital Marketing</small></div>
+            </div>
+          </div></a></li>
+      <li class="auto-suggestion"><a class="collection-item" href="#">
+          <div class="display-flex">
+            <div class="display-flex align-item-center flex-grow-1">
+              <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-12.png')}}" width="30" alt="sample image"></div>
+              <div class="member-info display-flex flex-column"><span class="black-text">Anna Strong</span><small class="grey-text">Web Designer</small></div>
+            </div>
+          </div></a></li>
+    </ul>
+    <ul class="display-none" id="page-search-title">
+      <li class="auto-suggestion-title"><a class="collection-item" href="#">
+          <h6 class="search-title">PAGES</h6></a></li>
+    </ul>
+    <ul class="display-none" id="search-not-found">
+      <li class="auto-suggestion"><a class="collection-item display-flex align-items-center" href="#"><span class="material-icons">error_outline</span><span class="member-info">No results found.</span></a></li>
+    </ul>
+
+
+
+    <!-- BEGIN: SideNav-->
+    <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-active-square">
+      <div class="brand-sidebar">
+        <h1 class="logo-wrapper">
+          <a class="brand-logo darken-1" href="/">
+            <img class="hide-on-med-and-down" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/>
+            <img class="show-on-medium-and-down hide-on-med-and-up" src="{{url_for('static', filename='images/kumi-logo.png')}}" alt="materialize logo"/>
+            <span class="logo-text hide-on-med-and-down">Kumi</span>
+          </a>
+          <a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a>
+        </h1>
+      </div>
+      <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
+        <li class="bold"><a class="waves-effect profile-button" href="#" data-target="profile-dropdown"><i><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></i><span class="menu-title" data-i18n="Support">Tai Huynh</span></a>
+        </li>
+        <li class="bold hide-on-med-and-down"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="activity" data-target="slide-out-right"><i class="material-icons">assignment</i><span class="menu-title" data-i18n="Tasks" data-target="slide-out-right">Tasks</span><span class="badge badge pill orange float-right mr-10">2</span></a></li>
+    <!-- Channels -->
+        <li class="navigation-header"><a class="navigation-header-text">Channels</a><i class="navigation-header-icon material-icons">more_horiz</i></li>
+        
+        <li class="bold"><a class="waves-effect waves-cyan" href="#"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">#Home</span></a>
+        </li>
+        <li class="bold"><a class="waves-effect waves-cyan" href="#"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">#Engineer-Team</span></a>
+        </li>
+        
+        <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">More</span><span class="badge badge pill orange float-right mr-10">3</span></a>
+          <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+
+                <li class="bold"><a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Design-Team</span></a>
+                </li>
+                <li class="bold"><a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Marketing-Team</span></a>
+                </li>
+                <li class="bold"><a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Human-Resources</span></a>
+                </li>
+            </ul>
+          </div>
+        </li>
+    <!-- Direct Message -->
+        <li class="navigation-header"><a class="navigation-header-text">Direct Message</a><i class="navigation-header-icon material-icons">more_horiz</i>
+        </li>
+        <li class="bold"><a class="waves-effect waves-cyan active" href="#"><i><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-12.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Alice Hawker</span></a>
+        </li>
+        <li class="bold"><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-busy"><img src="{{url_for('static', filename='images/avatar/avatar-10.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Mary Adams</span></a>
+        </li>
+        <li class="bold"><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-away"><img src="{{url_for('static', filename='images/avatar/avatar-2.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Caleb Richards</span></a>
+        </li>
+        
+    <!-- Contacts -->
+        <li class="navigation-header"><a class="navigation-header-text">CONTACTS </a><i class="navigation-header-icon material-icons">more_horiz</i>
+        </li>
+        <li class="bold hide-on-med-and-down"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="messages" data-target="slide-out-right"><i class="material-icons green-text">people</i><span class="menu-title" data-i18n="Friends" data-target="slide-out-right">Friends</span><span class="badge badge pill orange float-right mr-10">1</span></a></li>
+        
+        <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Members</span></a>
+          <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-3.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Jo Daniels</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-11.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">June Lane</span></a>
+                </li>
+                <li class="bold"><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-12.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Alice Hawker</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-4.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Daniel Russel</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-busy"><img src="{{url_for('static', filename='images/avatar/avatar-10.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Mary Adams</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-busy"><img src="{{url_for('static', filename='images/avatar/avatar-6.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Christian Bates</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-away"><img src="{{url_for('static', filename='images/avatar/avatar-2.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Caleb Richards</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-away"><img src="{{url_for('static', filename='images/avatar/avatar-1.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Nathan Watts</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/avatar-9.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Elizabeth Elliott</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/avatar-5.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Edward Fletcher</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/avatar-7.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Micheal Hernandez</span></a>
+                </li>
+                <li><a class="waves-effect waves-cyan" href="#"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/avatar-8.png')}}" alt="avatar"><i></i></span></i><span class="menu-title">Willard Wood</span></a>
+                </li>
+            </ul>
+          </div>
+        </li>
+    <!-- Misc -->
+        <li class="navigation-header"><a class="navigation-header-text">Misc </a><i class="navigation-header-icon material-icons">more_horiz</i>
+        </li>
+        <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Options</span></a>
+          <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                <!--<li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>-->
+                <li class="bold"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="settings" data-target="slide-out-right"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
+                <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
+                <!--<li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>-->
+            </ul>
+          </div>
+        </li>
+        
+        <li><a class="waves-effect waves-block waves-light" href="#"><i class="material-icons">keyboard_tab</i><span class="menu-title" data-i18n="Support">Logout<span></a></li>
+      </ul>
+      <div class="navigation-background"></div><a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
+    </aside>
+    <!-- END: SideNav-->
+
+    <!-- BEGIN: Page Main-->
+    <div id="main">
+      <div class="row">
+        <div class="content-wrapper-before"></div>
+        <div class="col s12">
+          <div class="container">
+            <div class="chat-application">
+  <div class="app-chat">
+    <div class="content-area content-right">
+      <div class="app-wrapper">
+        <!-- Sidebar menu for small screen -->
+        <a href="#" data-target="chat-sidenav" class="sidenav-trigger hide-on-large-only">
+          <i class="material-icons">menu</i>
+        </a>
+        <!--/ Sidebar menu for small screen -->
+
+        <div class="card card card-default scrollspy border-radius-6 fixed-width">
+          <div class="card-content chat-content p-0">
+
+            <!-- Content Area -->
+            <div class="chat-content-area animate fadeUp">
+              <!-- Chat header -->
+              <div class="chat-header">
+                <div class="row valign-wrapper">
+                  <div class="col media-image online pr-0">
+                    <img src="{{url_for('static', filename='images/user/7.jpg')}}" alt="" class="circle z-depth-2 responsive-img">
+                  </div>
+                  <div class="col chat-content-header">
+                    <p class="m-0 font-weight-700">Alice Hawker</p>
+                    <p class="m-0 truncate" style="font-size: x-small">Kumi Front-End Developer</p>
+                  </div>
+                </div>
+                <span class="option-icon">
+                  <span class="favorite">
+                    <i class="material-icons">person_add</i>
+                  </span>
+                  <i class="material-icons hide-on-med-and-down">delete</i>
+                  <i class="material-icons">more_vert</i>
+                </span>
+              </div>
+              <!--/ Chat header -->
+
+              <!-- Chat content area -->
+              <div class="chat-area">
+                <div class="chats">
+                    <div class="span-time small grey-text text-lighten-1">4: 35 PM</div>
+                    <div class="chat">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/7.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>Hey Tai! Could you please help me out?</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chat chat-right">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/13.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>Hello there Alice! How can I help you?</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="span-time small grey-text text-lighten-1">4: 36 PM</div>
+                    <div class="chat">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/7.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>I am stuck with writing css.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chat chat-right">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/13.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>Absolutely!</p>
+                        </div>
+                        <div class="chat-text">
+                          <p>What exactly do you need help with?</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="span-time small grey-text text-lighten-1">4: 38 PM</div>
+                    <div class="chat">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/7.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>How to design clean and fresh UI.</p>
+                        </div>
+                        <div class="chat-text">
+                          <p>It's for my next project.</p>
+                        </div>
+                        <div class="chat-text">
+                          <p>Where do I start?</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chat chat-right">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/13.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>Sure, from materialize css. <a href="https://materializecss.com" target="_new" class="black-text">https://materializecss.com/</a></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="span-time small grey-text text-lighten-1">4: 39 PM</div>
+                    <div class="chat">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/7.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>Ahh ok I will take a look at it.</p>
+                        </div>
+                        <div class="chat-text">
+                          <p>Thanks!!!</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chat chat-right">
+                      <div class="chat-avatar">
+                        <a class="avatar">
+                          <img src="{{url_for('static', filename='images/user/13.jpg')}}" class="circle" alt="avatar" />
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-text">
+                          <p>Great, Feel free to get in touch on</p>
+                        </div>
+                        <div class="chat-text">
+                          <p>Kumi.com</p>
+                        </div>
+                        <div class="span-time-right small grey-text text-lighten-1">Just now</div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <!--/ Chat content area -->
+
+              <!-- Chat footer <-->
+              <div class="chat-footer">
+                <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input">
+                  <!--<i class="mr-2 hide-on-med-and-up"><a class="waves-effect waves-block waves-light chat-input-tool notification-button" href="javascript:void(0);" data-target="chat-options-dropdown"><i class="material-icons mr-2">arrow_drop_down_circle</i></a></i>-->
+                  <i class="mr-2 hide-on-med-and-up"><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="chat-options-dropdown"><i class="material-icons mr-2">arrow_drop_down_circle</i></a></i>
+                  <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light chat-input-tool" href="javascript:void(0);" id="emoji-button"><i class="material-icons mr-2">face</i></a></i>
+                  <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="attachment-dropdown"><i class="material-icons mr-2">attachment</i></a></i>
+                  <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_bold</i></a></i>
+                  <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_italic</i></a></i>
+                  <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_underlined</i></a></i>
+                  <input type="text" placeholder="Type message here.." class="message mb-0 " id="chat-input" name="chat-input">
+                  <a class="btn waves-effect waves-light send" onclick="enter_chat();">Send</a>
+                </form>
+              </div>
+              <!--/ Chat footer -->
+            </div>
+            <!--/ Content Area -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- START RIGHT SIDEBAR NAV -->
+<aside id="right-sidebar-nav">
+  <div id="slide-out-right" class="slide-out-right-sidenav sidenav rightside-navigation">
+    <div class="row">
+      <div class="slide-out-right-title">
+        <div class="col s12 border-bottom-1 pb-0 pt-1">
+          <div class="row">
+            <div class="col s2 pr-0 center">
+              <i class="material-icons vertical-text-middle"><a href="#" class="sidenav-close">clear</a></i>
+            </div>
+            <div class="col s10 pl-0">
+              <ul class="tabs">
+                <li class="tab col s4 p-0">
+                  <a href="#messages" class="active">
+                    <span>Friends</span>
+                  </a>
+                </li>
+                <li class="tab col s4 p-0">
+                  <a href="#activity">
+                    <span>Tasks</span>
+                  </a>
+                </li>
+                <li class="tab col s4 p-0">
+                  <a href="#settings">
+                    <span>Settings</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-out-right-body row pl-3">
+        <div id="messages" class="col s12 pb-0 messages">
+          <div class="collection border-none mb-0">
+            <input class="header-search-input mt-4 mb-2" type="text" name="Search" placeholder="Search" />
+            <ul class="collection right-sidebar-chat p-0 mb-0">
+              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                data-target="slide-out-chat">
+                <span class="avatar-status avatar-online avatar-50"><img
+                    src="{{url_for('static', filename='images/avatar/avatar-12.png')}}" alt="avatar" />
+                  <i></i>
+                </span>
+                <div class="user-content">
+                  <h6 class="line-height-0">Alice Hawker</h6>
+                  <p class="medium-small blue-grey-text text-lighten-3 pt-3">You: Kumi.com</p>
+                </div>
+                <span class="secondary-content medium-small">Just now</span>
+              </li>
+              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                data-target="slide-out-chat">
+                <span class="avatar-status avatar-busy avatar-50"><img
+                    src="{{url_for('static', filename='images/avatar/avatar-10.png')}}" alt="avatar" />
+                  <i></i>
+                </span>
+                <div class="user-content">
+                  <h6 class="line-height-0">Mary Adams</h6>
+                  <p class="medium-small blue-grey-text text-lighten-3 pt-3">Thanks for your report</p>
+                </div>
+                <span class="secondary-content medium-small">4:14 PM</span>
+              </li>
+              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                data-target="slide-out-chat">
+                <span class="avatar-status avatar-away avatar-50"><img
+                    src="{{url_for('static', filename='images/avatar/avatar-2.png')}}" alt="avatar" />
+                  <i></i>
+                </span>
+                <div class="user-content">
+                  <h6 class="line-height-0">Caleb Richards</h6>
+                  <p class="medium-small blue-grey-text text-lighten-3 pt-3">Wanna do lunch today?</p>
+                </div>
+                <span class="secondary-content medium-small">11:12 AM</span>
+              </li>
+              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                data-target="slide-out-chat">
+                <span class="avatar-status avatar-online avatar-50"><img
+                    src="{{url_for('static', filename='images/avatar/avatar-11.png')}}" alt="avatar" />
+                  <i></i>
+                </span>
+                <div class="user-content">
+                  <h6 class="line-height-0">June Lane</h6>
+                  <p class="medium-small blue-grey-text text-lighten-3 pt-3">I will meet with your team tomorrow at 3pm</p>
+                </div>
+                <span class="secondary-content medium-small">1 day</span>
+              </li>
+              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                data-target="slide-out-chat">
+                <span class="avatar-status avatar-busy avatar-50"><img
+                    src="{{url_for('static', filename='images/avatar/avatar-6.png')}}" alt="avatar" />
+                  <i></i>
+                </span>
+                <div class="user-content">
+                  <h6 class="line-height-0">Christian Bates</h6>
+                  <p class="medium-small blue-grey-text text-lighten-3 pt-3">I'll have June Lane contact you</p>
+                </div>
+                <span class="secondary-content medium-small">1 day</span>
+              </li>
+              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                data-target="slide-out-chat">
+                <span class="avatar-status avatar-off avatar-50"><img
+                    src="{{url_for('static', filename='images/avatar/avatar-8.png')}}" alt="avatar" />
+                  <i></i>
+                </span>
+                <div class="user-content">
+                  <h6 class="line-height-0">Willard Wood</h6>
+                  <p class="medium-small blue-grey-text text-lighten-3 pt-3">Budget approved, best of luck!</p>
+                </div>
+                <span class="secondary-content medium-small">3 days</span>
+              </li>
+              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                data-target="slide-out-chat">
+                <span class="avatar-status avatar-online avatar-50"><img
+                    src="{{url_for('static', filename='images/avatar/avatar-4.png')}}" alt="avatar" />
+                  <i></i>
+                </span>
+                <div class="user-content">
+                  <h6 class="line-height-0">Daniel Russell</h6>
+                  <p class="medium-small blue-grey-text text-lighten-3 pt-3">maybe next time buddy</p>
+                </div>
+                <span class="secondary-content medium-small">4 days</span>
+              </li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+        </div>
+        <div id="settings" class="col s12">
+          <p class="setting-header mt-8 mb-3 ml-5 font-weight-900">GENERAL SETTINGS</p>
+          <ul class="collection border-none">
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Notifications</span>
+                <div class="switch right">
+                  <label>
+                    <input checked type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Email Notifications</span>
+                <div class="switch right">
+                  <label>
+                    <input checked type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Show recent activity</span>
+                <div class="switch right">
+                  <label>
+                    <input type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Show Task activity</span>
+                <div class="switch right">
+                  <label>
+                    <input type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Show your contact info</span>
+                <div class="switch right">
+                  <label>
+                    <input type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+          <p class="setting-header mt-7 mb-3 ml-5 font-weight-900">SYSTEM SETTINGS</p>
+          <ul class="collection border-none">
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>System Logs</span>
+                <div class="switch right">
+                  <label>
+                    <input type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Error Reporting</span>
+                <div class="switch right">
+                  <label>
+                    <input type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Applications Logs</span>
+                <div class="switch right">
+                  <label>
+                    <input checked type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Backup Servers</span>
+                <div class="switch right">
+                  <label>
+                    <input type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li class="collection-item border-none">
+              <div class="m-0">
+                <span>Audit Logs</span>
+                <div class="switch right">
+                  <label>
+                    <input type="checkbox" />
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div id="activity" class="col s12">
+          <div class="activity">
+            <p class="mt-5 mb-0 ml-5 font-weight-900">PENDING TASKS</p>
+            <ul class="widget-timeline mb-0">
+              <li class="timeline-items timeline-icon-green active">
+                <div class="timeline-time">Just now</div>
+                <h6 class="timeline-title">High Fidelity Prototyping</h6>
+                <p class="timeline-text">This task is assigned to Tai</p>
+                <div class="timeline-content orange-text">Pending</div>
+              </li>
+              <li class="timeline-items timeline-icon-cyan active">
+                <div class="timeline-time">3 days</div>
+                <h6 class="timeline-title">UI Design</h6>
+                <p class="timeline-text">This task is assigned to Daniel</p>
+                <div class="timeline-content blue-text">Urgent</div>
+              </li>
+            </ul>
+            <p class="mt-5 mb-0 ml-5 font-weight-900">ACTION REQUIRED</p>
+            <ul class="widget-timeline mb-0">
+              <li class="timeline-items timeline-icon-green active">
+                <div class="timeline-time">Just now</div>
+                <h6 class="timeline-title">New task assigned</h6>
+                <p class="timeline-text">Need to intergate backlog #16.4</p>
+                <div class="timeline-content orange-text">Pending Review</div>
+              </li>
+              <li class="timeline-items timeline-icon-red active">
+                <div class="timeline-time">20 mins</div>
+                <h6 class="timeline-title">Database overloaded 89%</h6>
+                <p class="timeline-text">Here are some news feed interactions concepts.</p>
+                <div class="timeline-content">
+                  <img src="{{url_for('static', filename='images/icon/pdf.png')}}" alt="document" height="30" width="25"
+                    class="mr-1">Database-log.doc
+                </div>
+                <div class="timeline-content red-text">Important</div>
+              </li>
+              <li class="timeline-items timeline-icon-cyan active">
+                <div class="timeline-time">50 mins</div>
+                <h6 class="timeline-title">System restart needed</h6>
+                <p class="timeline-text">Heroku will auto-deploy latest commit of the master branch upon system restart</p>
+                <div class="timeline-content blue-text">Urgent</div>
+              </li>
+              <li class="timeline-items timeline-icon-orange active">
+                <div class="timeline-time">5 hrs</div>
+                <h6 class="timeline-title">Low Fidelity Prototyping</h6>
+                <p class="timeline-text">Anish hand-drawn design concepts.</p>
+                <div class="timeline-content orange-text">Pending Review</div>
+              </li>
+            </ul>
+            <p class="mt-5 mb-0 ml-5 font-weight-900">DOCUMENTS</p>
+            <ul class="widget-timeline mb-0">
+              <li class="timeline-items timeline-icon-red active">
+                <div class="timeline-time">30 mins</div>
+                <h6 class="timeline-title">12 new users registered</h6>
+                <p class="timeline-text">Registration report auto-generated.</p>
+                <div class="timeline-content">
+                  <img src="{{url_for('static', filename='images/icon/pdf.png')}}" alt="document" height="30" width="25"
+                    class="mr-1">Registration_report.pdf
+                </div>
+              </li>
+              <li class="timeline-items timeline-icon-indigo active">
+                <div class="timeline-time">5 days</div>
+                <h6 class="timeline-title">Jacob completed the personas report</h6>
+                <p class="timeline-text">We also used personas to guide when we pitched our solution</p>
+                <div class="timeline-content">
+                  <img src="{{url_for('static', filename='images/icon/pdf.png')}}" alt="document" height="30" width="25"
+                    class="mr-1">personas_report.pdf
+                </div>
+              </li>
+            </ul>
+            <p class="mt-5 mb-0 ml-5 font-weight-900">COMPLETED TASKS</p>
+            <ul class="widget-timeline mb-0">
+              <li class="timeline-items timeline-icon-green active">
+                <div class="timeline-time">10 days</div>
+                <h6 class="timeline-title">Data Flow Diagram</h6>
+                <p class="timeline-text">Assigned to Tatsuya</p>
+                <div class="timeline-content green-text">Completed</div>
+              </li>
+              <li class="timeline-items timeline-icon-cyan">
+                <div class="timeline-time">10 days</div>
+                <h6 class="timeline-title">UI Transition Diagram</h6>
+                <p class="timeline-text">Assigned to Daniel</p>
+                <div class="timeline-content green-text">Completed</div>
+              </li>
+            </ul>
+            <br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+          </div>
+          <div class="content-overlay"></div>
+        </div>
+      </div>
+    </div>
+    <!-- END: Page Main-->
+
+    <!-- Theme Customizer -->
+    <div id="theme-cutomizer-out" class="theme-cutomizer sidenav row">
+    <div class="col s12">
+      <a class="sidenav-close" href="#!"><i class="material-icons">close</i></a>
+      <h5 class="theme-cutomizer-title">Theme</h5>
+      <div class="menu-options">
+         <hr class="customize-devider" />
+         <h6 class="mt-6">Colors:</h6>
+         <div class="menu-options-form row">
+            <div class="input-field col s12 menu-color mb-0">
+               <div class="gradient-color center-align">
+                  <span class="menu-color-option gradient-45deg-indigo-blue selected"
+                     data-color="gradient-45deg-indigo-blue"></span>
+                  <span
+                     class="menu-color-option gradient-45deg-purple-deep-orange"
+                     data-color="gradient-45deg-purple-deep-orange"
+                  ></span>
+                  <span
+                     class="menu-color-option gradient-45deg-light-blue-cyan"
+                     data-color="gradient-45deg-light-blue-cyan"
+                  ></span>
+                  <span
+                     class="menu-color-option gradient-45deg-purple-amber"
+                     data-color="gradient-45deg-purple-amber"
+                  ></span>
+                  <span
+                     class="menu-color-option gradient-45deg-purple-deep-purple"
+                     data-color="gradient-45deg-purple-deep-purple"
+                  ></span>
+                  <span
+                     class="menu-color-option gradient-45deg-deep-orange-orange"
+                     data-color="gradient-45deg-deep-orange-orange"
+                  ></span>
+                  <span class="menu-color-option gradient-45deg-green-teal" data-color="gradient-45deg-green-teal"></span>
+                  <span
+                     class="menu-color-option gradient-45deg-indigo-light-blue"
+                     data-color="gradient-45deg-indigo-light-blue"
+                  ></span>
+                  <span class="menu-color-option gradient-45deg-red-pink" data-color="gradient-45deg-red-pink"></span>
+               </div>
+               <div class="solid-color center-align">
+                  <span class="menu-color-option red" data-color="red"></span>
+                  <span class="menu-color-option purple" data-color="purple"></span>
+                  <span class="menu-color-option pink" data-color="pink"></span>
+                  <span class="menu-color-option deep-purple" data-color="deep-purple"></span>
+                  <span class="menu-color-option cyan" data-color="cyan"></span>
+                  <span class="menu-color-option teal" data-color="teal"></span>
+                  <span class="menu-color-option light-blue" data-color="light-blue"></span>
+                  <span class="menu-color-option amber darken-3" data-color="amber darken-3"></span>
+                  <span class="menu-color-option brown darken-2" data-color="brown darken-2"></span>
+               </div>
+            </div>
+            <div class="input-field col s12 menu-bg-color mb-0">
+               <p class="mt-0">Menu Background Color</p>
+               <div class="gradient-color center-align">
+                  <span
+                     class="menu-bg-color-option gradient-45deg-indigo-blue"
+                     data-color="gradient-45deg-indigo-blue"
+                  ></span>
+                  <span
+                     class="menu-bg-color-option gradient-45deg-purple-deep-orange"
+                     data-color="gradient-45deg-purple-deep-orange"
+                  ></span>
+                  <span
+                     class="menu-bg-color-option gradient-45deg-light-blue-cyan"
+                     data-color="gradient-45deg-light-blue-cyan"
+                  ></span>
+                  <span
+                     class="menu-bg-color-option gradient-45deg-purple-amber"
+                     data-color="gradient-45deg-purple-amber"
+                  ></span>
+                  <span
+                     class="menu-bg-color-option gradient-45deg-purple-deep-purple"
+                     data-color="gradient-45deg-purple-deep-purple"
+                  ></span>
+                  <span
+                     class="menu-bg-color-option gradient-45deg-deep-orange-orange"
+                     data-color="gradient-45deg-deep-orange-orange"
+                  ></span>
+                  <span class="menu-bg-color-option gradient-45deg-green-teal" data-color="gradient-45deg-green-teal"></span>
+                  <span
+                     class="menu-bg-color-option gradient-45deg-indigo-light-blue"
+                     data-color="gradient-45deg-indigo-light-blue"
+                  ></span>
+                  <span class="menu-bg-color-option gradient-45deg-red-pink" data-color="gradient-45deg-red-pink"></span>
+               </div>
+               <div class="solid-color center-align">
+                  <span class="menu-bg-color-option red" data-color="red"></span>
+                  <span class="menu-bg-color-option purple" data-color="purple"></span>
+                  <span class="menu-bg-color-option pink" data-color="pink"></span>
+                  <span class="menu-bg-color-option deep-purple" data-color="deep-purple"></span>
+                  <span class="menu-bg-color-option cyan" data-color="cyan"></span>
+                  <span class="menu-bg-color-option teal" data-color="teal"></span>
+                  <span class="menu-bg-color-option light-blue" data-color="light-blue"></span>
+                  <span class="menu-bg-color-option amber darken-3" data-color="amber darken-3"></span>
+                  <span class="menu-bg-color-option brown darken-2" data-color="brown darken-2"></span>
+               </div>
+            </div>
+            <div class="input-field col s12">
+               <div class="switch">
+                  Dark Mode
+                  <label class="float-right"
+                     ><input class="menu-dark-checkbox" type="checkbox" checked /> <span class="lever ml-0"></span
+                  ></label>
+               </div>
+            </div>
+            <div class="input-field col s12">
+               <div class="switch">
+                  Collapse Menu
+                  <label class="float-right"
+                     ><input class="menu-collapsed-checkbox" type="checkbox"/> <span class="lever ml-0"></span
+                  ></label>
+               </div>
+            </div>
+            <div class="input-field col s12">
+               <div class="switch">
+                  <p class="mt-0">Menu Type</p>
+                  <label>
+                     <input
+                        class="menu-selection-radio with-gap"
+                        value="sidenav-active-square"
+                        name="menu-selection"
+                        type="radio"
+                        checked
+                     />
+                     <span>Square</span>
+                  </label>
+                  <label>
+                     <input
+                        class="menu-selection-radio with-gap"
+                        value="sidenav-active-rounded"
+                        name="menu-selection"
+                        type="radio"
+                     />
+                     <span>Rounded</span>
+                  </label>
+                  <label>
+                     <input class="menu-selection-radio with-gap" value="" name="menu-selection" type="radio" />
+                     <span>Normal</span>
+                  </label>
+               </div>
+            </div>
+         </div>
+
+      <hr class="customize-devider" />
+      <div class="navbar-options row">
+         <div class="input-field col s12 navbar-color mb-0">
+            <p class="mt-0">Chat Area Background</p>
+            <div class="gradient-color center-align">
+               <span class="navbar-color-option bg-image-shattered selected" data-color="bg-image-shattered"></span>
+               <span class="navbar-color-option bg-image-gradient-squares" data-color="bg-image-gradient-squares"></span>
+               <span class="navbar-color-option bg-image-arches" data-color="bg-image-arches"></span>
+               <span class="navbar-color-option bg-image-brick-wall-dark" data-color="bg-image-brick-wall-dark"></span>
+               <span class="navbar-color-option bg-image-foggy-birds" data-color="bg-image-foggy-birds"></span>
+               <span class="navbar-color-option bg-image-swirl" data-color="bg-image-swirl"></span>
+               <span class="navbar-color-option bg-image-hexellence" data-color="bg-image-hexellence"></span>
+               <span class="navbar-color-option bg-image-inspiration-geometry" data-color="bg-image-inspiration-geometry"></span>
+               <span class="navbar-color-option bg-image-flowers" data-color="bg-image-flowers"></span>
+               
+               <span class="navbar-color-option bg-image-light-wool" data-color="bg-image-light-wool"></span>
+               <span class="navbar-color-option bg-image-gray-floral" data-color="bg-image-gray-floral"></span>
+               <span class="navbar-color-option bg-image-beige-paper" data-color="bg-image-beige-paper"></span>
+               <span class="navbar-color-option bg-image-padded-light" data-color="bg-image-padded-light"></span>
+               <span class="navbar-color-option bg-image-pool-table" data-color="bg-image-pool-table"></span>
+               <span class="navbar-color-option bg-image-skulls" data-color="bg-image-skulls"></span>
+               <span class="navbar-color-option bg-image-xv" data-color="bg-image-xv"></span>
+               <span class="navbar-color-option bg-image-type" data-color="bg-image-type"></span>
+               <span class="navbar-color-option bg-image-purty-wood" data-color="bg-image-purty-wood"></span>
+            </div>
+         </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    <!--/ Theme Customizer -->
+    <!-- END: Footer-->
+    
+    <!-- BEGIN JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@2.12.1/dist/index.min.js"></script>
+    <script src="{{url_for('static', filename='js/vendors.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/plugins.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/search.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/customizer.min.js')}}"></script>
+    <script src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/js/scripts/app-chat.min.js"></script>
+    <!-- END JS-->
+  </body>
+</html>

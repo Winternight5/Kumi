@@ -13,12 +13,12 @@
     </table>
 
     <hr>
-    <h3>Sharing Table</h3>
+    <h3>Friends Table</h3>
     <table border="1">
         <tr>
             <td>id</td><td>user id</td><td>note id</td><td>option</td>
         </tr>
-        {% for item in shares %}
+        {% for item in friends %}
         <tr>
             <td>{{item.id}}</td><td>{{item.user_id}}</td><td>{{item.post_id}}</td><td><a href="/delshareid/{{item.id}}">Delete</a></td>
         </tr>
@@ -26,7 +26,7 @@
     </table>
 
     <hr>
-    <h3>Notes Table</h3>
+    <h3>Messages Table</h3>
     <table border="1">
         <tr>
             <td>id</td><td>user id</td><td>note detail</td><td>timestamp</td><td>option</td>
