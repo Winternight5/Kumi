@@ -138,10 +138,10 @@
                         <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="Members" data-target="slide-out-right"><i class="fas fa-users"><small class="notification-badge orange online-counter hide">0</small></i></a></li>
                         <li><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
                         <!--
-    <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-    <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
-    <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
-    <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
+                        <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+                        <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
+                        <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
+                        <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
                     </ul>
                     <!-- attachment-dropdown-->
                     <ul class="dropdown-content black-text" id="attachment-dropdown" style="min-width: 250px;">
@@ -379,16 +379,16 @@
             </li>
             <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
             <!--<li class="bold">
-        <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Options</span></a>
-        <div class="collapsible-body">
-            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                <!--<li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
-                <li class="bold"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="settings" data-target="slide-out-right"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
-                <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
-                <!--<li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
-            </ul>
-        </div>
-    </li>-->
+                <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Options</span></a>
+                <div class="collapsible-body">
+                    <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                        <!--<li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
+                        <li class="bold"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="settings" data-target="slide-out-right"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
+                        <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
+                        <!--<li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
+                    </ul>
+                </div>
+            </li>-->
 
             <li><a class="waves-effect waves-block waves-light" href="/logout"><i class="material-icons">keyboard_tab</i><span class="menu-title" data-i18n="Support">Logout<span></a></li>
         </ul>
@@ -815,7 +815,8 @@
     <script src="{{url_for('static', filename='js/search.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/customizer.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/app-chat.min.js')}}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>-->
     <!-- END JS-->
     <script>
         // SocketIO
@@ -839,7 +840,7 @@
                 });
                 /*
                 var t = '';
-                
+
                 if (lastMsg == current_user) {
 		            t = '<div class="chat-text"><p>'+e+"</p></div>";
                     $(".chat:last-child .chat-body").append(t);
@@ -847,7 +848,7 @@
                     t = '<div class="chat chat-right"><div class="chat-body"><div class="chat-text"><p>' + e + '</p></div></div></div>';
                     $("#chat-area").append(t);
                 }
-                
+
                 $(".message").val("");
                 scrollToBottom(current_user);*/
 	        }
@@ -929,7 +930,7 @@
             socket.on('disconnect', function () {
                 socket.emit('disconnect', {});
             });
-            
+
             socket.on('status', updateUserStatus);
 
             socket.on('message', onMessage);
@@ -941,7 +942,7 @@
                     updateList("#friends_ul");
                     updateList("#members_ul");
                 });
-                
+
                 online_users = data.clients;
                 friends_online_counter = arrayDiff(allfriends, online_users);
 
@@ -969,8 +970,8 @@
                 socket.emit('channel', { id: data });
                 $('#chat-area').html('');
 
-                $.getJSON("/gm/"+data, function(data) {
-                    $.each(data, function(key, val) {
+                $.getJSON("/gm/" + data, function (data) {
+                    $.each(data, function (key, val) {
                         onMessage(val);
                     });
                 });
@@ -980,17 +981,17 @@
                 //$('.sidenav').sidenav('close');
             });
 
-            
+
             $("#profile-dropdown li").click(function () {
                 type = $(this).attr("data-value");
 
                 $.ajax({
-                    url: "/cs/"+type
-                }).done(function(data) {
+                    url: "/cs/" + type
+                }).done(function (data) {
                     socket.emit('update_stats');
                 });
             });
         });
     </script>
-</body >
+</body>
 </html >
