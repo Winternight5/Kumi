@@ -944,7 +944,6 @@
             socket = io.connect('http://' + document.domain + ':' + location.port + '/home', {transports: ['websocket']});
 
             socket.on('connect', function () {
-                updateFriendList();
                 socket.emit('joined', {});
             });
 
@@ -963,7 +962,8 @@
             }
 
             function updateUserStatus(data) {
-                //console.log(data)
+                updateFriendList();
+
                 $.each(data['users'], function (key, value) {
                     updateStatus(value['id'], value['online_status'], value['status'])
                     updateList("#friends_ul");
