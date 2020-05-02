@@ -117,6 +117,15 @@
         .chat-body:hover .span-time {
             display: block;
         }
+
+        .unselectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 <!-- END: Head-->
@@ -335,11 +344,11 @@
             <li class="navigation-header"><a class="navigation-header-text">Channels</a><i class="navigation-header-icon material-icons">more_horiz</i></li>
             {% for channel in channels %}
             <li class="bold">
-                <a class="waves-effect waves-cyan {{channel.active}} open-chat" href="#" data-target="{{channel.b64name}}"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">{{channel.name}}</span></a>
+                <a class="waves-effect waves-cyan open-chat {{channel.active}}" href="#" data-link="{{channel.b64name}}" data-type="menu"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">{{channel.name}}</span></a>
             </li>
             {% endfor %}
 
-            <li class="bold">
+            <!--<li class="bold">
                 <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">More</span><span class="badge badge pill orange float-right mr-10">3</span></a>
                 <div class="collapsible-body">
                     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
@@ -355,14 +364,14 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li>-->
             <!-- Direct Message -->
             <li class="navigation-header">
                 <a class="navigation-header-text">Direct Message</a><i class="navigation-header-icon material-icons">more_horiz</i>
             </li>
             {% for friend in friends %}
             <li id="member_{{friend.id}}" class="bold member_{{friend.id}} hide">
-                <a class="waves-effect waves-cyan open-chat {{friend.active}}" href="#" data-target="{{friend.b64name}}"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/'+friend.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title">{{friend.fullname}} </span></a>
+                <a class="waves-effect waves-cyan open-chat {{friend.active}} {{friend.b64name}}" href="#" data-link="{{friend.b64name}}" data-id="{{friend.id}}" data-type="menu"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/'+friend.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title">{{friend.fullname}} </span></a>
             </li>
             {% endfor %}
 
@@ -420,18 +429,18 @@
                                                 <div class="chat-header">
                                                     <div class="row valign-wrapper">
                                                         <div class="col media-image online pr-0">
-                                                            <img src="{{url_for('static', filename='images/user/7.jpg')}}" alt="" class="circle z-depth-2 responsive-img" id="chat-avatar">
+                                                            <img src="{% if current_channel[0] %}{{url_for('static', filename='images/avatar/'+current_channel[0].imgUrl)}}{% endif %}" alt="" class="circle z-depth-2 responsive-img white" id="chat-avatar">
                                                         </div>
                                                         <div class="col chat-content-header">
-                                                            <p class="m-0 font-weight-700" id="chat-name">Alice Hawker</p>
-                                                            <p class="m-0 truncate" style="font-size: x-small" id="chat-subtext">Kumi Front-End Developer</p>
+                                                            <p class="m-0 font-weight-700" id="chat-name">{% if current_channel[0] %}{{ current_channel[0].name }}{% endif %}</p>
+                                                            <p class="m-0 truncate" style="font-size: x-small" id="chat-subtext">{% if current_channel[0] %}{{ current_channel[0].title }}{% endif %}</p>
                                                         </div>
                                                     </div>
                                                     <span class="option-icon">
-                                                        <span class="favorite" id="chat-add-friend">
+                                                        <span class="favorite hide" id="chat-add-friend">
                                                             <i class="material-icons">person_add</i>
                                                         </span>
-                                                        <i class="material-icons hide-on-med-and-down" id="chat-delete">delete</i>
+                                                        <i class="material-icons hide-on-med-and-down hide" id="chat-delete">delete</i>
                                                         <i class="material-icons">more_vert</i>
                                                     </span>
                                                 </div>
@@ -526,18 +535,18 @@
                                     <div id="Members" class="col s12 pb-0 messages">
                                         <div class="collection border-none mb-0">
                                             <input class="header-search-input mt-4 mb-2" type="text" name="Search" placeholder="Search" autocomplete="off" />
-                                            <ul class="collection right-sidebar-chat p-0 mb-0" id="members_ul">
+                                            <ul class="collection right-sidebar-chat p-0 mb-0 unselectable" id="members_ul">
                                                 {% for member in members %}
-                                                <li class="collection-item right-sidebar-chat-item display-flex avatar pl-5 pb-0 member_{{member.id}}" data-target="slide-out-chat" data-position="3">
+                                                <li class="open-chat collection-item right-sidebar-chat-item display-flex avatar pl-5 pb-0 member_{{member.id}}" data-target="slide-out-chat" data-position="3" data-link="{{member.b64name}}">
                                                     <span class="avatar-status avatar-off avatar-50">
                                                         <img src="{{url_for('static', filename='images/avatar/'+member.imgUrl)}}" alt="avatar" />
                                                         <i></i>
                                                     </span>
                                                     <div class="user-content">
                                                         <h6 class="line-height-0">{{member.fullname}}</h6>
-                                                        <p class="medium-small blue-grey-text text-lighten-3 pt-3">...</p>
+                                                        <p class="medium-small blue-grey-text text-lighten-3 pt-3">{{member.title}}</p>
                                                     </div>
-                                                    <span class="secondary-content medium-small">...</span>
+                                                    <!--<span class="secondary-content medium-small">...</span>-->
                                                 </li>
                                                 {% endfor %}
                                             </ul>
@@ -547,18 +556,18 @@
                                     <div id="Friends" class="col s12 pb-0 messages">
                                         <div class="collection border-none mb-0">
                                             <input class="header-search-input mt-4 mb-2" type="text" name="Search" placeholder="Search" autocomplete="off" />
-                                            <ul class="collection right-sidebar-chat p-0 mb-0" id="friends_ul">
+                                            <ul class="collection right-sidebar-chat p-0 mb-0 unselectable" id="friends_ul">
                                                 {% for member in members %}
-                                                <li id="friend_{{member.id}}" class="collection-item right-sidebar-chat-item display-flex avatar pl-5 pb-0 member_{{member.id}}" data-target="slide-out-chat" data-position="3" data-id="{{member.id}}">
+                                                <li id="friend_{{member.id}}" class="open-chat collection-item right-sidebar-chat-item display-flex avatar pl-5 pb-0 member_{{member.id}}" data-link="{{member.b64name}}" data-target="slide-out-chat" data-position="3" data-id="{{member.id}}">
                                                     <span class="avatar-status avatar-off avatar-50">
                                                         <img src="{{url_for('static', filename='images/avatar/'+member.imgUrl)}}" alt="avatar" />
                                                         <i></i>
                                                     </span>
                                                     <div class="user-content">
                                                         <h6 class="line-height-0">{{member.fullname}}</h6>
-                                                        <p class="medium-small blue-grey-text text-lighten-3 pt-3">You: Kumi.com</p>
+                                                        <p class="medium-small grey-text pt-3">{{member.title}}</p>
                                                     </div>
-                                                    <span class="secondary-content medium-small">Just now</span>
+                                                    <!--<span class="secondary-content medium-small">Just now</span>-->
                                                 </li>
                                                 {% endfor %}
                                             </ul>
@@ -894,8 +903,17 @@
                         friends.push($(this).data('id'));
                     }
                 });
+
+                allfriends = friends;
+                var friends_online_counter = arrayDiff(allfriends, online_users);
+            
+                if (friends_online_counter.length <= 0) {
+                    if (!$(".friend-online-counter").hasClass("hide"))
+                        $(".friend-online-counter").addClass('hide');
+                } else {
+                    $(".friend-online-counter").text(friends_online_counter.length).removeClass('hide');
+                }
             });
-            allfriends = friends;
         }
 
         function updateList(type) {
@@ -930,10 +948,16 @@
             socket.on('disconnect', function () {
                 socket.emit('disconnect', {});
             });
+            
+            socket.on('channel_header', updateChannelHeader);
 
             socket.on('status', updateUserStatus);
 
             socket.on('message', onMessage);
+
+            function updateChannelHeader() {
+
+            }
 
             function updateUserStatus(data) {
                 //console.log(data)
@@ -944,7 +968,6 @@
                 });
 
                 online_users = data.clients;
-                friends_online_counter = arrayDiff(allfriends, online_users);
 
                 if (data.count == 1) {
                     if (!$(".online-counter").hasClass("hide"))
@@ -952,34 +975,46 @@
                 } else {
                     $(".online-counter").text(data.count - 1).removeClass('hide');
                 }
-
-                if (friends_online_counter.length == 0) {
-                    if (!$(".friend-online-counter").hasClass("hide"))
-                        $(".friend-online-counter").addClass('hide');
-                } else {
-                    $(".friend-online-counter").text(friends_online_counter.length).removeClass('hide');
-                }
             }
 	    });
     </script>
     <script>
         // other functions
         $(document).ready(function () {
-            $(".open-chat").click(function () {
-                data = $(this).attr("data-target");
-                socket.emit('channel', { id: data });
-                $('#chat-area').html('');
+            var inputs = document.querySelectorAll(".open-chat");
+            for (i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('click', function () {
+                    b64name = this.dataset.link;
+                    id = this.dataset.id;
+                    socket.emit('channel', { b64: b64name, id: id });
+                    $('#chat-area').html('');
 
-                $.getJSON("/gm/" + data, function (data) {
-                    $.each(data, function (key, val) {
-                        onMessage(val);
+                    $.getJSON("/gm/" + b64name, function (data) {
+                        $.each(data, function (key, val) {
+                            onMessage(val);
+                        });
                     });
-                });
 
-                $msgs.scrollTop($(".chat-area > .chats").height());
-                //enter_chat('test', false);
-                //$('.sidenav').sidenav('close');
-            });
+                    $.getJSON("/channel/" + b64name, function (data) {
+                        $('#chat-avatar').attr("src", "static/images/avatar/"+data.imgUrl);
+                        $('#chat-name').text(data.name);
+                        $('#chat-subtext').text(data.title);
+                        //console.log(data)
+                    });
+
+                    $msgs.scrollTop($(".chat-area > .chats").height());
+                    
+                    $('.open-chat').removeClass('active gradient-45deg-indigo-blue gradient-shadow');
+
+                    if (this.dataset.type == "menu") {
+                        this.classList.add('active', 'gradient-45deg-indigo-blue', 'gradient-shadow');
+                    } else if (this.dataset.target == "slide-out-chat") {
+                        $('.'+b64name).addClass('active gradient-45deg-indigo-blue gradient-shadow');
+                    }
+                    //$(this).addClass('active')
+                    //$(this).sidenav('close');
+                });
+            }
 
 
             $("#profile-dropdown li").click(function () {

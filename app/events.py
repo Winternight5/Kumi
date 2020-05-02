@@ -128,13 +128,14 @@ def changeChannel(data):
     oldRoom = session.get('room')
     leave_room(oldRoom)
     
-    currentRoom = session['room'] = data['id']
+    currentRoom = session['room'] = data['b64']
 
     channelCheck = Channel.query.filter_by(b64name=currentRoom).first()
     print(channelCheck)
     if (channelCheck is None):
         newChannel = Channel(b64name=currentRoom,
-                       owner_id=current_user.id)
+                       owner_id=current_user.id,
+                       access_type=data['id'])
         db.session.add(newChannel)
         db.session.commit()
     

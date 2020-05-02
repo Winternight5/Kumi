@@ -8,6 +8,7 @@ from werkzeug.urls import url_parse
 from datetime import datetime, date, timedelta
 import random, string, html, re, uuid, pybase64
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 themes = {
     'day': {
@@ -86,12 +87,16 @@ def index():
     members = []
     friends = []
     channels = []
+    current_channel = []
     chats = getMessages('I0hvbWU=')
 
-    for channel in Channel.query.filter(Channel.name != '').all():
-        channel.active = 'active' if channel.id is 1 else ''
-        channels.append(channel)
+    channel_q = Channel.query.filter(Channel.name != '').all() if current_user.access_type == 999 else Channel.query.filter(or_(current_user.access_type == Channel.access_type, Channel.id == 1), Channel.name != '').all()
 
+    for channel in channel_q:
+        channel.active = 'active' if channel.id is 1 else ''
+        if channel.id is 1:
+            current_channel.append(channel)
+        channels.append(channel)
     # Query friend database
     # Retrieve all friends of current_user
     friends_query = (User.query
@@ -129,6 +134,7 @@ def index():
                            title='Home',
                            current_user=current_user,
                            channels=channels,
+                           current_channel=current_channel,
                            chats=chats,
                            members=members,
                            friends=friends)
@@ -224,9 +230,36 @@ def json_getFriend():
 
     return json.dumps(data)
 
+# -------------------------------------------------------------------------------------------------------------------------
+# ----- Get Channel JSON
+# -------------------------------------------------------------------------------------------------------------------------
+@app.route('/channel/<string:name>')
+@login_required
+def json_getChannel(name):
+    '''Get all friends and return JSON
+    '''
+    if not name: return '0'
+
+    data = {}
+    
+    #query = User.query.filter(User.email == d_name[0]).first() if name[:2] == 'I0' else Channel.query.filter(Channel.b64name == name).first()
+    query = Channel.query.filter(Channel.b64name == name).first()
+    user_id = query.owner_id if current_user.id == query.access_type else query.access_type
+    
+    if query.name:
+        data['name'] = query.name
+        data['title'] = query.title
+        data['imgUrl'] = query.imgUrl
+    else:
+        user = User.query.filter(User.id == user_id).first()
+        data['name'] = user.firstname+" "+user.lastname
+        data['title'] = user.title
+        data['imgUrl'] = user.imgUrl
+
+    return json.dumps(data)
 
 # -------------------------------------------------------------------------------------------------------------------------
-# ----- Get Person JSON
+# ----- Update Current User Status
 # -------------------------------------------------------------------------------------------------------------------------
 @app.route('/cs/<int:type>')
 @login_required
@@ -413,16 +446,19 @@ def fillCheck():
 
 def addadmin():
     u1, u2, u3, u4, u5, u6 = users = [
-        User(firstname='admin', lastname='sidenote', email='admin'),
-        User(firstname='tai', lastname='huynh', email='tai@mail.com', status=0, imgUrl='avatar-13.png'),
-        User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, imgUrl='avatar-12.png'),
-        User(firstname='Mary', lastname='Adams', email='mary@mail.com', status=1, imgUrl='avatar-10.png'),
-        User(firstname='Caleb', lastname='Richards', email='caleb@mail.com', status=0, imgUrl='avatar-2.png'),
-        User(firstname='Daniel', lastname='Russel', email='daniel@mail.com', status=2, imgUrl='avatar-4.png')
+        User(firstname='admin', lastname='sidenote', email='admin', admin_level='0', access_type='999'),
+        User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='0', access_type='999'),
+        User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, title='Tai\'s Girlfriend (Girl Bot)', imgUrl='avatar-10.png', access_type='1'),
+        User(firstname='Nathaniel', lastname='Wallace', email='nathaniel@mail.com', status=1, title='UX Designer', imgUrl='avatar-2.png', access_type='2'),
+        User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='4'),
+        User(firstname='Daniel', lastname='Saneel', email='daniel@mail.com', status=2, title='Marketing Guru', imgUrl='avatar-8.png', access_type='3')
     ]
-    c1, c2 = channels = [
-        Channel(b64name='I0hvbWU=', owner_id='1', name='#Home'),
-        Channel(b64name='I0VuZ2luZWVyLVRlYW0=', owner_id='1', name='#Engineer-Team')
+    c1, c2, c3, c4, c5 = channels = [
+        Channel(b64name='I0hvbWU=', owner_id='1', name='#Home', title='Main Lobby', access_type='0', imgUrl='lobby.png'),
+        Channel(b64name='I0VuZ2luZWVyLVRlYW0=', owner_id='1', name='#Engineer-Team', title='Engineer Lounge - coder only!', access_type='1', imgUrl='coder.png'),
+        Channel(b64name='I0Rlc2lnbi1UZWFt', owner_id='1', name='#Design-Team', title='UI & UX Designers House', access_type='2', imgUrl='ux.png'),
+        Channel(b64name='I01hcmtldGluZy1UZWFt', owner_id='1', name='#Marketing-Team', title='Killer Marketing Team - "essential"', access_type='3', imgUrl='marketing.png'),
+        Channel(b64name='I0h1bWFuLVJlc291cmNlcw==', owner_id='1', name='#Human-Resources', title='Gatekeeper of policy and guideline', access_type='4', imgUrl='hr.png')
     ]
     u1.set_password('1234')
     u2.set_password('1234')
@@ -438,6 +474,9 @@ def addadmin():
         u2.friendships.append(Friend(friendee=u4))
         u2.friendships.append(Friend(friendee=u5))
         u3.friendships.append(Friend(friendee=u2))
+        u4.friendships.append(Friend(friendee=u2))
+        u5.friendships.append(Friend(friendee=u2))
+        u6.friendships.append(Friend(friendee=u2))
         db.session.commit()
         
     except Exception as e:

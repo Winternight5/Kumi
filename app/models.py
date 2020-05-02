@@ -17,6 +17,7 @@ class User(UserMixin, db.Model):
     lastname = db.Column(db.String(128))
     title = db.Column(db.String(256))
     admin_level = db.Column(db.Integer)
+    access_type = db.Column(db.Integer)
     password_hash = db.Column(db.String(128))
     settings = db.Column(db.Text, default='')
     imgUrl = db.Column(db.Text)
@@ -87,6 +88,9 @@ class Channel(db.Model):
     b64name = db.Column(db.String(128), index=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('User.id'))
     name = db.Column(db.String(128))
+    title = db.Column(db.String(256))
+    access_type = db.Column(db.Integer)
+    imgUrl = db.Column(db.Text)
     posts = db.relationship('Post', backref='channel', lazy='dynamic')
 
     def __repr__(self):
