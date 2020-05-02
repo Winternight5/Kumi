@@ -906,7 +906,7 @@
 
                 allfriends = friends;
                 var friends_online_counter = arrayDiff(allfriends, online_users);
-            
+                console.log(friends_online_counter)
                 if (friends_online_counter.length <= 0) {
                     if (!$(".friend-online-counter").hasClass("hide"))
                         $(".friend-online-counter").addClass('hide');
