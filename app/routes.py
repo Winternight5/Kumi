@@ -10,18 +10,13 @@ import random, string, html, re, uuid, pybase64
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 
-themes = {
-    'day': {
-        'browser': '#ffc400',
-        'switch': 'Night Mode'
-    },
-    'dark': {
-        'browser': '#212121',
-        'switch': 'Day Mode'
+theme = {
+    'theme': 'gradient-45deg-indigo-blue', #value if type == '' else '',
+    'mode': '',
+    'collapse': '',
+    'menu': 'sidenav-active-square',
+    'chatarea': 'bg-image-shattered',
     }
-}
-
-currentTheme = 'day'
 
 # -------------------------------------------------------------------------------------------------------------------------
 #----- Demo
@@ -81,6 +76,7 @@ def index():
     :return: Display all of user's notes
     '''
     #session['room'] = '/#home'
+    global theme
     current_user.fullname = current_user.firstname+' '+current_user.lastname
     current_user.online_status = online_status(current_user.status)
     room = session['room'] = b64name_channel('#Home')
@@ -130,9 +126,12 @@ def index():
         member.b64name = b64name_dm(current_user.email, member.email)
         members.append(member)
 
+    settings = json.loads(current_user.settings) if current_user.settings else theme
+    print(settings)
     return render_template('home.html', 
                            title='Home',
                            current_user=current_user,
+                           settings=settings,
                            channels=channels,
                            current_channel=current_channel,
                            chats=chats,
@@ -257,6 +256,31 @@ def json_getChannel(name):
         data['imgUrl'] = user.imgUrl
 
     return json.dumps(data)
+
+# -------------------------------------------------------------------------------------------------------------------------
+# ----- Update Theme
+# -------------------------------------------------------------------------------------------------------------------------
+@app.route('/update/<string:type>/<string:value>')
+@login_required
+def updateTheme(type, value):
+    '''Update Theme
+    '''
+    if not type or not value: return '0'
+
+    global theme
+
+    current_theme = json.loads(current_user.settings) if current_user.settings else theme
+
+    if str(type) == 'theme': current_theme['theme'] = value
+    if str(type) == 'mode': current_theme['mode'] = value
+    if str(type) == 'collapse': current_theme['collapse'] = value
+    if str(type) == 'menu': current_theme['menu'] = value
+    if str(type) == 'chatarea': current_theme['chatarea'] = value
+    print(current_theme)
+    current_user.settings = json.dumps(current_theme)
+    db.session.commit()
+
+    return '1'
 
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Update Current User Status

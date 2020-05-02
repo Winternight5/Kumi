@@ -129,7 +129,7 @@
     </style>
 </head>
 <!-- END: Head-->
-<body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns app-page black" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
+<body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns app-page" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
 
     <!-- BEGIN: Header-->
     <header class="page-topbar" id="header">
@@ -344,7 +344,7 @@
             <li class="navigation-header"><a class="navigation-header-text">Channels</a><i class="navigation-header-icon material-icons">more_horiz</i></li>
             {% for channel in channels %}
             <li class="bold">
-                <a class="waves-effect waves-cyan open-chat {{channel.active}}" href="#" data-link="{{channel.b64name}}" data-type="menu"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">{{channel.name}}</span></a>
+                <a class="waves-effect waves-cyan open-chat {{channel.active}} gradient-shadow" href="#" data-link="{{channel.b64name}}" data-type="menu"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">{{channel.name}}</span></a>
             </li>
             {% endfor %}
 
@@ -371,7 +371,7 @@
             </li>
             {% for friend in friends %}
             <li id="member_{{friend.id}}" class="bold member_{{friend.id}} hide">
-                <a class="waves-effect waves-cyan open-chat {{friend.active}} {{friend.b64name}}" href="#" data-link="{{friend.b64name}}" data-id="{{friend.id}}" data-type="menu"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/'+friend.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title">{{friend.fullname}} </span></a>
+                <a class="waves-effect waves-cyan open-chat {{friend.active}} {{friend.b64name}} gradient-shadow" href="#" data-link="{{friend.b64name}}" data-id="{{friend.id}}" data-type="menu"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/'+friend.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title">{{friend.fullname}} </span></a>
             </li>
             {% endfor %}
 
@@ -675,41 +675,41 @@
     <div id="theme-cutomizer-out" class="theme-cutomizer sidenav row">
         <div class="col s12">
             <a class="sidenav-close" href="#!"><i class="material-icons">close</i></a>
-            <h5 class="theme-cutomizer-title">Theme</h5>
+            <h5 class="theme-cutomizer-title grey-text">Theme</h5>
             <div class="menu-options">
                 <hr class="customize-devider" />
-                <h6 class="mt-6">Colors:</h6>
+                <h6 class="mt-6 grey-text">Colors:</h6>
                 <div class="menu-options-form row">
                     <div class="input-field col s12 menu-color mb-0">
                         <div class="gradient-color center-align">
-                            <span class="menu-color-option gradient-45deg-indigo-blue selected"
-                                  data-color="gradient-45deg-indigo-blue"></span>
+                            <span class="menu-color-option gradient-45deg-indigo-blue"
+                                  data-color="gradient-45deg-indigo-blue" id="gradient-45deg-indigo-blue"></span>
                             <span class="menu-color-option gradient-45deg-purple-deep-orange"
-                                  data-color="gradient-45deg-purple-deep-orange"></span>
+                                  data-color="gradient-45deg-purple-deep-orange" id="gradient-45deg-purple-deep-orange"></span>
                             <span class="menu-color-option gradient-45deg-light-blue-cyan"
-                                  data-color="gradient-45deg-light-blue-cyan"></span>
+                                  data-color="gradient-45deg-light-blue-cyan" id="gradient-45deg-light-blue-cyan"></span>
                             <span class="menu-color-option gradient-45deg-purple-amber"
-                                  data-color="gradient-45deg-purple-amber"></span>
+                                  data-color="gradient-45deg-purple-amber" id="gradient-45deg-purple-amber"></span>
                             <span class="menu-color-option gradient-45deg-purple-deep-purple"
-                                  data-color="gradient-45deg-purple-deep-purple"></span>
+                                  data-color="gradient-45deg-purple-deep-purple" id="gradient-45deg-purple-deep-purple"></span>
                             <span class="menu-color-option gradient-45deg-deep-orange-orange"
-                                  data-color="gradient-45deg-deep-orange-orange"></span>
-                            <span class="menu-color-option gradient-45deg-green-teal" data-color="gradient-45deg-green-teal"></span>
+                                  data-color="gradient-45deg-deep-orange-orange" id="gradient-45deg-deep-orange-orange"></span>
+                            <span class="menu-color-option gradient-45deg-green-teal" data-color="gradient-45deg-green-teal" id="gradient-45deg-green-teal"></span>
                             <span class="menu-color-option gradient-45deg-indigo-light-blue"
-                                  data-color="gradient-45deg-indigo-light-blue"></span>
-                            <span class="menu-color-option gradient-45deg-red-pink" data-color="gradient-45deg-red-pink"></span>
+                                  data-color="gradient-45deg-indigo-light-blue" id="gradient-45deg-indigo-light-blue"></span>
+                            <span class="menu-color-option gradient-45deg-red-pink" data-color="gradient-45deg-red-pink" id="gradient-45deg-red-pink"></span>
                         </div>
-                        <div class="solid-color center-align">
-                            <span class="menu-color-option red" data-color="red"></span>
-                            <span class="menu-color-option purple" data-color="purple"></span>
-                            <span class="menu-color-option pink" data-color="pink"></span>
-                            <span class="menu-color-option deep-purple" data-color="deep-purple"></span>
-                            <span class="menu-color-option cyan" data-color="cyan"></span>
-                            <span class="menu-color-option teal" data-color="teal"></span>
-                            <span class="menu-color-option light-blue" data-color="light-blue"></span>
-                            <span class="menu-color-option amber darken-3" data-color="amber darken-3"></span>
-                            <span class="menu-color-option brown darken-2" data-color="brown darken-2"></span>
-                        </div>
+                        <!--<div class="solid-color center-align">
+                <span class="menu-color-option red" data-color="red"></span>
+                <span class="menu-color-option purple" data-color="purple"></span>
+                <span class="menu-color-option pink" data-color="pink"></span>
+                <span class="menu-color-option deep-purple" data-color="deep-purple"></span>
+                <span class="menu-color-option cyan" data-color="cyan"></span>
+                <span class="menu-color-option teal" data-color="teal"></span>
+                <span class="menu-color-option light-blue" data-color="light-blue"></span>
+                <span class="menu-color-option amber darken-3" data-color="amber darken-3"></span>
+                <span class="menu-color-option brown darken-2" data-color="brown darken-2"></span>
+            </div>-->
                     </div>
                     <div class="input-field col s12 menu-bg-color mb-0">
                         <p class="mt-0">Menu Background Color</p>
@@ -731,34 +731,65 @@
                                   data-color="gradient-45deg-indigo-light-blue"></span>
                             <span class="menu-bg-color-option gradient-45deg-red-pink" data-color="gradient-45deg-red-pink"></span>
                         </div>
-                        <div class="solid-color center-align">
-                            <span class="menu-bg-color-option red" data-color="red"></span>
-                            <span class="menu-bg-color-option purple" data-color="purple"></span>
-                            <span class="menu-bg-color-option pink" data-color="pink"></span>
-                            <span class="menu-bg-color-option deep-purple" data-color="deep-purple"></span>
-                            <span class="menu-bg-color-option cyan" data-color="cyan"></span>
-                            <span class="menu-bg-color-option teal" data-color="teal"></span>
-                            <span class="menu-bg-color-option light-blue" data-color="light-blue"></span>
-                            <span class="menu-bg-color-option amber darken-3" data-color="amber darken-3"></span>
-                            <span class="menu-bg-color-option brown darken-2" data-color="brown darken-2"></span>
+                        <!--div class="solid-color center-align">
+                <span class="menu-bg-color-option red" data-color="red"></span>
+                <span class="menu-bg-color-option purple" data-color="purple"></span>
+                <span class="menu-bg-color-option pink" data-color="pink"></span>
+                <span class="menu-bg-color-option deep-purple" data-color="deep-purple"></span>
+                <span class="menu-bg-color-option cyan" data-color="cyan"></span>
+                <span class="menu-bg-color-option teal" data-color="teal"></span>
+                <span class="menu-bg-color-option light-blue" data-color="light-blue"></span>
+                <span class="menu-bg-color-option amber darken-3" data-color="amber darken-3"></span>
+                <span class="menu-bg-color-option brown darken-2" data-color="brown darken-2"></span>
+            </div>-->
+                    </div>
+                    <!--<div class="input-field col s12">
+            <div class="switch">
+                Collapse Menu
+                <label class="float-right">
+                    <input class="menu-collapsed-checkbox" type="checkbox" /> <span class="lever ml-0"></span>
+                </label>
+            </div>
+        </div>-->
+                </div>
+
+                <hr class="customize-devider" />
+                <div class="navbar-options row">
+                    <div class="input-field col s12 navbar-color mb-0">
+                        <p class="mt-0">Chat Area Background</p>
+                        <div class="gradient-color center-align">
+                            <span class="navbar-color-option bg-image-shattered" data-color="bg-image-shattered" id="bg-image-shattered"></span>
+                            <span class="navbar-color-option bg-image-gradient-squares" data-color="bg-image-gradient-squares" id="bg-image-gradient-squares"></span>
+                            <span class="navbar-color-option bg-image-arches" data-color="bg-image-arches" id="bg-image-arches"></span>
+                            <span class="navbar-color-option bg-image-brick-wall-dark" data-color="bg-image-brick-wall-dark" id="bg-image-brick-wall-dark"></span>
+                            <span class="navbar-color-option bg-image-foggy-birds" data-color="bg-image-foggy-birds" id="bg-image-foggy-birds"></span>
+                            <span class="navbar-color-option bg-image-swirl" data-color="bg-image-swirl" id="bg-image-swirl"></span>
+                            <span class="navbar-color-option bg-image-hexellence" data-color="bg-image-hexellence" id="bg-image-hexellence"></span>
+                            <span class="navbar-color-option bg-image-inspiration-geometry" data-color="bg-image-inspiration-geometry" id="bg-image-inspiration-geometry"></span>
+                            <span class="navbar-color-option bg-image-flowers" data-color="bg-image-flowers" id="bg-image-flowers"></span>
+
+                            <span class="navbar-color-option bg-image-light-wool" data-color="bg-image-light-wool" id="bg-image-light-wool"></span>
+                            <span class="navbar-color-option bg-image-gray-floral" data-color="bg-image-gray-floral" id="bg-image-gray-floral"></span>
+                            <span class="navbar-color-option bg-image-beige-paper" data-color="bg-image-beige-paper" id="bg-image-beige-paper"></span>
+                            <span class="navbar-color-option bg-image-padded-light" data-color="bg-image-padded-light" id="bg-image-padded-light"></span>
+                            <span class="navbar-color-option bg-image-pool-table" data-color="bg-image-pool-table" id="bg-image-pool-table"></span>
+                            <span class="navbar-color-option bg-image-skulls" data-color="bg-image-skulls" id="bg-image-skulls"></span>
+                            <span class="navbar-color-option bg-image-xv" data-color="bg-image-xv" id="bg-image-xv"></span>
+                            <span class="navbar-color-option bg-image-type" data-color="bg-image-type" id="bg-image-type"></span>
+                            <span class="navbar-color-option bg-image-purty-wood" data-color="bg-image-purty-wood" id="bg-image-purty-wood"></span>
                         </div>
                     </div>
-                    <div class="input-field col s12">
-                        <div class="switch">
-                            Dark Mode
-                            <label class="float-right">
-                                <input class="menu-dark-checkbox" type="checkbox" checked /> <span class="lever ml-0"></span>
-                            </label>
-                        </div>
+                </div>
+                <hr class="customize-devider" />
+                <div class="input-field col s12">
+                    <div class="switch">
+                        Dark Mode
+                        <label class="float-right">
+                            <input class="menu-dark-checkbox" type="checkbox"
+                                   {% if settings.mode == 'true' %} checked{% endif %} /> <span class="lever ml-0"></span>
+                        </label>
                     </div>
-                    <div class="input-field col s12">
-                        <div class="switch">
-                            Collapse Menu
-                            <label class="float-right">
-                                <input class="menu-collapsed-checkbox" type="checkbox" /> <span class="lever ml-0"></span>
-                            </label>
-                        </div>
-                    </div>
+                </div>
                     <div class="input-field col s12">
                         <div class="switch">
                             <p class="mt-0">Menu Type</p>
@@ -767,57 +798,41 @@
                                        value="sidenav-active-square"
                                        name="menu-selection"
                                        type="radio"
-                                       checked />
+                                       {% if settings.menu == 'sidenav-active-square' %}checked{% endif %} />
                                 <span>Square</span>
                             </label>
                             <label>
                                 <input class="menu-selection-radio with-gap"
                                        value="sidenav-active-rounded"
                                        name="menu-selection"
-                                       type="radio" />
+                                       type="radio"
+                                       {% if settings.menu == 'sidenav-active-rounded' %}checked{% endif %} />
                                 <span>Rounded</span>
                             </label>
                             <label>
-                                <input class="menu-selection-radio with-gap" value="" name="menu-selection" type="radio" />
+                                <input class="menu-selection-radio with-gap" value="none" name="menu-selection" type="radio"
+                                       {% if settings.menu == 'none' %}checked{% endif %} />
                                 <span>Normal</span>
                             </label>
                         </div>
                     </div>
-                </div>
-
-                <hr class="customize-devider" />
-                <div class="navbar-options row">
-                    <div class="input-field col s12 navbar-color mb-0">
-                        <p class="mt-0">Chat Area Background</p>
-                        <div class="gradient-color center-align">
-                            <span class="navbar-color-option bg-image-shattered selected" data-color="bg-image-shattered"></span>
-                            <span class="navbar-color-option bg-image-gradient-squares" data-color="bg-image-gradient-squares"></span>
-                            <span class="navbar-color-option bg-image-arches" data-color="bg-image-arches"></span>
-                            <span class="navbar-color-option bg-image-brick-wall-dark" data-color="bg-image-brick-wall-dark"></span>
-                            <span class="navbar-color-option bg-image-foggy-birds" data-color="bg-image-foggy-birds"></span>
-                            <span class="navbar-color-option bg-image-swirl" data-color="bg-image-swirl"></span>
-                            <span class="navbar-color-option bg-image-hexellence" data-color="bg-image-hexellence"></span>
-                            <span class="navbar-color-option bg-image-inspiration-geometry" data-color="bg-image-inspiration-geometry"></span>
-                            <span class="navbar-color-option bg-image-flowers" data-color="bg-image-flowers"></span>
-
-                            <span class="navbar-color-option bg-image-light-wool" data-color="bg-image-light-wool"></span>
-                            <span class="navbar-color-option bg-image-gray-floral" data-color="bg-image-gray-floral"></span>
-                            <span class="navbar-color-option bg-image-beige-paper" data-color="bg-image-beige-paper"></span>
-                            <span class="navbar-color-option bg-image-padded-light" data-color="bg-image-padded-light"></span>
-                            <span class="navbar-color-option bg-image-pool-table" data-color="bg-image-pool-table"></span>
-                            <span class="navbar-color-option bg-image-skulls" data-color="bg-image-skulls"></span>
-                            <span class="navbar-color-option bg-image-xv" data-color="bg-image-xv"></span>
-                            <span class="navbar-color-option bg-image-type" data-color="bg-image-type"></span>
-                            <span class="navbar-color-option bg-image-purty-wood" data-color="bg-image-purty-wood"></span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <!--/ Theme Customizer -->
     <!-- END: Footer-->
     <!-- BEGIN JS-->
+    <script>
+        var socket;
+        var current_user = {{ current_user.id }};
+        var myImgUrl = '{{ current_user.imgUrl }}';
+        var fullName = '{{ current_user.fullname }}';
+        var roomName = '{{ room }}';
+        var lastMsg = 0;
+        var online_users = [];
+        var allfriends = [];
+        var selectedTheme = '{{settings.theme}}';
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@2.12.1/dist/index.min.js"></script>
     <script src="{{url_for('static', filename='js/vendors.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/plugins.min.js')}}"></script>
@@ -829,15 +844,6 @@
     <!-- END JS-->
     <script>
         // SocketIO
-        var socket;
-        var current_user = {{ current_user.id }};
-        var myImgUrl = '{{ current_user.imgUrl }}';
-        var fullName = '{{ current_user.fullname }}';
-        var roomName = '{{ room }}';
-        var lastMsg = 0;
-        var online_users = [];
-        var allfriends = [];
-
         var $msgs = $('.chat-area');
 
         function enter_chat(a) {
@@ -980,54 +986,74 @@
 	    });
     </script>
     <script>
+
+        function resetClass(e) {
+            $(e).removeClass("gradient-45deg-indigo-blue gradient-45deg-purple-deep-orange gradient-45deg-light-blue-cyan gradient-45deg-purple-amber gradient-45deg-purple-deep-purple gradient-45deg-deep-orange-orange gradient-45deg-green-teal gradient-45deg-indigo-light-blue gradient-45deg-red-pink red purple pink deep-purple cyan teal light-blue amber darken-3 brown darken-2 gradient-45deg-indigo-purple gradient-45deg-deep-purple-blue")
+        
+            $(e).removeClass("bg-image-arches bg-image-gradient-squares bg-image-brick-wall-dark bg-image-foggy-birds bg-image-swirl bg-image-hexellence bg-image-inspiration-geometry bg-image-shattered bg-image-flowers bg-image-light-wool bg-image-gray-floral bg-image-beige-paper bg-image-padded-light bg-image-pool-table bg-image-skulls bg-image-xv bg-image-type bg-image-purty-wood")
+        }
         // other functions
-        $(document).ready(function () {
-            var inputs = document.querySelectorAll(".open-chat");
-            for (i = 0; i < inputs.length; i++) {
-                inputs[i].addEventListener('click', function () {
-                    b64name = this.dataset.link;
-                    id = this.dataset.id;
-                    socket.emit('channel', { b64: b64name, id: id });
-                    $('#chat-area').html('');
+    $(document).ready(function () {
+        var inputs = document.querySelectorAll(".open-chat");
+        for (i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('click', function () {
+                b64name = this.dataset.link;
+                id = this.dataset.id;
+                socket.emit('channel', { b64: b64name, id: id });
+                $('#chat-area').html('');
 
-                    $.getJSON("/gm/" + b64name, function (data) {
-                        $.each(data, function (key, val) {
-                            onMessage(val);
-                        });
+                $.getJSON("/gm/" + b64name, function (data) {
+                    $.each(data, function (key, val) {
+                        onMessage(val);
                     });
+                });
 
-                    $.getJSON("/channel/" + b64name, function (data) {
-                        $('#chat-avatar').attr("src", "static/images/avatar/"+data.imgUrl);
-                        $('#chat-name').text(data.name);
-                        $('#chat-subtext').text(data.title);
-                        //console.log(data)
-                    });
+                $.getJSON("/channel/" + b64name, function (data) {
+                    $('#chat-avatar').attr("src", "static/images/avatar/" + data.imgUrl);
+                    $('#chat-name').text(data.name);
+                    $('#chat-subtext').text(data.title);
+                    //console.log(data)
+                });
 
-                    $msgs.scrollTop($(".chat-area > .chats").height());
-                    
-                    $('.open-chat').removeClass('active gradient-45deg-indigo-blue gradient-shadow');
+                $msgs.scrollTop($(".chat-area > .chats").height());
 
-                    if (this.dataset.type == "menu") {
-                        this.classList.add('active', 'gradient-45deg-indigo-blue', 'gradient-shadow');
-                    } else if (this.dataset.target == "slide-out-chat") {
-                        $('.'+b64name).addClass('active gradient-45deg-indigo-blue gradient-shadow');
+                $('.open-chat').removeClass('active ' + selectedTheme);
+                resetClass('.sidenav-main .sidenav li a');
+
+                if (this.dataset.type == "menu") {
+                    strs = selectedTheme.split(" ");
+                    for (i = 0; i < strs.length; i++) {
+                        this.classList.add(strs[i]);
                     }
-                    //$(this).addClass('active')
-                    //$(this).sidenav('close');
-                });
-            }
+                    this.classList.add('active');
+                } else if (this.dataset.target == "slide-out-chat") {
+                    $('.' + b64name).addClass('active ' + selectedTheme);
+                }
+                //$(this).addClass('active')
+                //$(this).sidenav('close');
+            });
+        }
 
 
-            $("#profile-dropdown li").click(function () {
-                type = $(this).attr("data-value");
+        $("#profile-dropdown li").click(function () {
+            type = $(this).attr("data-value");
 
-                $.ajax({
-                    url: "/cs/" + type
-                }).done(function (data) {
-                    socket.emit('update_stats');
-                });
+            $.ajax({
+                url: "/cs/" + type
+            }).done(function (data) {
+                socket.emit('update_stats');
             });
         });
+
+        // Theme init
+        $(".navbar-main").addClass('{{settings.theme}}')
+        $(".content-wrapper-before").addClass('{{settings.theme}}')
+        $(".sidenav-main .sidenav li a.active").addClass('{{settings.theme}}')
+        $(".sidenav-main").removeClass("sidenav-active-square sidenav-active-rounded").addClass('{{settings.menu}}')
+        $(".chat-area").addClass('{{settings.chatarea}}')
+        $("#{{settings.chatarea}}").addClass('selected')
+        $("#{{settings.theme}}").addClass('selected')
+    });
     </script>
 </body>
 </html >
