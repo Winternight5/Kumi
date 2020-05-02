@@ -469,20 +469,21 @@ def fillCheck():
     return redirect(url_for('showdb'))
 
 def addadmin():
-    u1, u2, u3, u4, u5, u6 = users = [
-        User(firstname='admin', lastname='sidenote', email='admin', admin_level='0', access_type='999'),
-        User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='0', access_type='999'),
-        User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, title='Tai\'s Girlfriend (Girl Bot)', imgUrl='avatar-10.png', access_type='1'),
-        User(firstname='Nathaniel', lastname='Wallace', email='nathaniel@mail.com', status=1, title='UX Designer', imgUrl='avatar-2.png', access_type='2'),
-        User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='4'),
-        User(firstname='Daniel', lastname='Saneel', email='daniel@mail.com', status=2, title='Marketing Guru', imgUrl='avatar-8.png', access_type='3')
+    u1, u2, u3, u4, u5, u6, u7 = users = [
+    User(firstname='admin', lastname='sidenote', email='admin', admin_level='0', access_type='999'),
+    User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='0', access_type='999'),
+    User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, title='Tai\'s Girlfriend (Girl Bot)', imgUrl='avatar-10.png', access_type='1'),
+    User(firstname='Nathaniel', lastname='Wallace', email='nathaniel@mail.com', status=1, title='UX Designer', imgUrl='avatar-2.png', access_type='2'),
+    User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='4'),
+    User(firstname='Daniel', lastname='Saneel', email='daniel@mail.com', status=2, title='Marketing Guru', imgUrl='avatar-8.png', access_type='3'),
+    User(firstname='Ishie', lastname='Eswar', email='ishie@mail.com', status=2, title='CEO', imgUrl='avatar-6.png', access_type='999')
     ]
     c1, c2, c3, c4, c5 = channels = [
-        Channel(b64name='I0hvbWU=', owner_id='1', name='#Home', title='Main Lobby', access_type='0', imgUrl='lobby.png'),
-        Channel(b64name='I0VuZ2luZWVyLVRlYW0=', owner_id='1', name='#Engineer-Team', title='Engineer Lounge - coder only!', access_type='1', imgUrl='coder.png'),
-        Channel(b64name='I0Rlc2lnbi1UZWFt', owner_id='1', name='#Design-Team', title='UI & UX Designers House', access_type='2', imgUrl='ux.png'),
-        Channel(b64name='I01hcmtldGluZy1UZWFt', owner_id='1', name='#Marketing-Team', title='Killer Marketing Team - "essential"', access_type='3', imgUrl='marketing.png'),
-        Channel(b64name='I0h1bWFuLVJlc291cmNlcw==', owner_id='1', name='#Human-Resources', title='Gatekeeper of policy and guideline', access_type='4', imgUrl='hr.png')
+    Channel(b64name='I0hvbWU=', owner_id='1', name='#Home', title='Main Lobby', access_type='0', imgUrl='lobby.png'),
+    Channel(b64name='I0VuZ2luZWVyLVRlYW0=', owner_id='1', name='#Engineer-Team', title='Engineer Lounge - coder only!', access_type='1', imgUrl='coder.png'),
+    Channel(b64name='I0Rlc2lnbi1UZWFt', owner_id='1', name='#Design-Team', title='UI & UX Designers House', access_type='2', imgUrl='ux.png'),
+    Channel(b64name='I01hcmtldGluZy1UZWFt', owner_id='1', name='#Marketing-Team', title='Killer Marketing Team - "essential"', access_type='3', imgUrl='marketing.png'),
+    Channel(b64name='I0h1bWFuLVJlc291cmNlcw==', owner_id='1', name='#Human-Resources', title='Gatekeeper of policy and guideline', access_type='4', imgUrl='hr.png')
     ]
     u1.set_password('1234')
     u2.set_password('1234')
@@ -490,6 +491,7 @@ def addadmin():
     u4.set_password('1234')
     u5.set_password('1234')
     u6.set_password('1234')
+    u7.set_password('1234')
     
     try:
         db.session.add_all(users)
