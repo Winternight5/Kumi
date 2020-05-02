@@ -544,7 +544,7 @@
                                                     </span>
                                                     <div class="user-content">
                                                         <h6 class="line-height-0">{{member.fullname}}</h6>
-                                                        <p class="medium-small blue-grey-text text-lighten-3 pt-3">{{member.title}}</p>
+                                                        <p class="medium-small grey-text pt-3">{{member.title}}</p>
                                                     </div>
                                                     <!--<span class="secondary-content medium-small">...</span>-->
                                                 </li>
@@ -847,6 +847,7 @@
                 socket.emit('text', {
                     msg: e
                 });
+                $(".message").val("");
                 /*
                 var t = '';
 
