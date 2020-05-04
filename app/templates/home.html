@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
     <meta name="description" content="Kumi Team Messenger, It's modern, responsive and based on Material Design by Google.">
     <meta name="author" content="ThemeSelect">
     <title>Kumi Team Messenger</title>
@@ -26,6 +26,11 @@
     <!-- Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/custom.css')}}">
     <style>
+        html, body {margin: 0; height: 100%; overflow: hidden}
+        body {
+            /* Disables pull-to-refresh but allows overscroll glow effects. */
+            overscroll-behavior-y: none;
+        }
         .chat-area {
             background-image: url({{url_for('static', filename='images/bg/shattered.png')}})
         }
@@ -684,6 +689,29 @@
                         <div id="slide-out-chat" class="sidenav slide-out-right-sidenav-chat">
                             <canvas id="imageCanvas"></canvas>
                             <canvas id="whiteboard"></canvas>
+                            <div class="row z-depth-2 align-right" style="z-index: 1000; position: absolute;">
+                                <div class="slide-out-right-title" onselectstart="return false;">
+                                    <div class="col s12 border-bottom-1 pb-0 pt-1">
+                                        <div class="row">
+                                            <div class="col s12">
+                                                <i class="material-icons vertical-text-middle"><a href="#" class="sidenav-close">clear</a></i>
+                                                WHITEBOARD
+                                                <i class="material-icons vertical-text-middle">navigate_next</i>
+                                                <input type="file" accept="image/*" id="file" accept="image/*;capture=camera" id="file" style="display: none;">
+                                                <label for="file">
+                                                    <i class="material-icons vertical-text-middle"><a class="waves-effect">image</a></i>
+                                                </label>
+                                                <i class="material-icons vertical-text-middle">navigate_next</i>
+                                                <i class="material-icons vertical-text-middle" data-color="black"><a href="#" class="black-text change-color">lens</a></i>
+                                                <i class="material-icons vertical-text-middle" data-color="blue"><a href="#" class="blue-text change-color">lens</a></i>
+                                                <i class="material-icons vertical-text-middle" data-color="red"><a href="#" class="red-text change-color">lens</a></i>
+                                                <i class="material-icons vertical-text-middle">navigate_next</i>
+                                                <i class="material-icons vertical-text-middle"><a href="#" id="change-type" style="color: black">brush</a></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </aside>
                 </div>
@@ -1032,7 +1060,7 @@
             var colors = document.getElementsByClassName('color');
             var context = canvas.getContext('2d');
             var imgContext = imageCanvas.getContext('2d');
-
+            $('#slide-out-chat').sidenav({ draggable: false })
             var current = {
                 type: 'source-over',
                 color: 'black',
@@ -1070,27 +1098,27 @@
             // ----- interactive elements
 
             // select color by get all .color class elements
-            $('.color').on('click', function () {
-                current.color = $(this).css("background-color");
-                console.log($('#iconTypeColor').text())
-                if ($('#iconTypeColor').text() == "brush")
-                    $('#iconTypeColor').css("color", current.color);
+            $('.change-color').on('click', function () {
+                current.color = $(this).css("color");
+                if ($('#change-type').text() == 'brush')
+                    $('#change-type').css("color", current.color);
+                //$(this).addClass("color")
+                //if ($('#iconTypeColor').text() == "brush")
+                //    $('#iconTypeColor').css("color", current.color);
                 //$('.color').removeClass("active");
                 //$(this).addClass( "active" );
             });
 
             // select color
-            $('.penType').on('click', function () {
+            $('#change-type').on('click', function () {
                 if ($(this).text() == 'brush') {
-                    current.type = 'source-over';
-                    current.size = 2;
-                    $('#iconTypeColor').css("color", current.color);
-                    $('#iconTypeColor').text('brush');
-                } else {
                     current.type = 'destination-out';
                     current.size = 30;
-                    $('#iconTypeColor').css("color", "black");
-                    $('#iconTypeColor').text('invert_colors_off');
+                    $(this).text('call_to_action').css('color', 'black')
+                } else {
+                    current.type = 'source-over';
+                    current.size = 2;
+                    $(this).text('brush').css("color", current.color);
                 }
             });
 
@@ -1167,7 +1195,6 @@
                 var w = canvas.width;
                 var h = canvas.height;
                 
-                console.log(w)
                 emitData = [
                     (x0 / w).toFixed(4),
                     (y0 / h).toFixed(4),
@@ -1235,10 +1262,11 @@
 
             function onFillImageEvent(img, callback) {
                 var image = new Image();
+                    console.log(img)
 
                 image.onload = function () {
                     imgContext.drawImage(image, 0, 0, canvas.width, canvas.height);
-                    $('#loading').fadeOut();
+                    //$('#loading').fadeOut();
                     if (typeof callback === 'function') callback();
                 }
 
@@ -1255,8 +1283,8 @@
                 imageCanvas.height = $('#slide-out-chat').height();
                 
                 // Redraw canvas if resize or newly loaded
-                $.get('/img?r={{ room }}', function (d) {
-                    $('#loading').show();
+                $.get('/img?r=' + roomName, function (d) {
+                    //$('#loading').show();
                     data = d[roomName];
 
                     if (data == null) return;
@@ -1271,7 +1299,7 @@
                     } else {
                         loadAsynchronous(data);
                     }
-                    $('#loading').fadeOut();
+                    //$('#loading').fadeOut();
                 });
             }
 
@@ -1305,7 +1333,7 @@
                 image2 = new Image;
 
             function saveCanvas() {
-                $('#loading').show();
+                //$('#loading').show();
                 image1.onload = checkload;
                 image1.src = imageCanvas.toDataURL();
 
@@ -1351,7 +1379,7 @@
 
             // Load Image
             function loadImage() {
-                $('#loading').fadeIn();
+               // $('#loading').fadeIn();
                 var tempCanvas = document.createElement("canvas"),
                     tempContext = tempCanvas.getContext('2d');
                 tempCanvas.width = $('#Canvas').width();
@@ -1365,6 +1393,7 @@
                     var img = new Image();
 
                     img.onload = function () {
+                        console.log(img)
                         tempContext.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
                         socket.emit('img', tempCanvas.toDataURL());
                     };

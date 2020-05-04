@@ -350,7 +350,7 @@ def login():
         if form.validate_on_submit():
             print('validating')
             # look at first result first()
-            user = User.query.filter_by(email=form.email.data).first()
+            user = User.query.filter_by(email=form.email.data.lower()).first()
 
             if user is None or not user.check_password(form.password.data):
                 flash('Invalid username or password')
@@ -379,8 +379,7 @@ def login():
 
         form = RegistrationForm()
         if form.validate_on_submit():
-            user = User(email=form.email.data.lower(
-            ), firstname=form.firstname.data.capitalize(), lastname=form.lastname.data.capitalize())
+            user = User(email=form.email.data.lower(), firstname=form.firstname.data.capitalize(), lastname=form.lastname.data.capitalize())
             user.set_password(form.password.data)
             try:
                 db.session.add(user)
