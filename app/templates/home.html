@@ -126,6 +126,20 @@
             -ms-user-select: none;
             user-select: none;
         }
+
+        .slide-out-right-sidenav-chat {
+          height: 100%;
+          width: 100%;
+        }
+
+        .slide-out-right-sidenav-chat canvas {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 1px solid black;
+        }
     </style>
 </head>
 <!-- END: Head-->
@@ -340,6 +354,7 @@
                 <a class="waves-effect profile-button" href="#" data-target="profile-dropdown"><i><span class="avatar-status avatar-{{ current_user.online_status }}"><img src="{{url_for('static', filename='images/avatar/'+current_user.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title" data-i18n="Support">{{ current_user.fullname }}</span></a>
             </li>
             <li class="bold hide-on-med-and-down"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="activity" data-target="slide-out-right"><i class="material-icons">assignment</i><span class="menu-title" data-i18n="Tasks" data-target="slide-out-right">Tasks</span><span class="badge badge pill orange float-right mr-10">2</span></a></li>
+
             <!-- Channels -->
             <li class="navigation-header"><a class="navigation-header-text">Channels</a><i class="navigation-header-icon material-icons">more_horiz</i></li>
             {% for channel in channels %}
@@ -349,22 +364,22 @@
             {% endfor %}
 
             <!--<li class="bold">
-                <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">More</span><span class="badge badge pill orange float-right mr-10">3</span></a>
-                <div class="collapsible-body">
-                    <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+        <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">More</span><span class="badge badge pill orange float-right mr-10">3</span></a>
+        <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
 
-                        <li class="bold">
-                            <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Design-Team</span></a>
-                        </li>
-                        <li class="bold">
-                            <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Marketing-Team</span></a>
-                        </li>
-                        <li class="bold">
-                            <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Human-Resources</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </li>-->
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Design-Team</span></a>
+                </li>
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Marketing-Team</span></a>
+                </li>
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Human-Resources</span></a>
+                </li>
+            </ul>
+        </div>
+    </li>-->
             <!-- Direct Message -->
             <li class="navigation-header">
                 <a class="navigation-header-text">Direct Message</a><i class="navigation-header-icon material-icons">more_horiz</i>
@@ -388,16 +403,16 @@
             </li>
             <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
             <!--<li class="bold">
-                <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Options</span></a>
-                <div class="collapsible-body">
-                    <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                        <!--<li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
-                        <li class="bold"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="settings" data-target="slide-out-right"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
-                        <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
-                        <!--<li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
-                    </ul>
-                </div>
-            </li>-->
+        <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Options</span></a>
+        <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                <!--<li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
+                <li class="bold"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="settings" data-target="slide-out-right"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
+                <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
+                <!--<li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
+            </ul>
+        </div>
+    </li>-->
 
             <li><a class="waves-effect waves-block waves-light" href="/logout"><i class="material-icons">keyboard_tab</i><span class="menu-title" data-i18n="Support">Logout<span></a></li>
         </ul>
@@ -437,6 +452,7 @@
                                                         </div>
                                                     </div>
                                                     <span class="option-icon">
+                                                        <span class="sidenav-trigger tabs-activate" data-target="slide-out-chat"><i class="material-icons">launch</i></span>
                                                         <span class="favorite hide" id="chat-add-friend">
                                                             <i class="material-icons">person_add</i>
                                                         </span>
@@ -537,7 +553,7 @@
                                             <input class="header-search-input mt-4 mb-2" type="text" name="Search" placeholder="Search" autocomplete="off" />
                                             <ul class="collection right-sidebar-chat p-0 mb-0 unselectable" id="members_ul">
                                                 {% for member in members %}
-                                                <li class="open-chat collection-item right-sidebar-chat-item display-flex avatar pl-5 pb-0 member_{{member.id}}" data-target="slide-out-chat" data-position="3" data-link="{{member.b64name}}">
+                                                <li class="open-chat collection-item right-sidebar-chat-item display-flex avatar pl-5 pb-0 member_{{member.id}}" data-target="slide-out-chat" data-position="3" data-link="{{member.b64name}}" data-id="{{member.id}}">
                                                     <span class="avatar-status avatar-off avatar-50">
                                                         <img src="{{url_for('static', filename='images/avatar/'+member.imgUrl)}}" alt="avatar" />
                                                         <i></i>
@@ -664,9 +680,13 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Slide Out Chat -->
+                        <div id="slide-out-chat" class="sidenav slide-out-right-sidenav-chat">
+                            <canvas id="imageCanvas"></canvas>
+                            <canvas id="whiteboard"></canvas>
+                        </div>
                     </aside>
                 </div>
-                <div class="content-overlay"></div>
             </div>
         </div>
     </div>
@@ -954,16 +974,10 @@
             socket.on('disconnect', function () {
                 socket.emit('disconnect', {});
             });
-            
-            socket.on('channel_header', updateChannelHeader);
 
             socket.on('status', updateUserStatus);
 
             socket.on('message', onMessage);
-
-            function updateChannelHeader() {
-
-            }
 
             function updateUserStatus(data) {
                 updateFriendList();
@@ -986,7 +1000,439 @@
 	    });
     </script>
     <script>
+        var idleTime = 0;
+        var idleTouch = 1;
+        var noteId = '1';
+        var colorsPalette = [
+            "#8B4513",
+            "#AF6E4D",
+            "#FFC0CB",
+            "#FFE5CC",
+            "#FFAA1D",
+            "#FA5B3D",
+            "#FF5470",
+            "#FF0000",
+            "#FF007C",
+            "#E936A7",
+            "#9C51B6",
+            "#5946B2",
+            "#2243B6",
+            "#5DADEC",
+            "#A7F432",
+            "#299617",
+            "#FFF700",
+            "#FFFFFF",
+            "#CCCCCC",
+            "#000000"
+        ];
 
+        $(document).ready(function () {
+            // Canvas
+            var canvas = document.getElementById('whiteboard');
+            var colors = document.getElementsByClassName('color');
+            var context = canvas.getContext('2d');
+            var imgContext = imageCanvas.getContext('2d');
+
+            var current = {
+                type: 'source-over',
+                color: 'black',
+                size: 2
+            };
+            var drawing = false;
+
+            socket.on('drawing', onDrawingEvent);
+  
+            socket.on('fill', onFillEvent);
+  
+            socket.on('img', onFillImageEvent);
+  
+            socket.on('new', newCanvas);
+  
+            socket.on('saved', onSaved);
+  
+            //socket.on('accessRevoked', onRevoke);
+
+            // ----- Detect screen resize
+            window.addEventListener('resize', onResize, false);
+
+            //Desktop mouse events
+            canvas.addEventListener('mousedown', onMouseDown, false);
+            canvas.addEventListener('mouseup', onMouseUp, false);
+            canvas.addEventListener('mouseout', onMouseUp, false);
+            canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
+
+            //Touch support for mobile devices
+            canvas.addEventListener('touchstart', onMouseDown, false);
+            canvas.addEventListener('touchend', onMouseUp, false);
+            canvas.addEventListener('touchcancel', onMouseUp, false);
+            canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
+
+            // ----- interactive elements
+
+            // select color by get all .color class elements
+            $('.color').on('click', function () {
+                current.color = $(this).css("background-color");
+                console.log($('#iconTypeColor').text())
+                if ($('#iconTypeColor').text() == "brush")
+                    $('#iconTypeColor').css("color", current.color);
+                //$('.color').removeClass("active");
+                //$(this).addClass( "active" );
+            });
+
+            // select color
+            $('.penType').on('click', function () {
+                if ($(this).text() == 'brush') {
+                    current.type = 'source-over';
+                    current.size = 2;
+                    $('#iconTypeColor').css("color", current.color);
+                    $('#iconTypeColor').text('brush');
+                } else {
+                    current.type = 'destination-out';
+                    current.size = 30;
+                    $('#iconTypeColor').css("color", "black");
+                    $('#iconTypeColor').text('invert_colors_off');
+                }
+            });
+
+            $('.new').on('click', function () {
+                socket.emit('new', {});
+            });
+
+            $('.save').on('click', function () {
+                if ($('#post_title').val().length > 0) {
+                    saveCanvas();
+                }
+            });
+
+            $('.refresh').on('click', function () {
+                window.location.reload(false);
+            });
+
+            // open app in fullscreen
+            $('.launch').on('click', function () {
+                var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+                if (fullscreenElement)
+                    exitFullscreen();
+                else
+                    launchIntoFullscreen(document.documentElement);
+            });
+
+            $('#file').on('change', function () {
+                loadImage();
+            });
+
+            $('.fill').on('click', function () {
+                idleTime = 0;
+                socket.emit('fill', {
+                    color: current.color
+                });
+            });
+
+            function newCanvas() {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                imgContext.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            // Draw functions
+            function drawLine(x0, y0, x1, y1, color, size, type, emit) {
+                context.globalCompositeOperation = type;
+                context.beginPath();
+                context.lineWidth = size;
+                context.lineJoin = context.lineCap = 'round';
+                context.strokeStyle = color;
+
+                context.moveTo(x0, y0);
+                context.lineTo(x1, y1);
+                context.stroke();
+
+                context.moveTo(x0 - 2, y0 - 2);
+                context.lineTo(x1 - 2, y1 - 2);
+                context.stroke();
+
+                context.moveTo(x0 - 1, y0 - 1);
+                context.lineTo(x1 - 1, y1 - 1);
+                context.stroke();
+
+                context.moveTo(x0 + 2, y0 + 2);
+                context.lineTo(x1 + 2, y1 + 2);
+                context.stroke();
+
+                context.moveTo(x0 + 1, y0 + 1);
+                context.lineTo(x1 + 1, y1 + 1);
+                context.stroke();
+                context.closePath();
+
+                if (!emit) { return; }
+
+                var w = canvas.width;
+                var h = canvas.height;
+                
+                console.log(w)
+                emitData = [
+                    (x0 / w).toFixed(4),
+                    (y0 / h).toFixed(4),
+                    (x1 / w).toFixed(4),
+                    (y1 / h).toFixed(4),
+                    color,
+                    size,
+                    type
+                ];
+                socket.emit('drawing', emitData);
+            }
+
+            function onMouseDown(e) {
+                drawing = true;
+                current.x = getInputX(e);
+                current.y = getInputY(e);
+            }
+
+            function onMouseUp(e) {
+                if (!drawing) { return; }
+                drawing = false;
+                drawLine(current.x, current.y, getInputX(e), getInputY(e), current.color, current.size, current.type, true);
+                idleTouch = 1;
+                //runOCRAD();
+            }
+
+            function onMouseMove(e) {
+                if (!drawing) { return; }
+                drawLine(current.x, current.y, getInputX(e), getInputY(e), current.color, current.size, current.type, true);
+                current.x = getInputX(e);
+                current.y = getInputY(e);
+            }
+
+            function getInputX(e) {
+                return e.clientX || e.changedTouches[0].clientX || e.touches[0].clientX;
+            }
+
+            function getInputY(e) {
+                return e.clientY || e.changedTouches[0].clientY || e.touches[0].clientY;
+            }
+
+            // limit the number of events per second
+            function throttle(callback, delay) {
+                var previousCall = new Date().getTime();
+                return function () {
+                    var time = new Date().getTime();
+
+                    if ((time - previousCall) >= delay) {
+                        previousCall = time;
+                        callback.apply(null, arguments);
+                    }
+                };
+            }
+
+            function onDrawingEvent(data) {
+                var w = canvas.width;
+                var h = canvas.height;
+                drawLine(data[0] * w, data[1] * h, data[2] * w, data[3] * h, data[4], data[5], data[6], false);
+            }
+
+            function onFillEvent(data) {
+                context.fillStyle = data.color;
+                context.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function onFillImageEvent(img, callback) {
+                var image = new Image();
+
+                image.onload = function () {
+                    imgContext.drawImage(image, 0, 0, canvas.width, canvas.height);
+                    $('#loading').fadeOut();
+                    if (typeof callback === 'function') callback();
+                }
+
+                image.src = img;
+            }
+
+            // make the canvas fill its parent
+            function onResize(callback) {
+                //$('#loading').show();
+
+                canvas.width = $('#slide-out-chat').width();
+                canvas.height = $('#slide-out-chat').height();
+                imageCanvas.width = $('#slide-out-chat').width();
+                imageCanvas.height = $('#slide-out-chat').height();
+                
+                // Redraw canvas if resize or newly loaded
+                $.get('/img?r={{ room }}', function (d) {
+                    $('#loading').show();
+                    data = d[roomName];
+
+                    if (data == null) return;
+
+                    //console.log(data);
+
+                    // Load Image First
+                    if (data['i'] != null) {
+                        onFillImageEvent(data['i'], function () { loadAsynchronous(data) });
+
+                        // if no images, load all layers
+                    } else {
+                        loadAsynchronous(data);
+                    }
+                    $('#loading').fadeOut();
+                });
+            }
+
+            function loadAsynchronous(data) {
+                // Layer d (draw lines)
+                if (typeof data['d'] === 'object') {
+                    // loop thru all of the layers
+                    for (j = 0; j < data['d'].length; j++) {
+                        varJDeferred = $.Deferred();
+                        //console.log(data['d'][j])
+
+                        // layer is string = Image (base64) or Fill Background color
+                        if (typeof data['d'][j] === 'string') {
+                            // color fill background data
+                            if (data['d'][j].length < 10) {
+                                onFillEvent({ 'color': data['d'][j] });
+                                varJDeferred.resolve();
+                            }
+                            // layer is object and is coordinates for the canvas to draw
+                        } else {
+                            onDrawingEvent(data['d'][j]);
+                            varJDeferred.resolve();
+                        }
+                    }
+                }
+            } //*/
+
+            // Save Canvas (create thumbnail)
+            var nloaded = 0;
+            var image1 = new Image,
+                image2 = new Image;
+
+            function saveCanvas() {
+                $('#loading').show();
+                image1.onload = checkload;
+                image1.src = imageCanvas.toDataURL();
+
+                image2.onload = checkload;
+                image2.src = canvas.toDataURL();
+            }
+
+            function checkload(event) {
+                nloaded++;
+                if (nloaded < 2) {
+                    return;
+                }
+
+                var tempCanvas = document.createElement("canvas");
+                var tempContext = tempCanvas.getContext('2d');
+                var width = (256 > image1.width) ? image1.width : 256;
+                var height = Math.round(width / image1.width * image1.height);
+                tempCanvas.width = width;
+                tempCanvas.height = height;
+                tempContext.drawImage(image1, 0, 0, width, height);
+                tempContext.drawImage(image2, 0, 0, width, height);
+
+                socket.emit('save', {
+                    'id': noteId,
+                    'title': $('#post_title').val(),
+                    'tags': $('#post_tags').val(),
+                    'DataURL': '<div class="card-image"><img src="' + tempCanvas.toDataURL() + '"></div>'
+                }); //*/
+
+                nloaded = 0;
+            }
+
+            function onSaved(data) {
+                msg = data ? "Saved!" : "Error: unable to save, please try again later";
+
+                M.toast({ html: msg })
+
+                if (noteId == '')
+                    window.location.reload()
+                else
+                    $('#loading').fadeOut();
+            }
+
+            // Load Image
+            function loadImage() {
+                $('#loading').fadeIn();
+                var tempCanvas = document.createElement("canvas"),
+                    tempContext = tempCanvas.getContext('2d');
+                tempCanvas.width = $('#Canvas').width();
+                tempCanvas.height = $('#Canvas').height();
+
+                var file = $('#file')[0].files[0]
+
+                var reader = new FileReader();
+
+                reader.onload = function () {
+                    var img = new Image();
+
+                    img.onload = function () {
+                        tempContext.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+                        socket.emit('img', tempCanvas.toDataURL());
+                    };
+
+                    img.src = reader.result;
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function launchIntoFullscreen(element) {
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            }
+
+            function exitFullscreen() {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+
+            /*function onRevoke() {
+                {-% if post.owner == False %-}
+                //Desktop mouse events
+                canvas.removeEventListener('mousedown', onMouseDown, false);
+                canvas.removeEventListener('mouseup', onMouseUp, false);
+                canvas.removeEventListener('mouseout', onMouseUp, false);
+                canvas.removeEventListener('mousemove', throttle(onMouseMove, 10), false);
+    
+                //Touch support for mobile devices
+                canvas.removeEventListener('touchstart', onMouseDown, false);
+                canvas.removeEventListener('touchend', onMouseUp, false);
+                canvas.removeEventListener('touchcancel', onMouseUp, false);
+                canvas.removeEventListener('touchmove', throttle(onMouseMove, 10), false);
+            
+                $('#TB_menu').hide();
+                $('#TB_colors').hide();
+                M.toast({html: 'The owner of this note has revoke collaborators editing access'})
+            
+                {-% endif %-}
+            }*/
+
+            function init() {
+                $('#iconTypeColor').css("color", current.color);
+
+                // resize canvas
+                onResize();
+                $('#loading').fadeOut();
+            }
+
+            // init run
+            init();
+        });
+    </script>
+    <script>
         function resetClass(e) {
             $(e).removeClass("gradient-45deg-indigo-blue gradient-45deg-purple-deep-orange gradient-45deg-light-blue-cyan gradient-45deg-purple-amber gradient-45deg-purple-deep-purple gradient-45deg-deep-orange-orange gradient-45deg-green-teal gradient-45deg-indigo-light-blue gradient-45deg-red-pink red purple pink deep-purple cyan teal light-blue amber darken-3 brown darken-2 gradient-45deg-indigo-purple gradient-45deg-deep-purple-blue")
         
@@ -999,7 +1445,8 @@
             inputs[i].addEventListener('click', function () {
                 b64name = this.dataset.link;
                 id = this.dataset.id;
-                socket.emit('channel', { b64: b64name, id: id });
+                //socket.emit('channel', { b64: b64name, id: id });
+                $.ajax({ url: "/ch/" + id + "/"+ b64name }).done(function (data) { console.log(data) });
                 $('#chat-area').html('');
 
                 $.getJSON("/gm/" + b64name, function (data) {
@@ -1008,12 +1455,12 @@
                     });
                 });
 
-                $.getJSON("/channel/" + b64name, function (data) {
+                /*$.getJSON("/channel/" + b64name, function (data) {
                     $('#chat-avatar').attr("src", "static/images/avatar/" + data.imgUrl);
                     $('#chat-name').text(data.name);
                     $('#chat-subtext').text(data.title);
                     //console.log(data)
-                });
+                });*/
 
                 $msgs.scrollTop($(".chat-area > .chats").height());
 

@@ -5632,7 +5632,7 @@ screen and (-ms-high-contrast:none) and (min-width:993px) {
 
 .slide-out-right-sidenav-chat {
 	top: 0;
-	width: 340px
+	width: 70vw;
 }
 
 #settings .setting-header {

@@ -9,10 +9,6 @@
 	vertical-align: bottom
 }
 
-.chat-application .sidenav-trigger {
-	display: none
-}
-
 .chat-application .small-icons {
 	font-size: 1.25rem;
 	line-height: 1.65rem
@@ -539,12 +535,6 @@
 	border-radius: .25rem
 }
 
-.chat-application .app-chat .sidenav-trigger {
-	position: absolute;
-	top: 102px;
-	display: none
-}
-
 .chat-application .no-data-found {
 	display: none
 }
@@ -587,7 +577,7 @@
 		margin-left: 3rem
 	}
 	.chat-application .app-chat .sidenav-trigger {
-		display: block!important
+		display: block !important
 	}
 	.chat-application .app-chat .chat-content {
 		display: block
