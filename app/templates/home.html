@@ -1445,8 +1445,8 @@
             inputs[i].addEventListener('click', function () {
                 b64name = this.dataset.link;
                 id = this.dataset.id;
-                //socket.emit('channel', { b64: b64name, id: id });
-                $.ajax({ url: "/ch/" + id + "/"+ b64name }).done(function (data) { console.log(data) });
+                socket.emit('channel', { b64: b64name, id: id });
+                //$.ajax({ url: "/ch/" + id + "/"+ b64name }).done(function (data) { console.log(data) });
                 $('#chat-area').html('');
 
                 $.getJSON("/gm/" + b64name, function (data) {
@@ -1455,12 +1455,12 @@
                     });
                 });
 
-                /*$.getJSON("/channel/" + b64name, function (data) {
+                $.getJSON("/channel/" + b64name, function (data) {
                     $('#chat-avatar').attr("src", "static/images/avatar/" + data.imgUrl);
                     $('#chat-name').text(data.name);
                     $('#chat-subtext').text(data.title);
                     //console.log(data)
-                });*/
+                });
 
                 $msgs.scrollTop($(".chat-area > .chats").height());
 
