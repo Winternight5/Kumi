@@ -3,8 +3,8 @@ from flask import current_app as app
 from flask import session, json, request, jsonify
 from flask_socketio import emit, join_room, leave_room
 from flask_login import current_user, login_required
-from . import routes, socketio
-from . import db
+from .. import socketio, db
+from . import main
 from .models import User, Post, Friend, Channel
 	
 clients = []
@@ -116,7 +116,7 @@ def disconnect():
     print('clients list: '+str(clients))
     print('--------------------------------------------------------------------------')
 
-@app.route('/ch/<int:id>/<string:b64>')
+@main.route('/ch/<int:id>/<string:b64>')
 @login_required
 def changeChannel(id, b64):
     '''
@@ -288,7 +288,7 @@ def revokeAccess():
     currentRoom = session.get('room')
     socketio.emit('accessRevoked', {}, room=currentRoom)	
     
-@app.route('/img', methods=['GET'])
+@main.route('/img', methods=['GET'])
 def img():
     '''
     Get Image

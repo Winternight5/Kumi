@@ -10,26 +10,20 @@ heroku = Heroku()
 db = SQLAlchemy()
 login = LoginManager()
 
-def create_app(debug=False, test_config=None):
+def create_app(debug=False):
     """Create an application."""
     app = Flask(__name__)
     app.debug = debug
     app.config.from_object(Config)
-
-    if test_config is None:
-    # load the instance config, if it exists, when not testing
-        app.config.from_object('config.Config')
-    else:
-        app.config.from_mapping(test_config)
-        
+    
+    from .main import main as main_blueprint
+    #from . import routes, events, models
+    app.register_blueprint(main_blueprint)
+    
     db.init_app(app)
     socketio.init_app(app)
     login.init_app(app)
     login.login_view = 'login'
     
-    with app.app_context():
-        # Include our routes
-        from . import routes, events, models
-        db.create_all()
-        return app
+    return app
 

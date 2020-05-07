@@ -1,6 +1,6 @@
-from flask import current_app as app
 from flask import render_template, flash, redirect, url_for, request, jsonify, json, session
-from . import db, events
+from .. import db
+from . import main
 from .forms import LoginForm, RegistrationForm, ResetForm
 from .models import User, Post, Friend, Channel
 from flask_login import current_user, login_user, logout_user, login_required, login_manager
@@ -21,7 +21,7 @@ theme = {
 # -------------------------------------------------------------------------------------------------------------------------
 #----- Demo
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/demo')
+@main.route('/demo')
 def demo():
     '''Demo page
     '''
@@ -30,7 +30,7 @@ def demo():
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Landing Page
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/')
+@main.route('/')
 def welcome():
     '''Landing Page / login screen
     '''
@@ -48,7 +48,7 @@ def welcome():
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Register Page
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/r/<string:email>')
+@main.route('/r/<string:email>')
 def register(email):
     '''Registration Page
     '''
@@ -66,7 +66,7 @@ def register(email):
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Index
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/home')
+@main.route('/home')
 @login_required
 def index():
     '''Main home page
@@ -194,7 +194,7 @@ def b64name_dm(user1, user2):
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Get Person JSON
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/p/<int:id>')
+@main.route('/p/<int:id>')
 @login_required
 def json_person(id):
     '''Get Person JSON
@@ -213,7 +213,7 @@ def json_person(id):
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Get Person JSON
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/getfriends')
+@main.route('/getfriends')
 @login_required
 def json_getFriend():
     '''Get all friends and return JSON
@@ -233,7 +233,7 @@ def json_getFriend():
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Get Channel JSON
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/channel/<string:name>')
+@main.route('/channel/<string:name>')
 @login_required
 def json_getChannel(name):
     '''Get all friends and return JSON
@@ -261,7 +261,7 @@ def json_getChannel(name):
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Update Theme
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/update/<string:type>/<string:value>')
+@main.route('/update/<string:type>/<string:value>')
 @login_required
 def updateTheme(type, value):
     '''Update Theme
@@ -286,7 +286,7 @@ def updateTheme(type, value):
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Update Current User Status
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/cs/<int:type>')
+@main.route('/cs/<int:type>')
 @login_required
 def changeStatus(type):
     '''Update User Status
@@ -299,7 +299,7 @@ def changeStatus(type):
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Get Person JSON
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/gm/<string:id>')
+@main.route('/gm/<string:id>')
 @login_required
 def getJSONMessages(id):
     '''Update User Status
@@ -311,7 +311,7 @@ def getJSONMessages(id):
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- User login & Registation / Logout
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/login', methods=['GET', 'POST'])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     '''Login Function
 
@@ -400,7 +400,7 @@ def login():
 
     return render_template('welcome.html', form=form)
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/logout')
+@main.route('/logout')
 @login_required
 def logout():
     '''Logout Function
@@ -414,7 +414,7 @@ def logout():
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Admin & skrunkworks stuff
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/db')
+@main.route('/db')
 @login_required
 def showdb():
     if current_user.email == "admin" or current_user.id == 2:
@@ -429,7 +429,7 @@ def showdb():
 
     return redirect(url_for('index'))
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/delshareid/<int:id>', methods=['GET'])
+@main.route('/delshareid/<int:id>', methods=['GET'])
 @login_required
 def delShareId(id):
     if current_user.email == "admin":
@@ -444,7 +444,7 @@ def delShareId(id):
 
     return redirect(url_for('index'))
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/delid/<int:id>', methods=['GET'])
+@main.route('/delid/<int:id>', methods=['GET'])
 @login_required
 def delID(id):
     if current_user.email == "admin":
@@ -459,7 +459,7 @@ def delID(id):
 
     return redirect(url_for('index'))
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/db_init')
+@main.route('/db_init')
 def fillCheck():
     db.create_all()
     user = User.query.first()
@@ -508,7 +508,7 @@ def addadmin():
     except Exception as e:
         return "FAILED entry: "+str(e)
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/db_clearposts')
+@main.route('/db_clearposts')
 @login_required
 def clearPosts():
     if current_user.email == "admin":
@@ -518,7 +518,7 @@ def clearPosts():
 
     return redirect(url_for('index'))
 # -------------------------------------------------------------------------------------------------------------------------
-@app.route('/db_addposts')
+@main.route('/db_addposts')
 @login_required
 def addDB():
     if current_user.email == "admin":

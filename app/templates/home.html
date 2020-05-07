@@ -1008,7 +1008,7 @@
 
 	    $(document).ready(function () {
 		    // Socket IO Stuff
-            socket = io.connect('http://' + document.domain + ':' + location.port + '/home', {transports: ['websocket']});
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/home'); //, {transports: ['websocket']}
 
             socket.on('connect', function () {
                 socket.emit('joined', {});
