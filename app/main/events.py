@@ -85,7 +85,7 @@ def update_stats():
         'clients': [int(i) for i in clients]
     }, broadcast=True)
 
-@socketio.on('disconnected', namespace='/')
+@socketio.on('disconnect', namespace='/')
 def disconnect():
     '''
     User Disconnected

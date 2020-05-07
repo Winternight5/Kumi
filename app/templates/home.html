@@ -886,6 +886,7 @@
     <!-- END: Footer-->
     <!-- BEGIN JS-->
     <script>
+        var socket;
         var current_user = {{ current_user.id }};
         var myImgUrl = '{{ current_user.imgUrl }}';
         var fullName = '{{ current_user.fullname }}';
@@ -1009,14 +1010,14 @@
         $(document).ready(function () {
             //var socket = io();
             // Socket IO Stuff
-            var socket = io.connect('http://' + document.domain + ':' + location.port + '/'); //, {transports: ['websocket']}
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/'); //, {transports: ['websocket']}
 
             socket.on('connect', function () {
                 socket.emit('joined');
             });
 
             socket.on('disconnect', function () {
-                socket.emit('disconnected');
+                socket.emit('disconnect');
             });
 
             socket.on('status', updateUserStatus);
