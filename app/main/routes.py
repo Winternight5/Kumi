@@ -35,7 +35,7 @@ def welcome():
     '''Landing Page / login screen
     '''
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
 
     data = {}
 
@@ -337,7 +337,7 @@ def login():
     '''
         # if user logged in, go to main home page
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
 
     # get post data of radio button 'login-option'
     option = request.form.get('login-option')
@@ -355,7 +355,7 @@ def login():
 
             if user is None or not user.check_password(form.password.data):
                 flash('Invalid username or password')
-                return redirect(url_for('index'))
+                return redirect(url_for('main.welcome'))
             
             user.last_login = datetime.utcnow()
             db.session.commit()
@@ -366,7 +366,7 @@ def login():
             next_page = request.args.get('next')
 
             if not next_page or url_parse(next_page).netloc != '':
-                next_page = url_for('index')
+                next_page = url_for('main.welcome')
 
             return redirect(next_page)
 
@@ -376,7 +376,7 @@ def login():
     # if sign-up validate registration form and create user
     elif (option == "sign-up"):
         if current_user.is_authenticated:
-            return redirect(url_for('index'))
+            return redirect(url_for('main.index'))
 
         form = RegistrationForm()
         if form.validate_on_submit():
@@ -389,7 +389,7 @@ def login():
                 print("\n FAILED entry: {}\n".format(json.dumps(data)))
                 print(e)
             flash('Congratulations, you are now a registered user!')
-            return redirect(url_for('login'))
+            return redirect(url_for('main.login'))
         return render_template('welcome.html', form=form, loginOption=option)
 
     # reset-login
@@ -410,7 +410,7 @@ def logout():
     :return: Log the user out
     '''
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.welcome'))
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Admin & skrunkworks stuff
 # -------------------------------------------------------------------------------------------------------------------------
@@ -427,7 +427,7 @@ def showdb():
 
         return render_template('result.html', Users=Users, Posts=Posts, friends=Friends, channels=Channels)
 
-    return redirect(url_for('index'))
+    return redirect(url_for('main.welcome'))
 # -------------------------------------------------------------------------------------------------------------------------
 @main.route('/delshareid/<int:id>', methods=['GET'])
 @login_required
@@ -440,9 +440,9 @@ def delShareId(id):
             db.session.delete(shared)
             db.session.commit()
 
-        return redirect(url_for('showdb'))
+        return redirect(url_for('main.showdb'))
 
-    return redirect(url_for('index'))
+    return redirect(url_for('main.welcome'))
 # -------------------------------------------------------------------------------------------------------------------------
 @main.route('/delid/<int:id>', methods=['GET'])
 @login_required
@@ -455,9 +455,9 @@ def delID(id):
             db.session.delete(user)
             db.session.commit()
 
-        return redirect(url_for('showdb'))
+        return redirect(url_for('main.showdb'))
 
-    return redirect(url_for('index'))
+    return redirect(url_for('main.welcome'))
 # -------------------------------------------------------------------------------------------------------------------------
 @main.route('/db_init')
 def fillCheck():
@@ -466,7 +466,7 @@ def fillCheck():
     if user is not None:
         return str(user.email)
     addadmin()
-    return redirect(url_for('showdb'))
+    return redirect(url_for('main.showdb'))
 
 def addadmin():
     u1, u2, u3, u4, u5, u6, u7 = users = [
@@ -514,9 +514,9 @@ def clearPosts():
     if current_user.email == "admin":
         Post.query.delete()
         db.session.commit()
-        return redirect(url_for('showdb'))
+        return redirect(url_for('main.showdb'))
 
-    return redirect(url_for('index'))
+    return redirect(url_for('main.welcome'))
 # -------------------------------------------------------------------------------------------------------------------------
 @main.route('/db_addposts')
 @login_required
@@ -534,9 +534,9 @@ def addDB():
         )
         db.session.commit()
 
-        return redirect(url_for('showdb'))
+        return redirect(url_for('main.showdb'))
 
-    return redirect(url_for('index'))
+    return redirect(url_for('main.welcome'))
 # -------------------------------------------------------------------------------------------------------------------------
 
 

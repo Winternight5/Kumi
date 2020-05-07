@@ -4,7 +4,7 @@ from flask import session, json, request, jsonify
 from flask_socketio import emit, join_room, leave_room
 from flask_login import current_user, login_required
 from .. import socketio, db
-from . import main
+from . import main, routes
 from .models import User, Post, Friend, Channel
 	
 clients = []
