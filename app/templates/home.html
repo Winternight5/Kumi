@@ -886,7 +886,6 @@
     <!-- END: Footer-->
     <!-- BEGIN JS-->
     <script>
-        var socket;
         var current_user = {{ current_user.id }};
         var myImgUrl = '{{ current_user.imgUrl }}';
         var fullName = '{{ current_user.fullname }}';
@@ -1007,6 +1006,7 @@
         };
 
         $(document).ready(function () {
+            var socket;
             // Socket IO Stuff
             socket = io.connect('http://' + document.domain + ':' + location.port + '/'); //, {transports: ['websocket']}
 
