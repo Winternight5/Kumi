@@ -1011,11 +1011,11 @@
             //socket = io.connect('http://' + document.domain + ':' + location.port + '/'); //, {transports: ['websocket']}
 
             socket.on('connect', function () {
-                socket.emit('joined', {});
+                socket.emit('joined');
             });
 
             socket.on('disconnect', function () {
-                socket.emit('disconnected', {});
+                socket.emit('disconnected');
             });
 
             socket.on('status', updateUserStatus);

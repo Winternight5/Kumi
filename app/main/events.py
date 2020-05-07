@@ -32,7 +32,7 @@ def clearDatas(currentRoom):
     datas[currentRoom]['d'] = []
     
 @socketio.on('joined', namespace='/')
-def joined(data):
+def joined():
     '''
     New User Joined
     ---------------
