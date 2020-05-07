@@ -1015,7 +1015,7 @@
             });
 
             socket.on('disconnect', function () {
-                socket.emit('disconnect', {});
+                socket.emit('disconnected', {});
             });
 
             socket.on('status', updateUserStatus);
