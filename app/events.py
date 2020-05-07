@@ -2,7 +2,7 @@ import os
 from flask import current_app as app
 from flask import session, json, request, jsonify
 from flask_socketio import emit, join_room, leave_room
-from flask_login import current_user
+from flask_login import current_user, login_required
 from . import routes, socketio
 from . import db
 from .models import User, Post, Friend, Channel
@@ -116,6 +116,36 @@ def disconnect():
     print('clients list: '+str(clients))
     print('--------------------------------------------------------------------------')
 
+@app.route('/ch/<int:id>/<string:b64>')
+@login_required
+def changeChannel(id, b64):
+    '''
+    User Change Channel
+    ---------------
+
+    Remove the user from the room
+    And join a new room.
+    '''
+    oldRoom = session.get('room')
+    leave_room(oldRoom)
+    
+    currentRoom = session['room'] = b64
+
+    channelCheck = Channel.query.filter_by(b64name=currentRoom).first()
+    print(channelCheck)
+    if (channelCheck is None):
+        newChannel = Channel(b64name=currentRoom,
+                       owner_id=current_user.id,
+                       access_type=id)
+        db.session.add(newChannel)
+        db.session.commit()
+    
+    channel_id = Channel.query.filter_by(b64name=currentRoom).first()
+    session['channel_id'] = channel_id
+
+    join_room(currentRoom)
+    return '1'
+
 @socketio.on('channel', namespace='/home')
 def changeChannel(data):
     '''
@@ -143,6 +173,7 @@ def changeChannel(data):
     session['channel_id'] = channel_id
 
     join_room(currentRoom)
+
 
 @socketio.on('text', namespace='/home')
 def text(data):
@@ -208,6 +239,7 @@ def loadImg(data):
     currentRoom = session.get('room')
     clearDatas(currentRoom)
     datas[currentRoom]['i'] = data
+    print(data)
     emit('img', data, room=currentRoom)
 
 @socketio.on('new', namespace='/home')

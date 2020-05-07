@@ -130,6 +130,7 @@ def index():
     print(settings)
     return render_template('home.html', 
                            title='Home',
+                           room=room,
                            current_user=current_user,
                            settings=settings,
                            channels=channels,

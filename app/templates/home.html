@@ -164,12 +164,12 @@
                         <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="activity" data-target="slide-out-right"><i class="material-icons">assignment<small class="notification-badge orange">2</small></i></a></li>
                         <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="Friends" data-target="slide-out-right"><i class="fas fa-user-check"><small class="notification-badge orange friend-online-counter hide">0</small></i></a></li>
                         <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="Members" data-target="slide-out-right"><i class="fas fa-users"><small class="notification-badge orange online-counter hide">0</small></i></a></li>
-                        <li><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
+                        <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
                         <!--
-                        <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-                        <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
-                        <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
-                        <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
+        <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+        <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
+        <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
+        <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
                     </ul>
                     <!-- attachment-dropdown-->
                     <ul class="dropdown-content black-text" id="attachment-dropdown" style="min-width: 250px;">
@@ -193,13 +193,35 @@
                             <a class="grey-text" href="#!"><span class="icon-bg-circle blue small"><i class="fab fa-dropbox"></i></span> DropBox</a>
                         </li>
                     </ul>
-                    <!-- profile-dropdown-->
+                    <!--profile-dropdown-->
                     <ul class="dropdown-content" id="profile-dropdown">
                         <li data-value="0"><a class="grey-text text-darken-1" href="#"><i class="material-icons green-text">fiber_manual_record</i> Online</a></li>
                         <li data-value="1"><a class="grey-text text-darken-1" href="#"><i class="material-icons red-text">fiber_manual_record</i> Busy</a></li>
                         <li data-value="2"><a class="grey-text text-darken-1" href="#"><i class="material-icons yellow-text">fiber_manual_record</i> Away</a></li>
                     </ul>
-                    <!-- profile-dropdown-->
+                    <!--pen-dropdown-->
+                    <ul class="dropdown-content" id="pen-dropdown" style="max-width: 30px;">
+                        <li><span class="change-type black-text"><i class="material-icons">brush</i></span></li>
+                        <li><span class="change-type amber-text text-lighten-2"><i class="material-icons">call_to_action</i></span></li>
+                        <li class="divider"></li>
+                        <li><span class="change-color black-text" data-color="black"><i class="material-icons">lens</i></span></li>
+                        <li><span class="change-color blue-text" data-color="blue"><i class="material-icons">lens</i></span></li>
+                        <li><span class="change-color red-text" data-color="red"><i class="material-icons">lens</i></span></li>
+                        <li><span class="change-color green-text" data-color="green"><i class="material-icons">lens</i></span></li>
+                    </ul>
+                    <!--image-dropdown-->
+                    <ul class="dropdown-content" id="image-dropdown">
+                        <li>
+                            <span>
+                                <input type="file" accept="image/*" id="file" accept="image/*;capture=camera" id="file" style="display: none;">
+                                <label for="file">
+                                    <i class="material-icons vertical-text-middle"><a class="waves-effect">image</a></i>
+                                </label>
+                            </span>
+                        </li>
+                        <li><span class="black-text image-new"><i class="material-icons">layers_clear</i></span></li>
+                    </ul>
+                    <!--chat-options-dropdown-->
                     <ul class="dropdown-content" id="chat-options-dropdown" style="min-width: 250px;">
                         <li><a class="black-text" href="#"><span class="material-icons">format_bold</span> Bold</a></li>
                         <li><a class="black-text" href="#"><span class="material-icons">format_italic</span> Italic</a></li>
@@ -434,11 +456,11 @@
                         <div class="app-chat">
                             <div class="content-area content-right">
                                 <div class="app-wrapper">
-                                    <!-- Sidebar menu for small screen -->
+                                    <!-- Sidebar menu for small screen
                                     <a href="#" data-target="chat-sidenav" class="sidenav-trigger hide-on-large-only">
                                         <i class="material-icons">menu</i>
                                     </a>
-                                    <!--/ Sidebar menu for small screen -->
+                                    Sidebar menu for small screen -->
 
                                     <div class="card card card-default scrollspy border-radius-6 fixed-width">
                                         <div class="card-content chat-content p-0">
@@ -689,7 +711,7 @@
                         <div id="slide-out-chat" class="sidenav slide-out-right-sidenav-chat">
                             <canvas id="imageCanvas"></canvas>
                             <canvas id="whiteboard"></canvas>
-                            <div class="row z-depth-2 align-right" style="z-index: 1000; position: absolute;">
+                            <div class="row z-depth-2 align-right" style="z-index: 1000; position: absolute; background: white !important">
                                 <div class="slide-out-right-title" onselectstart="return false;">
                                     <div class="col s12 border-bottom-1 pb-0 pt-1">
                                         <div class="row">
@@ -697,16 +719,9 @@
                                                 <i class="material-icons vertical-text-middle"><a href="#" class="sidenav-close">clear</a></i>
                                                 WHITEBOARD
                                                 <i class="material-icons vertical-text-middle">navigate_next</i>
-                                                <input type="file" accept="image/*" id="file" accept="image/*;capture=camera" id="file" style="display: none;">
-                                                <label for="file">
-                                                    <i class="material-icons vertical-text-middle"><a class="waves-effect">image</a></i>
-                                                </label>
+                                                <i class="material-icons vertical-text-middle"><a href="#" class="notification-button" data-target="image-dropdown" style="color: black">image</a></i>
                                                 <i class="material-icons vertical-text-middle">navigate_next</i>
-                                                <i class="material-icons vertical-text-middle" data-color="black"><a href="#" class="black-text change-color">lens</a></i>
-                                                <i class="material-icons vertical-text-middle" data-color="blue"><a href="#" class="blue-text change-color">lens</a></i>
-                                                <i class="material-icons vertical-text-middle" data-color="red"><a href="#" class="red-text change-color">lens</a></i>
-                                                <i class="material-icons vertical-text-middle">navigate_next</i>
-                                                <i class="material-icons vertical-text-middle"><a href="#" id="change-type" style="color: black">brush</a></i>
+                                                <i class="material-icons vertical-text-middle"><a href="#" id="change-type" class="notification-button" data-target="pen-dropdown" style="color: black">brush</a></i>
                                             </div>
                                         </div>
                                     </div>
@@ -1110,19 +1125,20 @@
             });
 
             // select color
-            $('#change-type').on('click', function () {
-                if ($(this).text() == 'brush') {
+            $('.change-type').on('click', function () {
+                console.log($('#change-type').text())
+                if ($('#change-type').text() == 'brush') {
                     current.type = 'destination-out';
-                    current.size = 30;
-                    $(this).text('call_to_action').css('color', 'black')
+                    current.size = 50;
+                    $('#change-type').text('call_to_action').css('color', '#ffd54f')
                 } else {
                     current.type = 'source-over';
                     current.size = 2;
-                    $(this).text('brush').css("color", current.color);
+                    $('#change-type').text('brush').css("color", current.color);
                 }
             });
 
-            $('.new').on('click', function () {
+            $('.image-new').on('click', function () {
                 socket.emit('new', {});
             });
 
@@ -1262,7 +1278,6 @@
 
             function onFillImageEvent(img, callback) {
                 var image = new Image();
-                    console.log(img)
 
                 image.onload = function () {
                     imgContext.drawImage(image, 0, 0, canvas.width, canvas.height);
@@ -1289,7 +1304,6 @@
 
                     if (data == null) return;
 
-                    //console.log(data);
 
                     // Load Image First
                     if (data['i'] != null) {
@@ -1349,7 +1363,7 @@
 
                 var tempCanvas = document.createElement("canvas");
                 var tempContext = tempCanvas.getContext('2d');
-                var width = (256 > image1.width) ? image1.width : 256;
+                var width = (512 > image1.width) ? image1.width : 512;
                 var height = Math.round(width / image1.width * image1.height);
                 tempCanvas.width = width;
                 tempCanvas.height = height;
@@ -1382,8 +1396,8 @@
                // $('#loading').fadeIn();
                 var tempCanvas = document.createElement("canvas"),
                     tempContext = tempCanvas.getContext('2d');
-                tempCanvas.width = $('#Canvas').width();
-                tempCanvas.height = $('#Canvas').height();
+                tempCanvas.width = $('#slide-out-chat').width();
+                tempCanvas.height = $('#slide-out-chat').height();
 
                 var file = $('#file')[0].files[0]
 
@@ -1393,7 +1407,6 @@
                     var img = new Image();
 
                     img.onload = function () {
-                        console.log(img)
                         tempContext.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
                         socket.emit('img', tempCanvas.toDataURL());
                     };
