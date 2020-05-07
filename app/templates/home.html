@@ -902,8 +902,8 @@
     <script src="{{url_for('static', filename='js/search.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/customizer.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/app-chat.min.js')}}"></script>
-    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>-->
     <!-- END JS-->
     <script>
         // SocketIO
@@ -1008,7 +1008,7 @@
 
         $(document).ready(function () {
             // Socket IO Stuff
-            socket = io.connect('http://' + document.domain + ':' + location.port + '/home', { transports: ['websocket'] }); //, {transports: ['websocket']}
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/'); //, {transports: ['websocket']}
 
             socket.on('connect', function () {
                 socket.emit('joined', {});

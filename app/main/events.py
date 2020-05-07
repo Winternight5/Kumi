@@ -31,7 +31,7 @@ def clearDatas(currentRoom):
     datas[currentRoom] = {}
     datas[currentRoom]['d'] = []
     
-@socketio.on('joined', namespace='/home')
+@socketio.on('joined', namespace='/')
 def joined(data):
     '''
     New User Joined
@@ -66,7 +66,7 @@ def joined(data):
     print('clients list: '+str(clients))
     print('--------------------------------------------------------------------------')
 
-@socketio.on('update_stats', namespace='/home')
+@socketio.on('update_stats', namespace='/')
 def update_stats():
     '''
     Update User Stats
@@ -85,7 +85,7 @@ def update_stats():
         'clients': [int(i) for i in clients]
     }, broadcast=True)
 
-@socketio.on('disconnect', namespace='/home')
+@socketio.on('disconnect', namespace='/')
 def disconnect():
     '''
     User Disconnected
@@ -146,7 +146,7 @@ def changeChannel(id, b64):
     join_room(currentRoom)
     return '1'
 
-@socketio.on('channel', namespace='/home')
+@socketio.on('channel', namespace='/')
 def changeChannel(data):
     '''
     User Change Channel
@@ -175,7 +175,7 @@ def changeChannel(data):
     join_room(currentRoom)
 
 
-@socketio.on('text', namespace='/home')
+@socketio.on('text', namespace='/')
 def text(data):
     '''
     Text Messaging Feature
@@ -200,7 +200,7 @@ def text(data):
         'imgUrl': current_user.imgUrl
     }, room=currentRoom)
 
-@socketio.on('drawing', namespace='/home')
+@socketio.on('drawing', namespace='/')
 def drawing(data):
     '''
     Drawing Feature
@@ -213,7 +213,7 @@ def drawing(data):
     datas[currentRoom]['d'].append(data)
     emit('drawing', data, room=currentRoom)
 	
-@socketio.on('fill', namespace='/home')
+@socketio.on('fill', namespace='/')
 def fill(data):
     '''
     Fill Feature
@@ -228,7 +228,7 @@ def fill(data):
         'color': data['color']
     }, room=currentRoom)	
     
-@socketio.on('img', namespace='/home')
+@socketio.on('img', namespace='/')
 def loadImg(data):
     '''
     Image Feature
@@ -242,7 +242,7 @@ def loadImg(data):
     print(data)
     emit('img', data, room=currentRoom)
 
-@socketio.on('new', namespace='/home')
+@socketio.on('new', namespace='/')
 def new(data):
     '''
     New Canvas
@@ -254,7 +254,7 @@ def new(data):
     clearDatas(currentRoom)
     emit('new', {}, room=currentRoom)	
     
-@socketio.on('save', namespace='/home')
+@socketio.on('save', namespace='/')
 def save(newdata):
     '''
     Save Feature
