@@ -1713,9 +1713,6 @@
                 var file = fileInput.files[0];
                 var filename = file.name.split('.');
                 var extension = filename.pop()
-                //console.log(filename[0])
-                //console.log(extension)
-                //console.log(file.name)
 
                 var filename = (filename[0].length > 15) ? filename[0].substring(0, 15)+'....'+extension : file.name;
                 var html = '<span class="display-flex" class="uploading-file"><span class="display-flex align-item-center flex-grow-1" contentEditable=false><span class="material-icons black-text">insert_drive_file</span><span class="member-info display-flex flex-column"> <span class="black-text">' + filename + '</span> <small class="grey-text text-darken-2">' + fileSize(file.size) + '</small></span></span><i class="material-icons black-text attachment-clear">close</i></span>';
