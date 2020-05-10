@@ -23,7 +23,7 @@ def create_app(debug=False):
     db.init_app(app)
     socketio.init_app(app)
     login.init_app(app)
-    login.login_view = 'login'
+    login.login_view = 'main.login'
     
     return app
 

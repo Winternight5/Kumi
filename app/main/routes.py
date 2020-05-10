@@ -1,3 +1,4 @@
+import os
 from flask import render_template, flash, redirect, url_for, request, jsonify, json, session
 from .. import db
 from . import main
@@ -5,6 +6,7 @@ from .forms import LoginForm, RegistrationForm, ResetForm
 from .models import User, Post, Friend, Channel
 from flask_login import current_user, login_user, logout_user, login_required, login_manager
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 from datetime import datetime, date, timedelta
 import random, string, html, re, uuid, pybase64
 from sqlalchemy.orm import Session
@@ -17,6 +19,34 @@ theme = {
     'menu': 'sidenav-active-square',
     'chatarea': 'bg-image-shattered',
     }
+
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+UPLOAD_FOLDER = 'static/files/'
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@main.route('/file', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file-upload' not in request.files:
+            flash('No file part')
+            return '0'
+        file = request.files['file-upload']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            os.makedirs(os.path.join(main.root_path, '../static/files'), exist_ok=True)
+            file.save(os.path.join(main.root_path, '../static/files', filename))
+        else:
+            return '0'
+    return '1'
 
 # -------------------------------------------------------------------------------------------------------------------------
 #----- Demo
@@ -75,7 +105,6 @@ def index():
 
     :return: Display all of user's notes
     '''
-    #session['room'] = '/#home'
     global theme
     current_user.fullname = current_user.firstname+' '+current_user.lastname
     current_user.online_status = online_status(current_user.status)
@@ -127,7 +156,7 @@ def index():
         members.append(member)
 
     settings = json.loads(current_user.settings) if current_user.settings else theme
-    print(settings)
+    #print(settings)
     return render_template('home.html', 
                            title='Home',
                            room=room,
@@ -152,10 +181,13 @@ def getMessages(id, offset = 0):
 
     for chat in q:
         temp = {}
+        temp['id'] = chat.id
         temp['user_id'] = chat.user.id
         temp['firstname'] = chat.user.firstname
-        temp['msg'] = chat.body
+        temp['body'] = json.loads(chat.body)
         temp['imgUrl'] = chat.user.imgUrl
+        temp['timestamp'] = chat.timestamp
+        temp['visible'] = chat.visible
         chats.append(temp)
 
     return chats
@@ -250,11 +282,18 @@ def json_getChannel(name):
         data['name'] = query.name
         data['title'] = query.title
         data['imgUrl'] = query.imgUrl
+        data['type'] = 0
     else:
         user = User.query.filter(User.id == user_id).first()
         data['name'] = user.firstname+" "+user.lastname
         data['title'] = user.title
         data['imgUrl'] = user.imgUrl
+        data['type'] = user.id
+        #if current_user.friendships is not None:
+        #    for temp in current_user.friendships:
+        #        print(str(current_user.firstname)+" = "+str(temp.id)+" : "+str(temp.user_id)+" / "+str(temp.friend_id)+" | "+str(query.access_type)+"-"+str(current_user.id))
+        #        if temp.friend_id == current_user.id:
+        #            data['type'] = temp.id
 
     return json.dumps(data)
 
@@ -277,7 +316,7 @@ def updateTheme(type, value):
     if str(type) == 'collapse': current_theme['collapse'] = value
     if str(type) == 'menu': current_theme['menu'] = value
     if str(type) == 'chatarea': current_theme['chatarea'] = value
-    print(current_theme)
+    #print(current_theme)
     current_user.settings = json.dumps(current_theme)
     db.session.commit()
 
@@ -502,7 +541,6 @@ def addadmin():
         u3.friendships.append(Friend(friendee=u2))
         u4.friendships.append(Friend(friendee=u2))
         u5.friendships.append(Friend(friendee=u2))
-        u6.friendships.append(Friend(friendee=u2))
         db.session.commit()
         
     except Exception as e:

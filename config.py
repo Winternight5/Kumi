@@ -12,5 +12,5 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    
+    UPLOAD_FOLDER = '/static/uploads'
     #SQLALCHEMY_ECHO=True

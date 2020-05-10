@@ -25,6 +25,8 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/app-chat.min.css')}}">
     <!-- Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/custom.css')}}">
+    <!-- Animate CSS-->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/animate.css')}}">
     <style>
         html, body {margin: 0; height: 100%; overflow: hidden}
         body {
@@ -145,6 +147,32 @@
           height: 100%;
           border: 1px solid black;
         }
+
+        .opt-text {
+            visibility: hidden;
+            position: relative;
+            right: 6px;
+        }
+
+        .line-option:hover .opt-text {
+            visibility: visible;
+        }
+
+        #chat-input .file-load {
+            display: none;
+        }
+
+        .chat-area .uploading-file {
+            display: none;
+        }
+
+        .chat-area .attachment-clear {
+            display: none;
+        }
+
+        .chat-area .attachment-clear {
+            display: none;
+        }
     </style>
 </head>
 <!-- END: Head-->
@@ -166,32 +194,37 @@
                         <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="Members" data-target="slide-out-right"><i class="fas fa-users"><small class="notification-badge orange online-counter hide">0</small></i></a></li>
                         <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
                         <!--
-                        <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-                        <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
-                        <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
-                        <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
+        <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+        <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
+        <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
+        <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
                     </ul>
                     <!-- attachment-dropdown-->
                     <ul class="dropdown-content black-text" id="attachment-dropdown" style="min-width: 250px;">
-                        <li>
-                            <a class="black-text" href="#"><span class="material-icons icon-bg-circle blue small">attachment</span> Attach a File</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">insert_drive_file</span> System File</a>
-                        </li>
-                        <li>
-                            <a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">camera</span> Camera</a>
-                        </li>
-                        <li>
-                            <a class="grey-text" href="#!"><span class="icon-bg-circle cyan small"><i class="fab fa-google-drive"></i></span> Google Drive</a>
-                        </li>
-                        <li>
-                            <a class="grey-text" href="#!"><span class="icon-bg-circle black small"><i class="fab fa-github"></i></span> GitHub</a>
-                        </li>
-                        <li>
-                            <a class="grey-text" href="#!"><span class="icon-bg-circle blue small"><i class="fab fa-dropbox"></i></span> DropBox</a>
-                        </li>
+                        <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                            <li class="hide-on-med-and-down">
+                                <span>Attach a File:</span>
+                            </li>
+                            <li class="hide-on-large-only"><a class="black-text" href="javascript:editorCmd('bold');"><span class="material-icons">format_bold</span> Bold</a></li>
+                            <li class="hide-on-large-only"><a class="black-text" href="javascript:editorCmd('italic');"><span class="material-icons">format_italic</span> Italic</a></li>
+                            <li class="hide-on-large-only"><a class="black-text" href="javascript:editorCmd('underline');"><span class="material-icons">format_underlined</span> Underline</a></li>
+                            <li class="divider"></li>
+                            <li id="file-upload-tigger">
+                                <a class="black-text" href="#!">
+                                    <input type="file" id="file-upload" name="file-upload" style="display: none;">
+                                    <span class="material-icons icon-bg-circle deep-orange small">insert_drive_file</span> System File
+                                </a>
+                            </li>
+                            <li>
+                                <a class="grey-text" href="#!"><span class="icon-bg-circle cyan small"><i class="fab fa-google-drive"></i></span> Google Drive</a>
+                            </li>
+                            <li>
+                                <a class="grey-text" href="#!"><span class="icon-bg-circle black small"><i class="fab fa-github"></i></span> GitHub</a>
+                            </li>
+                            <li>
+                                <a class="grey-text" href="#!"><span class="icon-bg-circle blue small"><i class="fab fa-dropbox"></i></span> DropBox</a>
+                            </li>
+                        </form>
                     </ul>
                     <!--profile-dropdown-->
                     <ul class="dropdown-content" id="profile-dropdown">
@@ -213,31 +246,13 @@
                     <ul class="dropdown-content" id="image-dropdown">
                         <li>
                             <span>
-                                <input type="file" accept="image/*" id="file" accept="image/*;capture=camera" id="file" style="display: none;">
+                                <input type="file" id="file" accept="image/*;capture=camera" style="display: none;">
                                 <label for="file">
                                     <i class="material-icons vertical-text-middle"><a class="waves-effect">image</a></i>
                                 </label>
                             </span>
                         </li>
                         <li><span class="black-text image-new"><i class="material-icons">layers_clear</i></span></li>
-                    </ul>
-                    <!--chat-options-dropdown-->
-                    <ul class="dropdown-content" id="chat-options-dropdown" style="min-width: 250px;">
-                        <li><a class="black-text" href="#"><span class="material-icons">format_bold</span> Bold</a></li>
-                        <li><a class="black-text" href="#"><span class="material-icons">format_italic</span> Italic</a></li>
-                        <li><a class="black-text" href="#"><span class="material-icons">format_underlined</span> Underline</a></li>
-                        <li class="divider"></li>
-                        <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">insert_drive_file</span> Device File</a></li>
-                        <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">camera</span> Camera</a></li>
-                        <li><a class="black-text" href="#!"><span class="icon-bg-circle cyan small"><i class="fab fa-google-drive"></i></span> Google Drive</a></li>
-                        <li><a class="black-text" href="#!"><span class="icon-bg-circle black small"><i class="fab fa-github"></i></span> GitHub</a></li>
-                        <li><a class="black-text" href="#!"><span class="icon-bg-circle blue small"><i class="fab fa-dropbox"></i></span> DropBox</a>
-                    </ul>
-                    <!-- emoji-dropdown-->
-                    <ul class="dropdown-content" id="emoji-dropdown">
-                        <li><a class="grey-text text-darken-1" href="#">&#128540;</a></li>
-                        <li><a class="grey-text text-darken-1" href="#"><i class="material-icons red-text">fiber_manual_record</i> Busy</a></li>
-                        <li><a class="grey-text text-darken-1" href="#"><i class="material-icons yellow-text">fiber_manual_record</i> Away</a></li>
                     </ul>
                 </div>
                 <nav class="display-none search-sm">
@@ -266,7 +281,7 @@
                 <div class="display-flex">
                     <div class="display-flex align-item-center flex-grow-1">
                         <div class="avatar"><img src="{{url_for('static', filename='images/icon/pdf-image.png')}}" width="24" height="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">Two new item submitted</span><small class="grey-text">Marketing Manager</small></div>
+                        <div class="member-info display-flex flex-column"><span class="black-text">Final report</span><small class="grey-text">Marketing Manager</small></div>
                     </div>
                     <div class="status"><small class="grey-text">17kb</small></div>
                 </div>
@@ -277,7 +292,7 @@
                 <div class="display-flex">
                     <div class="display-flex align-item-center flex-grow-1">
                         <div class="avatar"><img src="{{url_for('static', filename='images/icon/doc-image.png')}}" width="24" height="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">52 Doc file Generator</span><small class="grey-text">FontEnd Developer</small></div>
+                        <div class="member-info display-flex flex-column"><span class="black-text">Editable Report Document</span><small class="grey-text">FontEnd Developer</small></div>
                     </div>
                     <div class="status"><small class="grey-text">550kb</small></div>
                 </div>
@@ -288,20 +303,9 @@
                 <div class="display-flex">
                     <div class="display-flex align-item-center flex-grow-1">
                         <div class="avatar"><img src="{{url_for('static', filename='images/icon/xls-image.png')}}" width="24" height="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">25 Xls File Uploaded</span><small class="grey-text">Digital Marketing Manager</small></div>
+                        <div class="member-info display-flex flex-column"><span class="black-text">Traceability Matrix Sheet</span><small class="grey-text">Digital Marketing Manager</small></div>
                     </div>
                     <div class="status"><small class="grey-text">20kb</small></div>
-                </div>
-            </a>
-        </li>
-        <li class="auto-suggestion">
-            <a class="collection-item" href="#">
-                <div class="display-flex">
-                    <div class="display-flex align-item-center flex-grow-1">
-                        <div class="avatar"><img src="{{url_for('static', filename='images/icon/jpg-image.png')}}" width="24" height="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">Anna Strong</span><small class="grey-text">Web Designer</small></div>
-                    </div>
-                    <div class="status"><small class="grey-text">37kb</small></div>
                 </div>
             </a>
         </li>
@@ -310,46 +314,18 @@
                 <h6 class="search-title">MEMBERS</h6>
             </a>
         </li>
+        {% for member in members %}
         <li class="auto-suggestion">
             <a class="collection-item" href="#">
                 <div class="display-flex">
                     <div class="display-flex align-item-center flex-grow-1">
-                        <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" width="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">John Doe</span><small class="grey-text">UI designer</small></div>
+                        <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/'+member.imgUrl)}}" width="30" alt="sample image"></div>
+                        <div class="member-info display-flex flex-column"><span class="black-text">{{member.fullname}}</span><small class="grey-text">{{member.title}}</small></div>
                     </div>
                 </div>
             </a>
         </li>
-        <li class="auto-suggestion">
-            <a class="collection-item" href="#">
-                <div class="display-flex">
-                    <div class="display-flex align-item-center flex-grow-1">
-                        <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-8.png')}}" width="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">Michal Clark</span><small class="grey-text">FontEnd Developer</small></div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="auto-suggestion">
-            <a class="collection-item" href="#">
-                <div class="display-flex">
-                    <div class="display-flex align-item-center flex-grow-1">
-                        <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-10.png')}}" width="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">Milena Gibson</span><small class="grey-text">Digital Marketing</small></div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="auto-suggestion">
-            <a class="collection-item" href="#">
-                <div class="display-flex">
-                    <div class="display-flex align-item-center flex-grow-1">
-                        <div class="avatar"><img class="circle" src="{{url_for('static', filename='images/avatar/avatar-12.png')}}" width="30" alt="sample image"></div>
-                        <div class="member-info display-flex flex-column"><span class="black-text">Anna Strong</span><small class="grey-text">Web Designer</small></div>
-                    </div>
-                </div>
-            </a>
-        </li>
+        {% endfor %}
     </ul>
     <ul class="display-none" id="page-search-title">
         <li class="auto-suggestion-title">
@@ -411,9 +387,9 @@
             <li class="navigation-header">
                 <a class="navigation-header-text">Direct Message</a><i class="navigation-header-icon material-icons">more_horiz</i>
             </li>
-            {% for friend in friends %}
+            {% for friend in members %}
             <li id="member_{{friend.id}}" class="bold member_{{friend.id}} hide">
-                <a class="waves-effect waves-cyan open-chat {{friend.active}} {{friend.b64name}} gradient-shadow" href="#" data-link="{{friend.b64name}}" data-id="{{friend.id}}" data-type="menu"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/'+friend.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title">{{friend.fullname}} </span></a>
+                <a id="sidenav_m{{friend.id}}" class="waves-effect waves-cyan open-chat gradient-shadow" href="#" data-link="{{friend.b64name}}" data-id="{{friend.id}}" data-type="menu"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/'+friend.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title">{{friend.fullname}} </span></a>
             </li>
             {% endfor %}
 
@@ -479,56 +455,38 @@
                                                         </div>
                                                     </div>
                                                     <span class="option-icon">
-                                                        <span class="sidenav-trigger tabs-activate" data-target="slide-out-chat"><i class="material-icons">launch</i></span>
-                                                        <span class="favorite hide" id="chat-add-friend">
+                                                        <span class="hide" id="chat-add-friend" data-id="">
                                                             <i class="material-icons">person_add</i>
                                                         </span>
                                                         <i class="material-icons hide-on-med-and-down hide" id="chat-delete">delete</i>
-                                                        <i class="material-icons">more_vert</i>
+                                                        <span class="sidenav-trigger tabs-activate" data-target="slide-out-chat"><i class="material-icons">launch</i></span>
+                                                        <!--<i class="material-icons">more_vert</i>-->
                                                     </span>
                                                 </div>
                                                 <!--/ Chat header -->
                                                 <!-- Chat content area -->
                                                 <div class="chat-area">
                                                     <div class="chats" id="chat-area">
-                                                        {% for chat in chats %}
-                                                        {% if chat.user_id == current_user.id %}
-                                                        <div class="chat chat-right">
-                                                            <div class="chat-body">
-                                                                <div class="chat-text">
-                                                                    <p>{{ chat.msg }}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        {% else %}
-                                                        <div class="chat">
-                                                            <div class="chat-avatar">
-                                                                <a class="avatar">
-                                                                    <img src="{{url_for('static', filename='images/avatar/'+chat.imgUrl)}}" class="circle" alt="avatar" />
-                                                                </a>
-                                                            </div>
-                                                            <div class="chat-body">
-                                                                <div class="chat-text">
-                                                                    <p>{{ chat.msg }}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        {% endif %}
-                                                        {% endfor %}
+                                                        
                                                     </div>
                                                 </div>
                                                 <!--/ Chat content area -->
                                                 <!-- Chat footer <-->
                                                 <div class="chat-footer">
-                                                    <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input" autocomplete="off">
+                                                    <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input" autocomplete="off" enctype="multipart/form-data">
                                                         <!--<i class="mr-2 hide-on-med-and-up"><a class="waves-effect waves-block waves-light chat-input-tool notification-button" href="javascript:void(0);" data-target="chat-options-dropdown"><i class="material-icons mr-2">arrow_drop_down_circle</i></a></i>-->
-                                                        <i class="mr-2 hide-on-large-only"><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="chat-options-dropdown"><i class="material-icons mr-2">arrow_drop_down_circle</i></a></i>
+                                                        <i class="mr-2">
+                                                            <a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="attachment-dropdown">
+                                                                <i class="material-icons mr-2 hide-on-med-and-down">attachment</i>
+                                                                <i class="material-icons mr-2 hide-on-large-only">arrow_drop_down_circle</i>
+                                                            </a>
+                                                        </i>
                                                         <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light chat-input-tool" href="javascript:void(0);" id="emoji-button"><i class="material-icons mr-2">face</i></a></i>
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="attachment-dropdown"><i class="material-icons mr-2">attachment</i></a></i>
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_bold</i></a></i>
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_italic</i></a></i>
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:void(0);"><i class="material-icons mr-2">format_underlined</i></a></i>
-                                                        <input type="text" placeholder="Type message here.." class="message mb-0 " id="chat-input" name="chat-input">
+
+                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:editorCmd('bold');"><i class="material-icons mr-2">format_bold</i></a></i>
+                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:editorCmd('italic');"><i class="material-icons mr-2">format_italic</i></a></i>
+                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:editorCmd('underline');"><i class="material-icons mr-2">format_underlined</i></a></i>
+                                                        <div type="text" data-text="Type message here.." class="message grey-text text-darken-2 mb-0" id="chat-input" contentEditable=true></div>
                                                         <a class="btn waves-effect waves-light send" onclick="enter_chat();">Send</a>
                                                     </form>
                                                 </div>
@@ -849,7 +807,7 @@
                         Dark Mode
                         <label class="float-right">
                             <input class="menu-dark-checkbox" type="checkbox"
-                                   {% if settings.mode=='true' %} checked{% endif %} /> <span class="lever ml-0"></span>
+                                   {% if settings.mode == 'true' %} checked{% endif %} /> <span class="lever ml-0"></span>
                         </label>
                     </div>
                 </div>
@@ -861,7 +819,7 @@
                                    value="sidenav-active-square"
                                    name="menu-selection"
                                    type="radio"
-                                   {% if settings.menu=='sidenav-active-square' %}checked{% endif %} />
+                                   {% if settings.menu == 'sidenav-active-square' %}checked{% endif %} />
                             <span>Square</span>
                         </label>
                         <label>
@@ -869,12 +827,12 @@
                                    value="sidenav-active-rounded"
                                    name="menu-selection"
                                    type="radio"
-                                   {% if settings.menu=='sidenav-active-rounded' %}checked{% endif %} />
+                                   {% if settings.menu == 'sidenav-active-rounded' %}checked{% endif %} />
                             <span>Rounded</span>
                         </label>
                         <label>
                             <input class="menu-selection-radio with-gap" value="none" name="menu-selection" type="radio"
-                                   {% if settings.menu=='none' %}checked{% endif %} />
+                                   {% if settings.menu == 'none' %}checked{% endif %} />
                             <span>Normal</span>
                         </label>
                     </div>
@@ -882,19 +840,40 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Structure -->
+    <div id="friend-request-modal" class="modal">
+        <div class="modal-content">
+            <h4>Friend Request</h4>
+            <h6 class="black-text"></h6>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="friend-accept" class="modal-close waves-effect waves-blue btn-flat blue lighten-3 friend-accept">Accept</a>
+            <a href="#!" class="modal-close waves-effect waves-red btn-flat red lighten-3">Decline</a>
+        </div>
+    </div>
     <!--/ Theme Customizer -->
     <!-- END: Footer-->
     <!-- BEGIN JS-->
     <script>
         var socket;
-        var current_user = {{ current_user.id }};
-        var myImgUrl = '{{ current_user.imgUrl }}';
-        var fullName = '{{ current_user.fullname }}';
+        var max_minutes = 5;
+        var current_user = {
+            id: {{ current_user.id }},
+            fullName: '{{ current_user.fullname }}',
+            title: '{{ current_user.title }}',
+            myImgUrl: '{{ current_user.imgUrl }}',
+            selectedTheme:'{{settings.theme}}'
+        }
+        var current_person = {
+            id: 0,
+            fullName: '',
+            title: '',
+        }
         var roomName = '{{ room }}';
         var lastMsg = 0;
         var online_users = [];
         var allfriends = [];
-        var selectedTheme = '{{settings.theme}}';
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@2.12.1/dist/index.min.js"></script>
     <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
@@ -909,15 +888,110 @@
     <script>
         // SocketIO
         var $msgs = $('.chat-area');
+        var modals;
+        var tempFilename = {
+            id: 0,
+            name: '',
+            html: '',
+            url: ''
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var options = { dismissible: false }
+            modals = M.Modal.init(elems, options);
+        });
+
+        function htmlEncode(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function timeDifference(date1, date2) {
+            var seconds = Math.floor((date1 - date2)/1000);
+            var minutes = Math.floor(seconds/60);
+            var hours = Math.floor(minutes / 60);
+            var days = Math.floor(hours / 24);
+            var minutes_diff = minutes;
+
+            hours = hours - (days * 24);
+            minutes = minutes - (days * 24 * 60) - (hours * 60);
+            seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+
+            data = {
+                days: days,
+                hours: hours,
+                minutes: minutes,
+                seconds: seconds,
+                minutes_diff: minutes_diff
+            }
+            return data;
+        }
+
+        function editorCmd(cmd) {
+            $('#chat-input').focus();
+            switch (cmd) {
+                case "underline":
+                    document.execCommand('underline', false, '');
+                    break;
+
+                case "italic":
+                    document.execCommand('italic', false, '');
+                    break;
+
+                case "bold":
+                    document.execCommand('bold', false, '');
+                    break;
+
+                case "strikeThrough":
+                    document.execCommand('strikeThrough', false, '');
+                    break;
+            }
+        }
 
         function enter_chat(a) {
-            var e = (a == null) ? $(".message").val() : a;
+            var e = (a == null) ? $(".message").html() : a;
+            var f = ($("#file-upload").val() == '') ? 'text' : 'file';
 
             if (e != '') {
+                if (f == 'file') {
+                    e = '<span class="black-text file-load" id="' + tempFilename.name + '">File uploading...</span>'
+
+                    var form = $('#fileUploadForm')[0];
+                    var data = new FormData(form);
+                    //console.log(data)
+                    //return false;
+                    $.ajax({
+                        type: "POST",
+                        enctype: 'multipart/form-data',
+                        url: "/file",
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        timeout: 600000,
+                        success: function (data) {
+                            setTimeout(function () {
+                            socket.emit('update_text', {
+                                id: tempFilename.id,
+                                msg: '<a href="static/files/'+tempFilename.url+'" target="_blank" contentEditable=false>'+tempFilename.html+'</a>',
+                                id_name: tempFilename.name
+                            });}, 2000);
+                            /*setTimeout(function () {
+                                $('#' + tempFilename.name).html();
+                                console.log("SUCCESS : ", data.name);
+                            }, 2000);*/
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                        }
+                    });
+                }
                 socket.emit('text', {
-                    msg: e
+                    msg: e,
+                    type: f
                 });
-                $(".message").val("");
+                $(".message").html("");
+                $("#file-upload").val("");
                 /*
                 var t = '';
 
@@ -935,18 +1009,50 @@
         }
 
         function onMessage(data) {
-            if (current_user != data.user_id) {
-                var t = '';
-                t = '<div class="chat"><div class="chat-avatar"><a class="avatar"><img src="/static/images/avatar/' + data.imgUrl + '" class="circle" alt="avatar" /></a></div>' +
-                    '<div class="chat-body"><div class="chat-text replied"><p>' + data.msg + '</p></div></div></div>';
-                $("#chat-area").append(t);
-                scrollToBottom(data.user_id);
-            } else if (current_user == data.user_id) {
-                t = '<div class="chat chat-right"><div class="chat-body"><div class="chat-text"><p>' + data.msg + '</p></div></div></div>';
-                $("#chat-area").append(t);
-                scrollToBottom(data.user_id);
+            //console.log(data)
+            var t = '';
+            var msg = '<p'+ ((data.visible) ? '>'+data.body.msg : ' class="grey-text text-darken-2">Message deleted by user.');
+
+            if (data.track) {
+                tempFilename.id = data.id
             }
+
+            if (current_user.id != data.user_id) {
+                t = '<div class="chat animated fadeInDown unselectable" id="m_'+data.id+'"><div class="chat-avatar"><a class="avatar"><img src="/static/images/avatar/' + data.imgUrl + '" class="circle" alt="avatar" /></a></div>' +
+                    '<div class="chat-body"><div class="chat-text replied">' + msg + '</p></div></div></div>';
+                $("#chat-area").append(t);
+
+            } else if (current_user.id == data.user_id) {
+                // check minutes between current time and posted time, expires after 5mins
+                var current_time = new Date().getTime();
+                var timeDiff = timeDifference(current_time, new Date(data.timestamp + ' UTC'));
+                var delete_option = (timeDiff.minutes_diff <= max_minutes) ? '<p class="opt-text blue lighten-4" data-id="' + data.id + '" data-timestamp="' + data.timestamp + '"><a class="material-icons black-text medium" href="#">clear</a></p>' : '';
+
+                t = '<div class="chat chat-right options-button animated fadeInDown" id="m_'+data.id+'"><div class="chat-body"><div class="chat-text line-option">' + msg + '</p>'+delete_option+'</div></div></div>';
+                $("#chat-area").append(t);
+            }
+
+            scrollToBottom(data.user_id);
+            //console.log(data);
         }
+
+        //Prevent line/paragraph breaks in contentEditable
+        $('[contenteditable=true]').on('paste', function(e) {
+            //strips elements added to the editable tag when pasting
+            var $self = $(this);
+            setTimeout(function() {$self.html($self.text());}, 0);
+        }).on('keypress', function(e) {
+             //ignores enter key
+             var code = e.keyCode || e.which;
+             return code != 13;
+        });
+
+        $('#chat-input').keyup(function (e) {
+            var code = e.keyCode || e.which;
+			if (code == 13) {
+				enter_chat();
+            }
+		});
 
         function scrollToBottom(data) {
             $msgs.scrollTop($(".chat-area > .chats").height());
@@ -971,6 +1077,7 @@
                     if (data[$(this).data('id')] != 1) {
                         $(this).addClass('hide');
                     } else {
+                        $(this).removeClass('hide');
                         friends.push($(this).data('id'));
                     }
                 });
@@ -1007,10 +1114,14 @@
             return ret;
         };
 
+        function displayNotification(msg) {
+            M.toast({html: msg, classes: 'rounded', displayLength: 1500 })
+        }
+
         $(document).ready(function () {
             //var socket = io();
             // Socket IO Stuff
-            socket = io.connect('http://' + document.domain + ':' + location.port + '/', {transports: ['websocket']}); //, {transports: ['websocket']}
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/', { transports: ['websocket'] }); //, {transports: ['websocket']}
 
             socket.on('connect', function () {
                 socket.emit('joined');
@@ -1071,6 +1182,13 @@
             "#000000"
         ];
 
+
+        function resetClass(e) {
+            $(e).removeClass("gradient-45deg-indigo-blue gradient-45deg-purple-deep-orange gradient-45deg-light-blue-cyan gradient-45deg-purple-amber gradient-45deg-purple-deep-purple gradient-45deg-deep-orange-orange gradient-45deg-green-teal gradient-45deg-indigo-light-blue gradient-45deg-red-pink red purple pink deep-purple cyan teal light-blue amber darken-3 brown darken-2 gradient-45deg-indigo-purple gradient-45deg-deep-purple-blue")
+
+            $(e).removeClass("bg-image-arches bg-image-gradient-squares bg-image-brick-wall-dark bg-image-foggy-birds bg-image-swirl bg-image-hexellence bg-image-inspiration-geometry bg-image-shattered bg-image-flowers bg-image-light-wool bg-image-gray-floral bg-image-beige-paper bg-image-padded-light bg-image-pool-table bg-image-skulls bg-image-xv bg-image-type bg-image-purty-wood")
+        }
+
         $(document).ready(function () {
             // Canvas
             var canvas = document.getElementById('whiteboard');
@@ -1085,6 +1203,10 @@
             };
             var drawing = false;
 
+            socket.on('hide_message', onHideMessage);
+
+            socket.on('updated_text', onUpdatedText);
+
             socket.on('drawing', onDrawingEvent);
 
             socket.on('fill', onFillEvent);
@@ -1094,6 +1216,10 @@
             socket.on('new', newCanvas);
 
             socket.on('saved', onSaved);
+
+            socket.on('friend_request', friend_modal);
+
+            socket.on('friend_completed', friend_completed);
 
             //socket.on('accessRevoked', onRevoke);
 
@@ -1173,6 +1299,34 @@
                     color: current.color
                 });
             });
+
+            function onUpdatedText(data) {
+                $('#' + data.id_name).html(data.msg);
+            }
+
+            function friend_modal(data) {
+                if (current_user.id != data.friend) return false;
+
+                current_person.id = data.id
+                current_person.fullName = data.name
+                current_person.title = data.title
+
+                $('#friend-request-modal h6').html('<b>'+data.name+'</b> <i>"'+data.title+'"</i>, would like to add you as friend.')
+                modals[0].open();
+            }
+
+            function friend_completed(data) {
+                if (current_user.id != data.friend && current_user.id != data.id) return false;
+
+                displayNotification('Friend handshake confirmed!')
+            }
+
+            function onHideMessage(data) {
+                if (data == null) return false;
+
+                $("#m_" + data.id + " p:first-child").text('Message deleted by user.').addClass('grey-text text-darken-2')
+                $("#m_" + data.id+" p:nth-child(2)").addClass('hide')
+            }
 
             function newCanvas() {
                 context.clearRect(0, 0, canvas.width, canvas.height);
@@ -1385,7 +1539,7 @@
             function onSaved(data) {
                 msg = data ? "Saved!" : "Error: unable to save, please try again later";
 
-                M.toast({ html: msg })
+                displayNotification(msg)
 
                 if (noteId == '')
                     window.location.reload()
@@ -1465,34 +1619,21 @@
             }*/
 
             function init() {
-                $('#iconTypeColor').css("color", current.color);
+                // Theme init
+                //$('#iconTypeColor').css("color", current.color);
+                $(".navbar-main").addClass('{{settings.theme}}')
+                $(".content-wrapper-before").addClass('{{settings.theme}}')
+                $(".sidenav-main .sidenav li a.active").addClass('{{settings.theme}}')
+                $(".sidenav-main").removeClass("sidenav-active-square sidenav-active-rounded").addClass('{{settings.menu}}')
+                $(".chat-area").addClass('{{settings.chatarea}}')
+                $("#{{settings.chatarea}}").addClass('selected')
+                $("#{{settings.theme}}").addClass('selected')
 
-                // resize canvas
-                onResize();
-                $('#loading').fadeOut();
+                //$('#loading').fadeOut();
+                loadChatMessages(roomName)
             }
 
-            // init run
-            init();
-        });
-    </script>
-    <script>
-        function resetClass(e) {
-            $(e).removeClass("gradient-45deg-indigo-blue gradient-45deg-purple-deep-orange gradient-45deg-light-blue-cyan gradient-45deg-purple-amber gradient-45deg-purple-deep-purple gradient-45deg-deep-orange-orange gradient-45deg-green-teal gradient-45deg-indigo-light-blue gradient-45deg-red-pink red purple pink deep-purple cyan teal light-blue amber darken-3 brown darken-2 gradient-45deg-indigo-purple gradient-45deg-deep-purple-blue")
-
-            $(e).removeClass("bg-image-arches bg-image-gradient-squares bg-image-brick-wall-dark bg-image-foggy-birds bg-image-swirl bg-image-hexellence bg-image-inspiration-geometry bg-image-shattered bg-image-flowers bg-image-light-wool bg-image-gray-floral bg-image-beige-paper bg-image-padded-light bg-image-pool-table bg-image-skulls bg-image-xv bg-image-type bg-image-purty-wood")
-        }
-        // other functions
-    $(document).ready(function () {
-        var inputs = document.querySelectorAll(".open-chat");
-        for (i = 0; i < inputs.length; i++) {
-            inputs[i].addEventListener('click', function () {
-                b64name = this.dataset.link;
-                id = this.dataset.id;
-                socket.emit('channel', { b64: b64name, id: id });
-                //$.ajax({ url: "/ch/" + id + "/"+ b64name }).done(function (data) { console.log(data) });
-                $('#chat-area').html('');
-
+            function loadChatMessages(b64name) {
                 $.getJSON("/gm/" + b64name, function (data) {
                     $.each(data, function (key, val) {
                         onMessage(val);
@@ -1500,51 +1641,142 @@
                 });
 
                 $.getJSON("/channel/" + b64name, function (data) {
+                    if (data.type > 0 && allfriends.indexOf(data.type)) 
+                        $('#chat-add-friend').removeClass('hide').show().attr("data-id", data.type);
+                    else
+                        $('#chat-add-friend').removeClass('hide').hide();
+
                     $('#chat-avatar').attr("src", "static/images/avatar/" + data.imgUrl);
                     $('#chat-name').text(data.name);
                     $('#chat-subtext').text(data.title);
-                    //console.log(data)
+                    roomName = b64name;
+                    onResize();
                 });
 
                 $msgs.scrollTop($(".chat-area > .chats").height());
+            }
 
-                $('.open-chat').removeClass('active ' + selectedTheme);
-                resetClass('.sidenav-main .sidenav li a');
+            var inputs = document.querySelectorAll(".open-chat");
+            for (i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('click', function () {
+                    b64name = this.dataset.link;
+                    id = this.dataset.id;
+                    socket.emit('channel', { b64: b64name, id: id });
+                    //$.ajax({ url: "/ch/" + id + "/"+ b64name }).done(function (data) { console.log(data) });
+                    $('#chat-area').html('');
 
-                if (this.dataset.type == "menu") {
-                    strs = selectedTheme.split(" ");
-                    for (i = 0; i < strs.length; i++) {
-                        this.classList.add(strs[i]);
+
+                    loadChatMessages(b64name);
+
+                    $('.open-chat').removeClass('active ' + current_user.selectedTheme);
+                    resetClass('.sidenav-main .sidenav li a');
+
+                    if (this.dataset.type == "menu") {
+                        strs = current_user.selectedTheme.split(" ");
+                        for (i = 0; i < strs.length; i++) {
+                            this.classList.add(strs[i]);
+                        }
+                        this.classList.add('active');
+                    } else if (this.dataset.target == "slide-out-chat") {
+                        $('#sidenav_m' + id).addClass('active ' + current_user.selectedTheme);
                     }
-                    this.classList.add('active');
-                } else if (this.dataset.target == "slide-out-chat") {
-                    $('.' + b64name).addClass('active ' + selectedTheme);
-                }
-                //$(this).addClass('active')
-                //$(this).sidenav('close');
+                    //$(this).addClass('active')
+                    //$(this).sidenav('close');
+                });
+            }
+
+            $("#chat-add-friend").click(function () {
+                socket.emit('friend', { id: current_user.id, friend: parseInt($(this).attr("data-id")), name: current_user.fullName, title: current_user.title });
+                displayNotification('Friend request sent!')
             });
-        }
 
-
-        $("#profile-dropdown li").click(function () {
-            type = $(this).attr("data-value");
-
-            $.ajax({
-                url: "/cs/" + type
-            }).done(function (data) {
-                socket.emit('update_stats');
+            $("#friend-accept").click(function () {
+                socket.emit('friend_accept', { id: current_user.id, friend: current_person.id });
             });
+
+            $("#profile-dropdown li").click(function () {
+                type = $(this).attr("data-value");
+
+                $.ajax({
+                    url: "/cs/" + type
+                }).done(function (data) {
+                    socket.emit('update_stats');
+                });
+            });
+            
+            $("#file-upload-tigger").on('click', function (e) {
+                document.getElementById("file-upload").click();
+            });
+
+            $("#file-upload").on('change', function () {
+                var fileInput = document.getElementById('file-upload');
+                var file = fileInput.files[0];
+                var filename = file.name.split('.');
+                var extension = filename.pop()
+                //console.log(filename[0])
+                //console.log(extension)
+                //console.log(file.name)
+
+                var filename = (filename[0].length > 15) ? filename[0].substring(0, 15)+'....'+extension : file.name;
+                var html = '<span class="display-flex" class="uploading-file"><span class="display-flex align-item-center flex-grow-1" contentEditable=false><span class="material-icons black-text">insert_drive_file</span><span class="member-info display-flex flex-column"> <span class="black-text">' + filename + '</span> <small class="grey-text text-darken-2">' + fileSize(file.size) + '</small></span></span><i class="material-icons black-text attachment-clear">close</i></span>';
+
+                $("#chat-input").html(html)
+                //<span class="black-text file-load">File uploading...</span>
+                //$("#chat-input").html('<a href="static/files/'+file.name+'" target="_blank" contentEditable=false><span class="display-flex"><span class="display-flex align-item-center flex-grow-1"><span class="material-icons black-text">insert_drive_file</span><span class="member-info display-flex flex-column"> <span class="black-text">'+file.name+'</span> <small class="grey-text text-darken-2">'+fileSize(file.size)+'</small></span></span></span></a>')
+                //$("#chat-input").html('<span contentEditable=false><a href="static/files/'+file.name+'" target="_blank"><i class="small material-icons black-text">insert_drive_file</i> <span class="black-text">'+file.name+'</span><br><small class="grey-text text-darken-2">'+fileSize(file.size)+'</small></a></span>')
+                tempFilename.name = new Date().getTime();
+                tempFilename.url = file.name
+                tempFilename.html = html;
+                //console.log(tempFilename.name)
+                //console.log(file)
+            });
+            
+            $("#chat-input").on('click', '.attachment-clear', function (e) {
+                e.preventDefault();
+                $("#chat-input").text('');
+                $("#file-upload").val('');
+            });
+
+            function toTimestamp(strDate){
+                var datum = Date.parse(strDate);
+                return datum;
+            }
+
+            function fileSize(fileSizeInBytes) {
+                var i = -1;
+                var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+                do {
+                    fileSizeInBytes = fileSizeInBytes / 1024;
+                    i++;
+                } while (fileSizeInBytes > 1024);
+
+                return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+            };
+
+            /*$('.line-option').on("mouseover", function () {
+                var current_time = new Date().getTime();
+                var posted_time = new Date($(this).children('p').eq(1).attr("data-timestamp")+' UTC');
+                data = timeDifference(current_time, posted_time)
+                console.log($(this).children('p').eq(0).text())
+                if (data.minutes_diff > 10 || $(this).children('p').eq(0).text() == 'Message deleted by user.')
+                    $(this).children('p').eq(1).addClass('hide');
+            });*/
+
+            $('#chat-area').on("click", ".opt-text", function () {
+                var current_time = new Date().getTime();
+                var posted_time = new Date($(this).attr("data-timestamp")+' UTC');
+                data = timeDifference(current_time, posted_time)
+
+                if (data.minutes_diff <= max_minutes)
+                    socket.emit('disable_text', { id: $(this).attr("data-id") });
+                else
+                    $(this).addClass('hide');
+                //console.log('difference = ' + data.days + ' days ' + data.hours + ' hours ' + data.minutes + ' minutes ' + data.seconds + ' seconds');
+            });
+
+            // init run
+            init();
         });
-
-        // Theme init
-        $(".navbar-main").addClass('{{settings.theme}}')
-        $(".content-wrapper-before").addClass('{{settings.theme}}')
-        $(".sidenav-main .sidenav li a.active").addClass('{{settings.theme}}')
-        $(".sidenav-main").removeClass("sidenav-active-square sidenav-active-rounded").addClass('{{settings.menu}}')
-        $(".chat-area").addClass('{{settings.chatarea}}')
-        $("#{{settings.chatarea}}").addClass('selected')
-        $("#{{settings.theme}}").addClass('selected')
-    });
     </script>
 </body>
 </html >

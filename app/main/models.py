@@ -24,6 +24,7 @@ class User(UserMixin, db.Model):
     status = db.Column(db.Integer)
     recent_channel = db.Column(db.Integer)
     last_login = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    #suspend_date = db.Column(db.DateTime)
 
     chats = db.relationship('Post', backref='user', lazy='dynamic')
     channel_owner = db.relationship('Channel', backref='channel', lazy='dynamic')
@@ -58,6 +59,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     b64name = db.Column(db.String(128), index=True)
     body = db.Column(db.Text)
+    visible = db.Column(db.Integer, default='1')
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
     channel_id = db.Column(db.Integer, db.ForeignKey('Channel.id'))

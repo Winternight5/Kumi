@@ -1,6 +1,6 @@
-import os
+import os, datetime
 from flask import current_app as app
-from flask import session, json, request, jsonify
+from flask import session, json, request, jsonify, redirect, url_for
 from flask_socketio import emit, join_room, leave_room
 from flask_login import current_user, login_required
 from .. import socketio, db
@@ -72,7 +72,6 @@ def update_stats():
     Update User Stats
     '''
     currentRoom = session.get('room')
-    members = []
 
     data = {}
     data['id'] = current_user.id
@@ -174,7 +173,6 @@ def changeChannel(data):
 
     join_room(currentRoom)
 
-
 @socketio.on('text', namespace='/')
 def text(data):
     '''
@@ -186,19 +184,111 @@ def text(data):
     currentRoom = session.get('room')
     currentChannel = session.get('channel_id')
 
+    msg = {
+        'type': data['type'],
+        'msg': data['msg']
+        }
+
+    type = 1 if data['type'] == 'file' else 0
+
     newPost = Post(b64name=currentRoom, 
-                   body=data['msg'], 
+                   body=json.dumps(msg), 
                    user_id=current_user.id,
                    channel_id=currentChannel.id)
     db.session.add(newPost)
+    db.session.flush()
+    db.session.commit()
+    db.session.refresh(newPost)
+
+    emit('message', {
+        'body': msg,
+        'id': newPost.id,
+        'user_id': current_user.id,
+        'imgUrl': current_user.imgUrl,
+        'timestamp': str(newPost.timestamp),
+        'visible': 1,
+        'track': type
+    }, room=currentRoom)
+
+@socketio.on('update_text', namespace='/')
+def update_text(data):
+    '''
+    Update Text Messaging Feature
+    ---------------
+
+    Save current user text data into memory and emit data to all users in the room.
+    '''
+    currentRoom = session.get('room')
+
+    msg = {
+        'type': 'file',
+        'msg': data['msg']
+        }
+
+    current_post = Post.query.filter_by(id=data['id']).first()
+    current_post.body = json.dumps(msg)
     db.session.commit()
 
-    print(currentChannel.id)
-    emit('message', {
+    emit('updated_text', {
         'msg': data['msg'],
-        'user_id': current_user.id,
-        'imgUrl': current_user.imgUrl
+        'id_name': data['id_name']
     }, room=currentRoom)
+
+@socketio.on('disable_text', namespace='/')
+def text(data):
+    '''
+    Text Messaging Feature
+    ---------------
+
+    Save current user text data into memory and emit data to all users in the room.
+    '''
+    currentRoom = session.get('room')
+    
+    current_post = Post.query.filter_by(id=data['id']).first()
+    current_post.visible = None
+    db.session.commit()
+
+    emit('hide_message', {
+        'id': data['id']
+    }, room=currentRoom)
+
+@socketio.on('friend', namespace='/')
+def friend_request(data):
+    '''
+    Add Friend Feature
+    ---------------
+
+    Emit friend request.
+    '''
+    currentRoom = session.get('room')
+
+    emit('friend_request', data, broadcast=True)
+
+
+@socketio.on('friend_accept', namespace='/')
+def friend_accept(data):
+    '''
+    Add Friend Feature
+    ---------------
+
+    Emit friend handshake completed.
+    '''
+    data['confirmed'] = 0
+
+    f1, f2 = handshake = [
+        Friend(user_id=data['id'], friend_id=data['friend']),
+        Friend(user_id=data['friend'], friend_id=data['id'])
+        ]
+
+    try:
+        db.session.add_all(handshake)
+        db.session.commit()
+        data['confirmed'] = 1
+    except Exception as e:
+        return "FAILED entry: "+str(e)
+
+    update_stats()
+    emit('friend_completed', data, broadcast=True)
 
 @socketio.on('drawing', namespace='/')
 def drawing(data):
