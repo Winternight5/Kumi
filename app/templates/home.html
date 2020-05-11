@@ -194,10 +194,10 @@
                         <li><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="Members" data-target="slide-out-right"><i class="fas fa-users"><small class="notification-badge orange online-counter hide">0</small></i></a></li>
                         <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
                         <!--
-        <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
-        <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
-        <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
-        <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
+                        <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
+                        <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge">5</small></i></a></li>
+                        <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{url_for('static', filename='images/avatar/avatar-13.png')}}" alt="avatar"><i></i></span></a></li>
+                        <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>-->
                     </ul>
                     <!-- attachment-dropdown-->
                     <ul class="dropdown-content black-text" id="attachment-dropdown" style="min-width: 250px;">
@@ -253,6 +253,10 @@
                             </span>
                         </li>
                         <li><span class="black-text image-new"><i class="material-icons">layers_clear</i></span></li>
+                    </ul>
+                    <!--chat-option-dropdown-->
+                    <ul class="dropdown-content" id="chat-option-dropdown">
+                        {% if current_user.admin_level == 1 %}<li><a class="black-text modal-trigger" href="#suspend-modal"><i class="material-icons">layers_clear</i> Suspension</a></li>{% endif %}
                     </ul>
                 </div>
                 <nav class="display-none search-sm">
@@ -458,16 +462,16 @@
                                                         <span class="hide" id="chat-add-friend" data-id="">
                                                             <i class="material-icons">person_add</i>
                                                         </span>
-                                                        <i class="material-icons hide-on-med-and-down hide" id="chat-delete">delete</i>
-                                                        <span class="sidenav-trigger tabs-activate" data-target="slide-out-chat"><i class="material-icons">launch</i></span>
-                                                        <!--<i class="material-icons">more_vert</i>-->
+                                                        <span class="sidenav-trigger tabs-activate hide-on-med-and-down" data-target="slide-out-chat"><i class="material-icons">launch</i></span>
+                                                        <i class="material-icons notification-button" data-target="chat-option-dropdown" id="chat-options">more_vert</i>
+                                                        <!--<i class="material-icons hide-on-med-and-down hide" id="chat-delete">delete</i>-->
                                                     </span>
                                                 </div>
                                                 <!--/ Chat header -->
                                                 <!-- Chat content area -->
                                                 <div class="chat-area">
                                                     <div class="chats" id="chat-area">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <!--/ Chat content area -->
@@ -819,7 +823,7 @@
                                    value="sidenav-active-square"
                                    name="menu-selection"
                                    type="radio"
-                                   {% if settings.menu == 'sidenav-active-square' %}checked{% endif %} />
+                                   {% if settings.menu=='sidenav-active-square' %}checked{% endif %} />
                             <span>Square</span>
                         </label>
                         <label>
@@ -827,12 +831,12 @@
                                    value="sidenav-active-rounded"
                                    name="menu-selection"
                                    type="radio"
-                                   {% if settings.menu == 'sidenav-active-rounded' %}checked{% endif %} />
+                                   {% if settings.menu=='sidenav-active-rounded' %}checked{% endif %} />
                             <span>Rounded</span>
                         </label>
                         <label>
                             <input class="menu-selection-radio with-gap" value="none" name="menu-selection" type="radio"
-                                   {% if settings.menu == 'none' %}checked{% endif %} />
+                                   {% if settings.menu=='none' %}checked{% endif %} />
                             <span>Normal</span>
                         </label>
                     </div>
@@ -840,6 +844,7 @@
             </div>
         </div>
     </div>
+    <!--/ Theme Customizer -->
 
     <!-- Modal Structure -->
     <div id="friend-request-modal" class="modal">
@@ -852,7 +857,45 @@
             <a href="#!" class="modal-close waves-effect waves-red btn-flat red lighten-3">Decline</a>
         </div>
     </div>
-    <!--/ Theme Customizer -->
+    <!-- Modal Structure -->
+    <div id="suspend-modal" class="modal">
+        <form id="suspension-form" onsubmit="return false">
+            <div class="modal-content">
+                <h4>Suspend User Option: (1) or (2)</h4>
+                <div class="row">
+                    <h6>1) Temporary</h6>
+                    <div class="input-field col s6">
+                        <input type="text" class="datepicker" id="suspend_date" name="suspend_date" placeholder="">
+                        <label for="suspend_date">Select expiration date</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" class="timepicker" id="suspend_time" name="suspend_time" placeholder="">
+                        <label for="suspend_time">Select expiration time</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <h6>2) Permanently</h6>
+                    <div class="col s12">
+                        <label>
+                            <input type="checkbox" id="suspend_perma" name="suspend_perma" />
+                            <span>Indefinitely</span>
+                        </label>
+                        <br /><br />
+                    </div>
+                </div>
+                <div class="row">
+                    <h6>Comment</h6>
+                    <div class="input-field col s12">
+                        <textarea id="suspend_comment" name="comment" class="materialize-textarea" placeholder="The WWW (What When Where) of reasoning"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" onclick="$(this).closest('form').submit()" class="waves-effect waves-blue btn-flat blue lighten-3">Apply</a>
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat red lighten-3">Cancel</a>
+            </div>
+        </form>
+    </div>
     <!-- END: Footer-->
     <!-- BEGIN JS-->
     <script>
@@ -896,10 +939,14 @@
             url: ''
         };
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.modal');
             var options = { dismissible: false }
             modals = M.Modal.init(elems, options);
+
+            elems = document.querySelectorAll('.timepicker');
+            options = { container: "body" }
+            timepicker = M.Timepicker.init(elems, options);
         });
 
         function htmlEncode(str) {
@@ -907,8 +954,8 @@
         }
 
         function timeDifference(date1, date2) {
-            var seconds = Math.floor((date1 - date2)/1000);
-            var minutes = Math.floor(seconds/60);
+            var seconds = Math.floor((date1 - date2) / 1000);
+            var minutes = Math.floor(seconds / 60);
             var hours = Math.floor(minutes / 60);
             var days = Math.floor(hours / 24);
             var minutes_diff = minutes;
@@ -971,11 +1018,12 @@
                         timeout: 600000,
                         success: function (data) {
                             setTimeout(function () {
-                            socket.emit('update_text', {
-                                id: tempFilename.id,
-                                msg: '<a href="static/files/'+tempFilename.url+'" target="_blank" contentEditable=false>'+tempFilename.html+'</a>',
-                                id_name: tempFilename.name
-                            });}, 2000);
+                                socket.emit('update_text', {
+                                    id: tempFilename.id,
+                                    msg: '<a href="static/files/' + tempFilename.url + '" target="_blank" contentEditable=false>' + tempFilename.html + '</a>',
+                                    id_name: tempFilename.name
+                                });
+                            }, 2000);
                             /*setTimeout(function () {
                                 $('#' + tempFilename.name).html();
                                 console.log("SUCCESS : ", data.name);
@@ -1011,14 +1059,14 @@
         function onMessage(data) {
             //console.log(data)
             var t = '';
-            var msg = '<p'+ ((data.visible) ? '>'+data.body.msg : ' class="grey-text text-darken-2">Message deleted by user.');
+            var msg = '<p' + ((data.visible) ? '>' + data.body.msg : ' class="grey-text text-darken-2">Message deleted by user.');
 
             if (data.track) {
                 tempFilename.id = data.id
             }
 
             if (current_user.id != data.user_id) {
-                t = '<div class="chat animated fadeInDown unselectable" id="m_'+data.id+'"><div class="chat-avatar"><a class="avatar"><img src="/static/images/avatar/' + data.imgUrl + '" class="circle" alt="avatar" /></a></div>' +
+                t = '<div class="chat animated fadeInDown unselectable" id="m_' + data.id + '"><div class="chat-avatar"><a class="avatar"><img src="/static/images/avatar/' + data.imgUrl + '" class="circle" alt="avatar" /></a></div>' +
                     '<div class="chat-body"><div class="chat-text replied">' + msg + '</p></div></div></div>';
                 $("#chat-area").append(t);
 
@@ -1028,7 +1076,7 @@
                 var timeDiff = timeDifference(current_time, new Date(data.timestamp + ' UTC'));
                 var delete_option = (timeDiff.minutes_diff <= max_minutes) ? '<p class="opt-text blue lighten-4" data-id="' + data.id + '" data-timestamp="' + data.timestamp + '"><a class="material-icons black-text medium" href="#">clear</a></p>' : '';
 
-                t = '<div class="chat chat-right options-button animated fadeInDown" id="m_'+data.id+'"><div class="chat-body"><div class="chat-text line-option">' + msg + '</p>'+delete_option+'</div></div></div>';
+                t = '<div class="chat chat-right options-button animated fadeInDown" id="m_' + data.id + '"><div class="chat-body"><div class="chat-text line-option">' + msg + '</p>' + delete_option + '</div></div></div>';
                 $("#chat-area").append(t);
             }
 
@@ -1037,22 +1085,22 @@
         }
 
         //Prevent line/paragraph breaks in contentEditable
-        $('[contenteditable=true]').on('paste', function(e) {
+        $('[contenteditable=true]').on('paste', function (e) {
             //strips elements added to the editable tag when pasting
             var $self = $(this);
-            setTimeout(function() {$self.html($self.text());}, 0);
-        }).on('keypress', function(e) {
-             //ignores enter key
-             var code = e.keyCode || e.which;
-             return code != 13;
+            setTimeout(function () { $self.html($self.text()); }, 0);
+        }).on('keypress', function (e) {
+            //ignores enter key
+            var code = e.keyCode || e.which;
+            return code != 13;
         });
 
         $('#chat-input').keyup(function (e) {
             var code = e.keyCode || e.which;
-			if (code == 13) {
-				enter_chat();
+            if (code == 13) {
+                enter_chat();
             }
-		});
+        });
 
         function scrollToBottom(data) {
             $msgs.scrollTop($(".chat-area > .chats").height());
@@ -1115,7 +1163,7 @@
         };
 
         function displayNotification(msg) {
-            M.toast({html: msg, classes: 'rounded', displayLength: 1500 })
+            M.toast({ html: msg, classes: 'rounded', displayLength: 1500 })
         }
 
         $(document).ready(function () {
@@ -1206,6 +1254,8 @@
             socket.on('hide_message', onHideMessage);
 
             socket.on('updated_text', onUpdatedText);
+
+            socket.on('suspend_broadcast', onSuspendBroadcast);
 
             socket.on('drawing', onDrawingEvent);
 
@@ -1299,6 +1349,13 @@
                     color: current.color
                 });
             });
+
+            function onSuspendBroadcast(data) {
+                if (current_user.id == data.id && data.type) {
+                    alert('Your account has been suspended.')
+                    window.location.href = '/logout'
+                }
+            }
 
             function onUpdatedText(data) {
                 $('#' + data.id_name).html(data.msg);
@@ -1641,10 +1698,18 @@
                 });
 
                 $.getJSON("/channel/" + b64name, function (data) {
-                    if (data.type > 0 && allfriends.indexOf(data.type)) 
+                    if (data.type > 0 && allfriends.indexOf(data.type))
                         $('#chat-add-friend').removeClass('hide').show().attr("data-id", data.type);
                     else
                         $('#chat-add-friend').removeClass('hide').hide();
+
+                    if (data.type > 0) {
+                        $('#chat-options').show();
+                        current_person.id = data.type;
+                        current_person.fullName = data.name;
+                        current_person.title = data.title;
+                    }else
+                        $('#chat-options').hide();
 
                     $('#chat-avatar').attr("src", "static/images/avatar/" + data.imgUrl);
                     $('#chat-name').text(data.name);
@@ -1665,7 +1730,6 @@
                     //$.ajax({ url: "/ch/" + id + "/"+ b64name }).done(function (data) { console.log(data) });
                     $('#chat-area').html('');
 
-
                     loadChatMessages(b64name);
 
                     $('.open-chat').removeClass('active ' + current_user.selectedTheme);
@@ -1677,6 +1741,7 @@
                             this.classList.add(strs[i]);
                         }
                         this.classList.add('active');
+
                     } else if (this.dataset.target == "slide-out-chat") {
                         $('#sidenav_m' + id).addClass('active ' + current_user.selectedTheme);
                     }
@@ -1703,7 +1768,7 @@
                     socket.emit('update_stats');
                 });
             });
-            
+
             $("#file-upload-tigger").on('click', function (e) {
                 document.getElementById("file-upload").click();
             });
@@ -1727,7 +1792,7 @@
                 //console.log(tempFilename.name)
                 //console.log(file)
             });
-            
+
             $("#chat-input").on('click', '.attachment-clear', function (e) {
                 e.preventDefault();
                 $("#chat-input").text('');
@@ -1770,6 +1835,52 @@
                     $(this).addClass('hide');
                 //console.log('difference = ' + data.days + ' days ' + data.hours + ' hours ' + data.minutes + ' minutes ' + data.seconds + ' seconds');
             });
+
+            $('#suspend-modal').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                onOpenEnd: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    $.getJSON("/gsd/" + current_person.id, function (data) {
+                        if (data.timestamp) { 
+                            var date = new Date(data.timestamp + ' UTC')
+                            var ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+                            $('#suspend_date').val(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate())
+                            $('#suspend_time').val(date.getHours() + ':' + date.getMinutes() + ' ' + ampm)
+                        }
+                        $('#suspend_comment').val(data.comment)
+                        $('#suspend_perma').prop(data.permanent)
+                    });
+                }
+            });
+
+            $('#suspension-form').submit(function () {
+                //type = $('#suspend_perma').prop('checked')
+                //console.log(current_person)
+                //socket.emit('suspend_perma', { id: current_person.id, type: type });
+                var form = $('#suspension-form')[0];
+                var data = new FormData(form);
+
+                timestamp = new Date(data.get('suspend_date') + ' ' + data.get('suspend_time'));
+                timestamp = new Date(timestamp.getTime() + timestamp.getTimezoneOffset() * 60000)
+                data.append('timestamp', timestamp.getTime() / 1000)
+
+                $.ajax({
+                    type: "POST",
+                    url: "/sfs/"+current_person.id,
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        M.toast({html: data, classes: 'rounded'});
+                        socket.emit('suspend_perma', { id: current_person.id });
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    }
+                });
+                $('#suspend-modal').modal('close');
+            })
 
             // init run
             init();

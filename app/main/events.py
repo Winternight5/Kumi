@@ -6,6 +6,7 @@ from flask_login import current_user, login_required
 from .. import socketio, db
 from . import main, routes
 from .models import User, Post, Friend, Channel
+from datetime import datetime, date, timedelta
 	
 clients = []
 datas = {}
@@ -172,6 +173,26 @@ def changeChannel(data):
     session['channel_id'] = channel_id
 
     join_room(currentRoom)
+
+@socketio.on('suspend_perma', namespace='/')
+def suspend_perma(data):
+    '''
+    Suspend user permanently
+    ---------------
+    '''
+    if current_user.admin_level <= 1:
+        user = User.query.filter_by(id=data['id']).first()
+        type = None
+
+        if user.block_login is not None:
+            type = 1
+        elif user.suspend_date is not None and user.suspend_date > datetime.utcnow():
+            type = 1
+
+        emit('suspend_broadcast', {
+            'id': data['id'],
+            'type': type
+        }, broadcast=True)
 
 @socketio.on('text', namespace='/')
 def text(data):

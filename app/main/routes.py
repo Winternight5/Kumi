@@ -70,8 +70,8 @@ def welcome():
     data = {}
 
     form=LoginForm()
-    email = "admin@test.com"
-    data['email'] = pybase64.urlsafe_b64encode(email.encode()).decode()
+    #email = "admin@test.com"
+    #data['email'] = pybase64.urlsafe_b64encode(email.encode()).decode()
 
     return render_template('welcome.html', form=form, data=data)
 
@@ -104,7 +104,26 @@ def index():
     *login required*
 
     :return: Display all of user's notes
+
+    if current_user.block_login:
+        logout_user()
+        return redirect(url_for('main.welcome'))
+
+    if current_user.suspend_date is not None and current_user.suspend_date > datetime.utcnow():
+        logout_user()
+        return redirect(url_for('main.welcome'))
     '''
+
+    if current_user.block_login:
+        flash('Your account has been permanently suspended')
+        logout_user()
+        return redirect(url_for('main.welcome'))
+
+    if current_user.suspend_date is not None and current_user.suspend_date > datetime.utcnow():
+        flash('Your account has been temporary suspended until '+str(current_user.suspend_date.strftime('%b %d, %Y at %I:%M %p')))
+        logout_user()
+        return redirect(url_for('main.welcome'))
+
     global theme
     current_user.fullname = current_user.firstname+' '+current_user.lastname
     current_user.online_status = online_status(current_user.status)
@@ -348,6 +367,52 @@ def getJSONMessages(id):
     return json.dumps(chats)
 
 # -------------------------------------------------------------------------------------------------------------------------
+# ----- Suspension submit
+# -------------------------------------------------------------------------------------------------------------------------
+@main.route('/sfs/<string:id>', methods=['POST'])
+@login_required
+def sfs(id):
+    if request.method == 'POST':
+        user = User.query.filter_by(id=id).first()
+        # check if the post request has date and time filled
+        if request.form['suspend_date'] != '' and request.form['suspend_time'] != '':
+            timestamp = datetime.fromtimestamp(int(request.form['timestamp']))
+            user.suspend_date = timestamp
+        else:
+            user.suspend_date = None
+            
+        if 'suspend_perma' in request.form and request.form['suspend_perma'] == 'on':
+            user.block_login = 1
+        else:
+            user.block_login = None
+
+        if request.form['comment'] != '':
+            user.comment = str(request.form['comment'])
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            print("FAILED entry: "+str(e));
+            
+        return "Suspension update applied."
+        
+    return ""
+# -------------------------------------------------------------------------------------------------------------------------
+# ----- Suspension submit
+# -------------------------------------------------------------------------------------------------------------------------
+@main.route('/gsd/<string:id>')
+@login_required
+def gsd(id):
+    user = User.query.filter_by(id=id).first()
+
+    data = {
+        'permanent': 'checked' if user.block_login else '',
+        'timestamp': user.suspend_date,
+        'comment': user.comment
+        }
+        
+    return data
+# -------------------------------------------------------------------------------------------------------------------------
 # ----- User login & Registation / Logout
 # -------------------------------------------------------------------------------------------------------------------------
 @main.route('/login', methods=['GET', 'POST'])
@@ -396,6 +461,14 @@ def login():
                 flash('Invalid username or password')
                 return redirect(url_for('main.welcome'))
             
+            if user.block_login:
+                flash('Your account has been permanently suspended')
+                return redirect(url_for('main.welcome'))
+
+            if user.suspend_date is not None and user.suspend_date > datetime.utcnow():
+                flash('Your account has been temporary suspended until '+str(user.suspend_date.strftime('%b %d, %Y at %I:%M %p'))+' GMT')
+                return redirect(url_for('main.welcome'))
+
             user.last_login = datetime.utcnow()
             db.session.commit()
             #login_user(user, remember=form.remember_me.data)
@@ -509,8 +582,8 @@ def fillCheck():
 
 def addadmin():
     u1, u2, u3, u4, u5, u6, u7 = users = [
-    User(firstname='admin', lastname='sidenote', email='admin', admin_level='0', access_type='999'),
-    User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='0', access_type='999'),
+    User(firstname='admin', lastname='sidenote', email='admin', admin_level='1', access_type='999'),
+    User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='1', access_type='999'),
     User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, title='Tai\'s Girlfriend (Girl Bot)', imgUrl='avatar-10.png', access_type='1'),
     User(firstname='Nathaniel', lastname='Wallace', email='nathaniel@mail.com', status=1, title='UX Designer', imgUrl='avatar-2.png', access_type='2'),
     User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='4'),

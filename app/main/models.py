@@ -23,8 +23,10 @@ class User(UserMixin, db.Model):
     imgUrl = db.Column(db.Text)
     status = db.Column(db.Integer)
     recent_channel = db.Column(db.Integer)
+    block_login = db.Column(db.Integer)
     last_login = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    #suspend_date = db.Column(db.DateTime)
+    suspend_date = db.Column(db.DateTime)
+    comment = db.Column(db.Text)
 
     chats = db.relationship('Post', backref='user', lazy='dynamic')
     channel_owner = db.relationship('Channel', backref='channel', lazy='dynamic')
