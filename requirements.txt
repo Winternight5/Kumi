@@ -1,5 +1,6 @@
 cffi>=1.12.3
 Click>=7.0
+email-validator>=1.0.5
 eventlet==0.17.4
 Flask>=1.1.1
 flask-heroku>=0.1.9
