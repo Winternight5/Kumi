@@ -1005,8 +1005,7 @@
 
                     var form = $('#fileUploadForm')[0];
                     var data = new FormData(form);
-                    //console.log(data)
-                    //return false;
+
                     $.ajax({
                         type: "POST",
                         enctype: 'multipart/form-data',
@@ -1024,10 +1023,6 @@
                                     id_name: tempFilename.name
                                 });
                             }, 2000);
-                            /*setTimeout(function () {
-                                $('#' + tempFilename.name).html();
-                                console.log("SUCCESS : ", data.name);
-                            }, 2000);*/
                         },
                         error: function (e) {
                             console.log("ERROR : ", e);
@@ -1040,19 +1035,6 @@
                 });
                 $(".message").html("");
                 $("#file-upload").val("");
-                /*
-                var t = '';
-
-                if (lastMsg == current_user) {
-                    t = '<div class="chat-text"><p>'+e+"</p></div>";
-                    $(".chat:last-child .chat-body").append(t);
-                } else {
-                    t = '<div class="chat chat-right"><div class="chat-body"><div class="chat-text"><p>' + e + '</p></div></div></div>';
-                    $("#chat-area").append(t);
-                }
-
-                $(".message").val("");
-                scrollToBottom(current_user);*/
             }
         }
 
