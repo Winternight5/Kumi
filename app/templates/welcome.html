@@ -35,23 +35,17 @@
           line-height: 1.5;
         }
 
-        /*
-         *  STYLE 1
-         */
-
-        body::-webkit-scrollbar-track
-        {
+        body::-webkit-scrollbar-track {
 	        background-color: #212121;
+            opacity: 0;
         }
 
-        body::-webkit-scrollbar
-        {
+        body::-webkit-scrollbar {
 	        width: 12px;
 	        background-color: #F5F5F5;
         }
 
-        body::-webkit-scrollbar-thumb
-        {
+        body::-webkit-scrollbar-thumb {
 	        border-radius: 10px;
 	        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	        background-color: #1565c0;
@@ -60,13 +54,24 @@
         .header-top {
           text-align: center;
           position: relative;
-          height: 105vh;
           padding-bottom: 80px;
           color: #fff;
           overflow: hidden;
+          border-left: 12px double #1565c0;
         }
+
+        #section_outline {
+          border-left: 12px double #ffb300; 
+          background: #fff;
+        }
+
+        #section_login {
+          border-left: 12px double #388e3c;
+          color: #454545;
+          background: #f1f1f1;
+        }
+
         .header-top h1 {
-          margin: 50px 0 20px;
           font-family: "Montserrat", sans-serif;
           font-size: 35px;
         }
@@ -79,7 +84,6 @@
           margin-right: auto;
           font-size: 1em;
           font-weight: 400;
-          padding: 20px;
         }
         @media only screen and (min-width: 37.5em) {
           .header-top h1 {
@@ -102,89 +106,15 @@
         }
 
         .section {
-          padding: 60px 0;
-          height: 95vh;
+          min-height: 105vh;
+          padding: 4vw;
         }
+
         .section__title {
-          font-size: 24px;
           color: #3b3b58;
           text-align: center;
-          font-family: "Montserrat", sans-serif;
-          margin: 14px 0;
-        }
-        .section__intro {
-          display: block;
-          text-align: center;
-          margin: 0 5% 30px;
-        }
-        @media only screen and (min-width: 43.75em) {
-          .section__intro {
-            margin-left: 15%;
-            margin-right: 15%;
-          }
-        }
-        .section--cta {
-          color: #454545;
-          background: #f1f1f1;
-        }
-
-        .box {
-          display: -webkit-box;
-          display: flex;
-          -webkit-box-flex: 1;
-                  flex: 1 0 100%;
-          margin-bottom: 20px;
-          background: #f9f9f9;
-        }
-        .box__grid {
-          display: -webkit-box;
-          display: flex;
-          flex-wrap: wrap;
-          -webkit-box-pack: justify;
-                  justify-content: space-between;
-        }
-        .box__title {
-          font-family: "Montserrat", sans-serif;
-        }
-        .box__more {
-          color: #ff4e5c;
-        }
-        .box__content {
-          color: #454545;
-          text-align: center;
-          padding: 20px;
-        }
-        .box__content > i {
-          color: #3b3b58;
-        }
-        .box__content:hover .box__more {
-          color: #ff3545;
-        }
-        .box__content:hover .box__more i {
-          padding-left: 4px;
-          -webkit-transition: all .2s ease-in-out;
-          transition: all .2s ease-in-out;
-        }
-        @media only screen and (min-width: 43.75em) {
-          .box {
-            -webkit-box-flex: 0;
-                    flex: 0 0 30%;
-          }
-        }
-
-        .btn {
-          color: #fff;
-          font-family: "Montserrat", sans-serif;
-          text-align: center;
-          display: block;
-          margin: 0 auto;
-          max-width: 300px;
-          padding: 12px 18px;
-          border-radius: 100px;
-          background: #ff4e5c;
-        }
-        .btn:hover {
-          background: #ff3545;
+          font: 700 60px/1 "Dancing Script", cursive;
+          padding-bottom: 3vh;
         }
 
         .footer {
@@ -196,145 +126,144 @@
           opacity: .65;
         }
 
+        .box-glow {
+            box-shadow: 0 0 4px 4px #0d47a1;
+        }
     </style>
 </head>    
 <body>
-    <div class="fixed-action-btn">
+    <div class="fixed-action-btn left-button">
         <a class="btn-floating btn-large blue darken-3">
             <i class="large material-icons">menu</i>
         </a>
         <ul>
-            <li><a class="btn-floating grey darken-2 scroll-trigger" data-id="#section_home"><i class="material-icons">home</i></a></li>
-            <li><a class="btn-floating blue scroll-trigger" data-id="#section_outline"><i class="material-icons">lightbulb</i></a></li>
-            <li><a class="btn-floating amber darken-2 scroll-trigger" data-id="#section_login"><i class="material-icons">person</i></a></li>
+            <li><a class="btn-floating blue darken-2 scroll-trigger" href="#section_home"><i class="material-icons">home</i></a></li>
+            <li><a class="btn-floating amber darken-2 scroll-trigger" href="#section_outline"><i class="material-icons">lightbulb</i></a></li>
         </ul>
     </div>
 
-    <section class="row header-top grey darken-4" id="section_home">
-        <div class="col s12 animated zoomIn">
-            <h1><span>Welcome to</span></h1>
-        </div>
-        <div class="col s12 l4 offset-l4">
-            <img src="{{url_for('static', filename='images/logo_transparent.png')}}" class="responsive-img animated zoomIn">
-        </div>
-        <div class="col s12 animated zoomIn">
-            <h2>Team Messaging for your organization.</h2>
-        </div>
-    </section>
-    <section class="section" id="section_outline">
-        <div class="wrapper">
-            <h2 class="section__title">Kumi's Objective</h2>
-            <div class="row">
-                <div class="col s12 m4 l4">
-                    <div class="card small">
-                        <div class="card-content center">
-                            <p><i class="fa fa-comment-dots fa-3x blue-grey-text"></i></p>
-                            <span class="card-title blue-text text-darken-3">Communication</span>
-                            <p>Kumi is a prototype web application designed to support group communication, where members can communicate and exchange information in real time</p>
+    <div class="section header-top grey darken-4" id="section_home">
+        <div class="row">
+            <div class="col s12 l4 offset-l1 animated fadeIn">
+                <h1><span>Welcome to</span></h1>
+                <img src="{{url_for('static', filename='images/logo_transparent.png')}}" class="responsive-img animated zoomIn">
+                <h2>Messaging for your Team</h2>
+            </div>
+            <div class="col s12 l4 offset-l1"><br /><br /><br /><br /></div>
+            <div class="col s12 l4 offset-l2 animated fadeIn">
+                <div class="card grey darken-4 box-glow">
+                    <form method="post" action="/login" novalidate>
+                        <div class="card-content center-align">
+                            <span class="card-title white-text" id="form_title">
+                                Team 10<br />
+                                <!-- radio options and their labels-->
+                                <label id="label-si" for="sign-in" class="radio-label waves-effect waves-light btn-flat blue white-text darken-2"><input id="sign-in" type="radio" name="login-option" value="sign-in" checked />Sign In</label>
+                                {% if data and data.email %}<label id="label-su" for="sign-up" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="sign-up" type="radio" name="login-option" value="sign-up" />Sign Up</label>{% endif %}
+                                <label id="label-rl" for="reset-login" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="reset-login" type="radio" name="login-option" value="reset-login" />Reset</label>
+                            </span>
+                            <div class="center-align indigo-text">
+                                <fieldset>
+                                    <!-- the value attribute will be sent to the server-->
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    <ul class="">
+                                        {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {% endwith %}
+
+                                    {{ form.hidden_tag() }}
+                                    <div class="input-field col s12 sign-in sign-up reset-login">
+                                        {{ form.email(id="email") }}
+                                        <label for="email">Email</label>
+                                        {% for error in form.email.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="input-field col s12 sign-up">
+                                        {{ form.firstname(id="firstname") }}
+                                        <label for="firstname">First Name</label>
+                                        {% for error in form.firstname.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="input-field col s12 sign-up">
+                                        {{ form.lastname(id="lastname") }}
+                                        <label for="lastname">Last Name</label>
+                                        {% for error in form.lastname.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="input-field col s12 sign-in sign-up">
+                                        {{ form.password(id="password1") }}
+                                        <label for="password1">Password</label>
+                                        {% for error in form.password.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="input-field col s12 sign-up">
+                                        {{ form.password2( id="password2") }}
+                                        <label for="password2">Re-Enter Password</label>
+                                        {% for error in form.password2.errors %}
+                                        <span class="error">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+                                </fieldset>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col s12 m4 l4">
-                    <div class="card small">
-                        <div class="card-content center">
-                            <p><i class="fa fa-lightbulb fa-3x yellow-text text-darken-2"></i></p>
-                            <span class="card-title blue-text text-darken-3">Collabroation</span>
-                            <p>Our team aims to provides several additional features that are specifically designed for collaborative works.</p>
+                        <div class="card-action center-align">
+                            <input class="waves-effect waves-light btn-flat blue darken-2 white-text" id="submit" name="submit" type="submit" value="Sign In">
                         </div>
-                    </div>
-                </div>
-                <div class="col s12 m4 l4">
-                    <div class="card small">
-                        <div class="card-content center">
-                            <p><i class="fa fa-mobile fa-3x blue-text"></i></p>
-                            <span class="card-title blue-text text-darken-3">Design</span>
-                            <p>Material Design by Google framework provides a single underlying responsive system across all platformsallowing for a more unified user experience.</p>
-                        </div>
-                        <div class="card-action center">
-                            <a class="box__content" href="https://materializecss.com/" target="_blank">Read more</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-    <div class="section section--cta" id="section_login">
-        <div class="wrapper">
-            <div class="row">
-                <div class="col s12 l6 offset-l3">
-                    <div class="card">
-                        <form method="post" action="/login" novalidate>
-                            <div class="card-content white-text center-align">
-                                <span class="card-title black-text">
-                                    Team 10<br />
-                                    <!-- radio options and their labels-->
-                                    <label id="label-si" for="sign-in" class="radio-label waves-effect waves-light btn-flat blue white-text"><input id="sign-in" type="radio" name="login-option" value="sign-in" checked />Sign In</label>
-                                    {% if data and data.email %}<label id="label-su" for="sign-up" class="radio-label waves-effect waves-light btn-flat"><input id="sign-up" type="radio" name="login-option" value="sign-up" />Sign Up</label>{% endif %}
-                                    <label id="label-rl" for="reset-login" class="radio-label waves-effect waves-light btn-flat"><input id="reset-login" type="radio" name="login-option" value="reset-login" />Reset</label>
-                                </span>
-                                <div class="center-align indigo-text">
-                                    <fieldset>
-                                        <!-- the value attribute will be sent to the server-->
-                                        {% with messages = get_flashed_messages() %}
-                                        {% if messages %}
-                                        <ul class="">
-                                            {% for message in messages %}
-                                            <li>{{ message }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                        {% endwith %}
-
-                                        {{ form.hidden_tag() }}
-                                        <div class="input-field col s12 sign-in sign-up reset-login">
-                                            {{ form.email(id="email") }}
-                                            <label for="email">Email</label>
-                                            {% for error in form.email.errors %}
-                                            <span class="error">[{{ error }}]</span>
-                                            {% endfor %}
-                                        </div>
-
-                                        <div class="input-field col s12 sign-up">
-                                            {{ form.firstname(id="firstname") }}
-                                            <label for="firstname">First Name</label>
-                                            {% for error in form.firstname.errors %}
-                                            <span class="error">[{{ error }}]</span>
-                                            {% endfor %}
-                                        </div>
-
-                                        <div class="input-field col s12 sign-up">
-                                            {{ form.lastname(id="lastname") }}
-                                            <label for="lastname">Last Name</label>
-                                            {% for error in form.lastname.errors %}
-                                            <span class="error">[{{ error }}]</span>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="input-field col s12 sign-in sign-up">
-                                            {{ form.password(id="password1") }}
-                                            <label for="password1">Password</label>
-                                            {% for error in form.password.errors %}
-                                            <span class="error">[{{ error }}]</span>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="input-field col s12 sign-up">
-                                            {{ form.password2( id="password2") }}
-                                            <label for="password2">Re-Enter Password</label>
-                                            {% for error in form.password2.errors %}
-                                            <span class="error">[{{ error }}]</span>
-                                            {% endfor %}
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            </div>
-                            <div class="card-action center-align">
-                                <input class="waves-effect waves-light btn-flat blue white-text" id="submit" name="submit" type="submit" value="Sign In">
-                            </div>
-                        </form>
+    </div>
+    <div class="section" id="section_outline">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <h2 class="section__title">Kumi's Objective</h2>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card small">
+                    <div class="card-content center">
+                        <p><i class="fa fa-comment-dots fa-3x blue-grey-text"></i></p>
+                        <span class="card-title blue-text text-darken-3">Communication</span>
+                        <p>Kumi is a prototype web application designed to support group communication, where members can communicate and exchange information in real time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card small">
+                    <div class="card-content center">
+                        <p><i class="fa fa-lightbulb fa-3x yellow-text text-darken-2"></i></p>
+                        <span class="card-title blue-text text-darken-3">Collabroation</span>
+                        <p>Our team aims to provides several additional features that are specifically designed for collaborative works.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card small">
+                    <div class="card-content center">
+                        <p><i class="fa fa-mobile fa-3x blue-text"></i></p>
+                        <span class="card-title blue-text text-darken-3">Design</span>
+                        <p>Material Design by Google framework provides a single underlying responsive system across all platformsallowing for a more unified user experience.</p>
+                    </div>
+                    <div class="card-action center">
+                        <a class="box__content" href="https://materializecss.com/" target="_blank">Read more</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--<section class="section scrollspy" id="section_login">
+        <div class="row">
+        </div>
+    </section>-->
     <div class="footer grey darken-4">
         <p>&copy; 2020 Kumi</p>
     </div>
@@ -345,12 +274,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         /* Script initialization */
+
         $(document).ready(function () {
             /* Materialize components initialization */
+
             /* Init functions at start */
-            $(document).ready(function(){
-                $('.fixed-action-btn').floatingActionButton();
-            });
+            $('.fixed-action-btn').floatingActionButton({ direction: 'bottom' });
 
             // Hide all input fields
             $('.sign-in, .sign-up, .reset-login').css('display', 'none');
@@ -366,20 +295,26 @@
                 });
 
                 if ($(this).prop('checked')) {
-                    $('input[type=radio]').parent('label').removeClass('blue').removeClass('white-text');
-                    $(this).parent('label').addClass('blue').addClass('white-text');
-                    $('html, body').animate({
-                        scrollTop: $("#section_login").offset().top
-                    }, 2000);
+                    $('input[type=radio]').parent('label').removeClass('blue');
+                    $(this).parent('label').addClass('blue');
+                    /*$('html, body').animate({
+                        scrollTop: $("#form_title").offset().top
+                    }, 2000);*/
                 }
                 applyButtonText($(this));
             });
 
-            $(".scroll-trigger").click(function () {
-                divID = $(this).attr('data-id')
-                $('html, body').animate({
-                    scrollTop: $(divID).offset().top
-                }, 650);
+            $(".scroll-trigger").on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var section_class = $(this).attr('data-track');
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 650, function(){
+                        window.location.hash = hash;
+                    });
+                }
             });
 
             // applies the apprproiate "submit" text based upon the selected radio/login option
