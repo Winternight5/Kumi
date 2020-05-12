@@ -1151,7 +1151,7 @@
         $(document).ready(function () {
             //var socket = io();
             // Socket IO Stuff
-            socket = io.connect('http://' + document.domain + ':' + location.port + '/'); //, {transports: ['websocket']}
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/', { transports: ['websocket'] }); //, {transports: ['websocket']}
 
             socket.on('connect', function () {
                 socket.emit('joined');
