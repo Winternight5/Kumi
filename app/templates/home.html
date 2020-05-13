@@ -256,7 +256,8 @@
                     </ul>
                     <!--chat-option-dropdown-->
                     <ul class="dropdown-content" id="chat-option-dropdown">
-                        {% if current_user.admin_level == 1 %}<li><a class="black-text modal-trigger" href="#suspend-modal"><i class="material-icons">layers_clear</i> Suspension</a></li>{% endif %}
+                        {% if current_user.admin_level == 0 %}
+                        <li><a class="black-text modal-trigger" href="#suspend-modal"><i class="material-icons">layers_clear</i> Suspension</a></li>{% endif %}
                     </ul>
                 </div>
                 <nav class="display-none search-sm">
@@ -364,37 +365,39 @@
 
             <!-- Channels -->
             <li class="navigation-header"><a class="navigation-header-text">Channels</a><i class="navigation-header-icon material-icons">more_horiz</i></li>
-            {% for channel in channels %}
+            {% for channel in all_channels %}
             <li class="bold">
-                <a class="waves-effect waves-cyan open-chat {{channel.active}} gradient-shadow" href="#" data-link="{{channel.b64name}}" data-type="menu"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">{{channel.name}}</span></a>
+                <a class="waves-effect waves-cyan open-chat {{channel.active}} gradient-shadow hide channel-item" href="#" data-id="{{channel.id}}" data-link="{{channel.b64name}}" data-type="menu"><i class="material-icons blue-text">chat_bubble_outline</i><span class="menu-title" data-i18n="Chat">{{channel.name}}</span></a>
             </li>
             {% endfor %}
 
             <!--<li class="bold">
-                <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">More</span><span class="badge badge pill orange float-right mr-10">3</span></a>
-                <div class="collapsible-body">
-                    <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+        <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">More</span><span class="badge badge pill orange float-right mr-10">3</span></a>
+        <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
 
-                        <li class="bold">
-                            <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Design-Team</span></a>
-                        </li>
-                        <li class="bold">
-                            <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Marketing-Team</span></a>
-                        </li>
-                        <li class="bold">
-                            <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Human-Resources</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </li>-->
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Design-Team</span></a>
+                </li>
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Marketing-Team</span></a>
+                </li>
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="#"><i class="material-icons orange-text">lock_outline</i><span class="menu-title" data-i18n="Chat">#Human-Resources</span></a>
+                </li>
+            </ul>
+        </div>
+    </li>-->
             <!-- Direct Message -->
             <li class="navigation-header">
                 <a class="navigation-header-text">Direct Message</a><i class="navigation-header-icon material-icons">more_horiz</i>
             </li>
             {% for friend in members %}
+            {% if friend.id != current_user.id %}
             <li id="member_{{friend.id}}" class="bold member_{{friend.id}} hide">
                 <a id="sidenav_m{{friend.id}}" class="waves-effect waves-cyan open-chat gradient-shadow" href="#" data-link="{{friend.b64name}}" data-id="{{friend.id}}" data-type="menu"><i><span class="avatar-status avatar-off"><img src="{{url_for('static', filename='images/avatar/'+friend.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title">{{friend.fullname}} </span></a>
             </li>
+            {% endif %}
             {% endfor %}
 
             <!-- Contacts -->
@@ -408,18 +411,10 @@
             <li class="navigation-header">
                 <a class="navigation-header-text">Misc </a><i class="navigation-header-icon material-icons">more_horiz</i>
             </li>
+            {% if current_user.admin_level == 0 %}
+            <li class="bold"><a class="waves-effect waves-cyan modal-trigger" href="JavaScript:void(0)" data-target="manage-channel-modal"><i class="material-icons">dashboard</i><span class="menu-title" data-i18n="Support">Manage Channel</span></a></li>
+            {% endif %}
             <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
-            <!--<li class="bold">
-                <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Options</span></a>
-                <div class="collapsible-body">
-                    <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                        <!--<li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
-                        <li class="bold"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="settings" data-target="slide-out-right"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Settings" data-target="slide-out-right">Settings</span></a></li>
-                        <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
-                        <!--<li class="bold"><a class="waves-effect waves-cyan toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i><span class="menu-title" data-i18n="Support">Fullscreen</span></a></li>
-                    </ul>
-                </div>
-            </li>-->
 
             <li><a class="waves-effect waves-block waves-light" href="/logout"><i class="material-icons">keyboard_tab</i><span class="menu-title" data-i18n="Support">Logout<span></a></li>
         </ul>
@@ -463,7 +458,7 @@
                                                             <i class="material-icons">person_add</i>
                                                         </span>
                                                         <span class="sidenav-trigger tabs-activate hide-on-med-and-down" data-target="slide-out-chat"><i class="material-icons">launch</i></span>
-                                                        <i class="material-icons notification-button" data-target="chat-option-dropdown" id="chat-options">more_vert</i>
+                                                        {% if current_user.admin_level == 0 %}<i class="material-icons notification-button" data-target="chat-option-dropdown" id="chat-options">more_vert</i>{% endif %}
                                                         <!--<i class="material-icons hide-on-med-and-down hide" id="chat-delete">delete</i>-->
                                                     </span>
                                                 </div>
@@ -542,6 +537,7 @@
                                             <input class="header-search-input mt-4 mb-2" type="text" name="Search" placeholder="Search" autocomplete="off" />
                                             <ul class="collection right-sidebar-chat p-0 mb-0 unselectable" id="members_ul">
                                                 {% for member in members %}
+                                                {% if member.id != current_user.id %}
                                                 <li class="open-chat collection-item right-sidebar-chat-item display-flex avatar pl-5 pb-0 member_{{member.id}}" data-target="slide-out-chat" data-position="3" data-link="{{member.b64name}}" data-id="{{member.id}}">
                                                     <span class="avatar-status avatar-off avatar-50">
                                                         <img src="{{url_for('static', filename='images/avatar/'+member.imgUrl)}}" alt="avatar" />
@@ -553,6 +549,7 @@
                                                     </div>
                                                     <!--<span class="secondary-content medium-small">...</span>-->
                                                 </li>
+                                                {% endif %}
                                                 {% endfor %}
                                             </ul>
                                             <br /><br /><br />
@@ -811,7 +808,7 @@
                         Dark Mode
                         <label class="float-right">
                             <input class="menu-dark-checkbox" type="checkbox"
-                                   {% if settings.mode == 'true' %} checked{% endif %} /> <span class="lever ml-0"></span>
+                                   {% if settings.mode=='true' %} checked{% endif %} /> <span class="lever ml-0"></span>
                         </label>
                     </div>
                 </div>
@@ -845,11 +842,10 @@
         </div>
     </div>
     <!--/ Theme Customizer -->
-
     <!-- Modal Structure -->
     <div id="friend-request-modal" class="modal">
         <div class="modal-content">
-            <h4>Friend Request</h4>
+            <h5>Friend Request</h5>
             <h6 class="black-text"></h6>
         </div>
         <div class="modal-footer">
@@ -858,44 +854,99 @@
         </div>
     </div>
     <!-- Modal Structure -->
-    <div id="suspend-modal" class="modal">
+    <div id="suspend-modal" class="modal modal-fixed-footer">
         <form id="suspension-form" onsubmit="return false">
             <div class="modal-content">
-                <h4>Suspend User Option: (1) or (2)</h4>
+                <h5>Suspend User Options by (1) or (2)</h5>
                 <div class="row">
-                    <h6>1) Temporary</h6>
-                    <div class="input-field col s6">
-                        <input type="text" class="datepicker" id="suspend_date" name="suspend_date" placeholder="">
-                        <label for="suspend_date">Select expiration date</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input type="text" class="timepicker" id="suspend_time" name="suspend_time" placeholder="">
-                        <label for="suspend_time">Select expiration time</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <h6>2) Permanently</h6>
                     <div class="col s12">
-                        <label>
-                            <input type="checkbox" id="suspend_perma" name="suspend_perma" />
-                            <span>Indefinitely</span>
-                        </label>
-                        <br /><br />
+                        <h6>1) Temporary</h6>
+                        <div class="input-field col s6">
+                            <input type="text" class="datepicker" id="suspend_date" name="suspend_date" placeholder="">
+                            <label for="suspend_date">Select expiration date</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" class="timepicker" id="suspend_time" name="suspend_time" placeholder="">
+                            <label for="suspend_time">Select expiration time</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <h6>Comment</h6>
-                    <div class="input-field col s12">
-                        <textarea id="suspend_comment" name="comment" class="materialize-textarea" placeholder="The WWW (What When Where) of reasoning"></textarea>
+                    <div class="col s12">
+                        <h6>2) Permanently</h6>
+                        <div class="col s12">
+                            <label>
+                                <input type="checkbox" id="suspend_perma" name="suspend_perma" />
+                                <span>Indefinitely</span>
+                            </label>
+                            <br /><br />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <h6>Comment</h6>
+                        <div class="input-field col s12">
+                            <textarea id="suspend_comment" name="comment" class="materialize-textarea" placeholder="The WWW (What When Where) of reasoning"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" onclick="$(this).closest('form').submit()" class="waves-effect waves-blue btn-flat blue lighten-3">Apply</a>
+                <a href="#!" class="waves-effect waves-blue btn-flat blue lighten-3" onclick="$(this).closest('form').submit()">Apply</a>
                 <a href="#!" class="modal-close waves-effect waves-red btn-flat red lighten-3">Cancel</a>
             </div>
         </form>
     </div>
+
+    <!-- Modal Structure -->
+    <div id="manage-channel-modal" class="modal modal-fixed-footer">
+        <form id="channels-form" onsubmit="return false">
+            <div class="modal-content">
+                <h5>Channels Manager</h5>
+                <h6 class="black-text"></h6>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field">
+                            <i class="material-icons prefix">person</i>
+                            <input type="text" name="user" id="person-input" class="autocomplete" autocomplete="off" placeholder="Member First and Last Name" onchange="name_Search()">
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="row">
+                    <div class="col s12 l12 input-field ">
+                        <h6>Members List:</h6>
+                        <select class="icons" name="user">
+                            <option value="" disabled selected>Select a memer</option>
+                            {% for member in members %}
+                            <option value="{{member.id}}" data-icon="{{url_for('static', filename='images/avatar/'+member.imgUrl)}}">{{member.fullname}} - {{member.title}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>-->
+                <div class="row">
+                    <h6>Channel List:</h6>
+                    <div id="channel-list">
+                        {% for channel in all_channels %}
+                        {% if channel.id != 1 %}
+                        <div class="col s12">
+                            <label>
+                                <input type="checkbox" name="channels" id="channel_{{ channel.id }}" value="{{ channel.id }}" />
+                                <span class="black-text">{{ channel.name }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="waves-effect waves-blue btn-flat blue lighten-3" onclick="$(this).closest('form').submit()">Apply</a>
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat red lighten-3">Close</a>
+            </div>
+        </form>
+    </div>
+
     <!-- END: Footer-->
     <!-- BEGIN JS-->
     <script>
@@ -938,6 +989,11 @@
             html: '',
             url: ''
         };
+        var activeChannels = [
+            {% for channel in channels %}
+                '{{ channel.id }}',
+            {% endfor %}
+        ]
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.modal');
@@ -1148,9 +1204,33 @@
             M.toast({ html: msg, classes: 'rounded', displayLength: 1500 })
         }
 
+        function name_Search() {
+            $input = $('#person-input').val();
+
+            if ($input == '' || $input.split(' ').length != 2) return false;
+
+            $("#channels-form input:checkbox").prop('checked', '');
+
+            $.getJSON("/cm/" + encodeURIComponent($input), function (data) {
+                $.each(data, function (key, val) {
+                    //console.log()
+                    $("#channel_"+val.id).prop('checked','on');
+                });
+            });
+        }
+
         $(document).ready(function () {
             //var socket = io();
             // Socket IO Stuff
+            $('input.autocomplete').autocomplete({
+                data: {
+                {% for member in members %} 
+                "{{member.fullname}}": "{{url_for('static', filename='images/avatar/'+member.imgUrl)}}",
+                {% endfor %}
+                },
+                onAutocomplete: name_Search()
+            });
+
             socket = io.connect('http://' + document.domain + ':' + location.port + '/'); //, {transports: ['websocket']}
 
             socket.on('connect', function () {
@@ -1238,6 +1318,8 @@
             socket.on('updated_text', onUpdatedText);
 
             socket.on('suspend_broadcast', onSuspendBroadcast);
+
+            socket.on('channels_broadcast', onChannelsBroadcast);
 
             socket.on('drawing', onDrawingEvent);
 
@@ -1331,6 +1413,14 @@
                     color: current.color
                 });
             });
+
+            function onChannelsBroadcast(data) {
+                if (current_user.id == data.id) {
+                    displayNotification('Your channels list has been updated')
+                    activeChannels = data.channels
+                    loadChannels();
+                }
+            }
 
             function onSuspendBroadcast(data) {
                 if (current_user.id == data.id && data.type) {
@@ -1668,8 +1758,21 @@
                 $("#{{settings.chatarea}}").addClass('selected')
                 $("#{{settings.theme}}").addClass('selected')
 
+                loadChannels();
+
                 //$('#loading').fadeOut();
                 loadChatMessages(roomName)
+            }
+
+            function loadChannels() {
+                $('.channel-item').each(function (key, val) {
+                    channel_id = $(this).attr('data-id')
+                    if (activeChannels.indexOf(channel_id) >= 0)
+                        $(this).removeClass('hide')
+                    else
+                        if (channel_id != 1)
+                            $(this).addClass('hide')
+                });
             }
 
             function loadChatMessages(b64name) {
@@ -1822,7 +1925,7 @@
                 dismissible: true, // Modal can be dismissed by clicking outside of the modal
                 onOpenEnd: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
                     $.getJSON("/gsd/" + current_person.id, function (data) {
-                        if (data.timestamp) { 
+                        if (data.timestamp) {
                             var date = new Date(data.timestamp + ' UTC')
                             var ampm = date.getHours() >= 12 ? 'PM' : 'AM';
                             $('#suspend_date').val(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate())
@@ -1847,14 +1950,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/sfs/"+current_person.id,
+                    url: "/sfs/" + current_person.id,
                     data: data,
                     processData: false,
                     contentType: false,
                     cache: false,
                     timeout: 600000,
                     success: function (data) {
-                        M.toast({html: data, classes: 'rounded'});
+                        M.toast({ html: data, classes: 'rounded' });
                         socket.emit('suspend_perma', { id: current_person.id });
                     },
                     error: function (e) {
@@ -1862,7 +1965,38 @@
                     }
                 });
                 $('#suspend-modal').modal('close');
-            })
+            });
+
+            $('#channels-form').submit(function () {
+                //type = $('#suspend_perma').prop('checked')
+                //console.log(current_person)
+                //socket.emit('suspend_perma', { id: current_person.id, type: type });
+                var form = $(this)[0];
+                var data = new FormData(form);
+
+                console.log(data.get('user'));
+
+                $.ajax({
+                    type: "POST",
+                    url: "/cfs",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        if (data.id) {
+                            displayNotification(data.msg)
+                            socket.emit('update_channel', { id: data.id, channels: data.channels });
+                        }else
+                            displayNotification(data)
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    }
+                });
+                //$('#suspend-modal').modal('close');
+            });
 
             // init run
             init();

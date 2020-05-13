@@ -30,6 +30,11 @@ class User(UserMixin, db.Model):
 
     chats = db.relationship('Post', backref='user', lazy='dynamic')
     channel_owner = db.relationship('Channel', backref='channel', lazy='dynamic')
+    channels = db.relationship(
+        'ChannelRelationship',
+        foreign_keys='ChannelRelationship.user_id',
+        backref='channel_of',
+    )
     friendships = db.relationship(
         'Friend',
         foreign_keys='Friend.user_id',
@@ -40,7 +45,6 @@ class User(UserMixin, db.Model):
         foreign_keys='Friend.friend_id',
         backref='friendee',
     )
-
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -82,6 +86,19 @@ class Friend(db.Model):
     def __repr__(self):
         return '<Friend {}>'.format(self.id)
 
+class ChannelRelationship(db.Model):
+    """
+    This class contains the friend functionality. 
+    All of the attributes for this class are listed below. 
+    """
+    __tablename__ = 'Channels'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
+    channel_id = db.Column(db.Integer, db.ForeignKey('Channel.id'))
+
+    def __repr__(self):
+        return '<Channels {}>'.format(self.id)
+
 class Channel(db.Model):
     """
     This class contains the channel functionality. 
@@ -96,6 +113,11 @@ class Channel(db.Model):
     access_type = db.Column(db.Integer)
     imgUrl = db.Column(db.Text)
     posts = db.relationship('Post', backref='channel', lazy='dynamic')
+    users = db.relationship(
+        'ChannelRelationship',
+        foreign_keys='ChannelRelationship.channel_id',
+        backref='users',
+    )
 
     def __repr__(self):
         return '<Channel {}>'.format(self.id)

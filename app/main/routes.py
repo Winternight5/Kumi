@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request, jsonify, j
 from .. import db
 from . import main
 from .forms import LoginForm, RegistrationForm, ResetForm
-from .models import User, Post, Friend, Channel
+from .models import User, Post, Friend, Channel, ChannelRelationship
 from flask_login import current_user, login_user, logout_user, login_required, login_manager
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
@@ -19,34 +19,13 @@ theme = {
     'menu': 'sidenav-active-square',
     'chatarea': 'bg-image-shattered',
     }
-
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALL_CHANNELS = []
+ALLOWED_EXTENSIONS = { 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'docx', 'doc', 'xlsx', 'xls', 'ppt', 'pptx' }
 UPLOAD_FOLDER = 'static/files/'
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@main.route('/file', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file-upload' not in request.files:
-            flash('No file part')
-            return '0'
-        file = request.files['file-upload']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            os.makedirs(os.path.join(main.root_path, '../static/files'), exist_ok=True)
-            file.save(os.path.join(main.root_path, '../static/files', filename))
-        else:
-            return '0'
-    return '1'
 
 # -------------------------------------------------------------------------------------------------------------------------
 #----- Demo
@@ -79,7 +58,7 @@ def welcome():
         'Member\'s Online Status',
         'Friend Request',
         'Theme Customization',
-        'Tasks',
+        'Tasks'
         ]
 
     form=LoginForm()
@@ -117,14 +96,6 @@ def index():
     *login required*
 
     :return: Display all of user's notes
-
-    if current_user.block_login:
-        logout_user()
-        return redirect(url_for('main.welcome'))
-
-    if current_user.suspend_date is not None and current_user.suspend_date > datetime.utcnow():
-        logout_user()
-        return redirect(url_for('main.welcome'))
     '''
 
     if current_user.block_login:
@@ -137,23 +108,28 @@ def index():
         logout_user()
         return redirect(url_for('main.welcome'))
 
-    global theme
+    global theme, ALL_CHANNELS
+    get_all_channels()
     current_user.fullname = current_user.firstname+' '+current_user.lastname
     current_user.online_status = online_status(current_user.status)
-    room = session['room'] = b64name_channel('#Home')
     members = []
     friends = []
     channels = []
-    current_channel = []
-    chats = getMessages('I0hvbWU=')
 
-    channel_q = Channel.query.filter(Channel.name != '').all() if current_user.access_type == 999 else Channel.query.filter(or_(current_user.access_type == Channel.access_type, Channel.id == 1), Channel.name != '').all()
+    current_channel = Channel.query.filter(Channel.id == 1).first()
+    current_channel.active = 'active'
+    channels.append(current_channel)
 
-    for channel in channel_q:
-        channel.active = 'active' if channel.id is 1 else ''
-        if channel.id is 1:
-            current_channel.append(channel)
+    chats = getMessages(channels[0].b64name)
+    room = session['room'] = b64name_channel(channels[0].name)
+
+    channels_query = (Channel.query
+        .filter(Channel.users.any(ChannelRelationship.user_id == current_user.id))
+        .all())
+
+    for channel in channels_query:
         channels.append(channel)
+    print(channels)
     # Query friend database
     # Retrieve all friends of current_user
     friends_query = (User.query
@@ -162,9 +138,9 @@ def index():
         #        u_alice.ID == Friendship.User_id,
         #        User.ID == Friendship.Friend_id
         #))
-        .order_by(User.status.asc())
+        .order_by(User.access_type.asc())
         .all())
-
+    
     for friend in friends_query:
         friend.fullname = friend.firstname+' '+friend.lastname
         # string of online status
@@ -177,9 +153,8 @@ def index():
     # Query User database
     # Retrieve all active members from last 6 months
     last_6months = datetime.today() - timedelta(days = 180)
-    for member in User.query.order_by(User.status.asc()).filter(
+    for member in User.query.order_by(User.firstname.asc()).filter(
             User.email != 'admin', 
-            User.id != current_user.id,
             User.last_login >= last_6months
         ).all():
         member.fullname = member.firstname+' '+member.lastname
@@ -196,6 +171,7 @@ def index():
                            settings=settings,
                            channels=channels,
                            current_channel=current_channel,
+                           all_channels=ALL_CHANNELS,
                            chats=chats,
                            members=members,
                            friends=friends)
@@ -254,6 +230,81 @@ def b64name_dm(user1, user2):
     data = ','.join(list)
 
     return pybase64.urlsafe_b64encode(data.encode()).decode()
+
+def get_all_channels():
+    global ALL_CHANNELS
+    ALL_CHANNELS = []
+
+    channels = Channel.query.filter(Channel.name != None).order_by(Channel.name.asc()).all()
+    ALL_CHANNELS = channels
+
+# -------------------------------------------------------------------------------------------------------------------------
+# ----- Get Channel JSON for Channels Manager
+# -------------------------------------------------------------------------------------------------------------------------
+@main.route('/cm/<string:form_user>')
+@login_required
+def json_channels(form_user):
+    '''Get Channel JSON
+    '''
+    data = []
+    fullname = str(form_user).split(' ')
+    user = User.query.filter(User.firstname==fullname[0], User.lastname==fullname[1]).first()
+
+    channels_query = (Channel.query
+        .filter(Channel.users.any(ChannelRelationship.user_id == user.id))
+        .all())
+    if len(channels_query) > 0:
+        for channel in channels_query:
+            temp = {
+                'id': channel.id,
+                'name': channel.name
+                }
+            data.append(temp)
+
+        return json.dumps(data)
+
+    return "0"
+
+# -------------------------------------------------------------------------------------------------------------------------
+# ----- Channels Manager - Form Submit
+# -------------------------------------------------------------------------------------------------------------------------
+@main.route('/cfs', methods=['POST'])
+@login_required
+def cfs():
+    print(request.form)
+    if request.method == 'POST' and current_user.admin_level == 0:
+        form_user = request.form.get("user")
+        fullname = str(form_user).split(' ')
+        # check if the post request has user field
+        if form_user is not None and form_user != '':
+            user = User.query.filter(User.firstname==fullname[0], User.lastname==fullname[1]).first()
+            new_channels = request.form.getlist('channels')
+            print(user.id)
+            if user is None: 
+                return "User Not Found"
+
+            channels_query = ChannelRelationship.query.filter(ChannelRelationship.user_id == user.id).all()
+            for i in channels_query:
+                db.session.delete(i)
+
+            if len(new_channels) > 0:
+                for i in new_channels:
+                    user.channels.append(ChannelRelationship(users=Channel.query.filter(Channel.id==i).first()))
+
+            try:
+                db.session.commit()
+            except Exception as e:
+                print("FAILED entry: "+str(e));
+            
+            return {
+                'id': user.id,
+                'channels': new_channels,
+                'msg':"Channel Applied Successfully"
+                } 
+
+        return "Error: Failed to Apply Changes"
+        
+    return "Access Denied"
 
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Get Person JSON
@@ -385,10 +436,12 @@ def getJSONMessages(id):
 @main.route('/sfs/<string:id>', methods=['POST'])
 @login_required
 def sfs(id):
-    if request.method == 'POST':
+    if request.method == 'POST' and current_user.admin_level == 0:
         user = User.query.filter_by(id=id).first()
+        suspend_date = request.form.get("user")
+        suspend_time = request.form.get("user")
         # check if the post request has date and time filled
-        if request.form['suspend_date'] != '' and request.form['suspend_time'] != '':
+        if suspend_date is not None and suspend_date != '' and suspend_time is not None and suspend_time != '':
             timestamp = datetime.fromtimestamp(int(request.form['timestamp']))
             user.suspend_date = timestamp
         else:
@@ -407,9 +460,9 @@ def sfs(id):
         except Exception as e:
             print("FAILED entry: "+str(e));
             
-        return "Suspension update applied."
+        return "Suspension update applied"
         
-    return ""
+    return "Access Denied"
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- Suspension submit
 # -------------------------------------------------------------------------------------------------------------------------
@@ -425,6 +478,32 @@ def gsd(id):
         }
         
     return data
+
+# -------------------------------------------------------------------------------------------------------------------------
+# ----- File Upload
+# -------------------------------------------------------------------------------------------------------------------------
+@main.route('/file', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file-upload' not in request.files:
+            flash('No file part')
+            return '0'
+        file = request.files['file-upload']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            os.makedirs(os.path.join(main.root_path, '../static/files'), exist_ok=True)
+            file.save(os.path.join(main.root_path, '../static/files', filename))
+        else:
+            flash('File not allowed')
+            return '0'
+    return '1'
+
 # -------------------------------------------------------------------------------------------------------------------------
 # ----- User login & Registation / Logout
 # -------------------------------------------------------------------------------------------------------------------------
@@ -595,20 +674,21 @@ def fillCheck():
 
 def addadmin():
     u1, u2, u3, u4, u5, u6, u7 = users = [
-    User(firstname='admin', lastname='sidenote', email='admin', admin_level='1', access_type='999'),
-    User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='1', access_type='999'),
-    User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, title='Tai\'s Girlfriend (Girl Bot)', imgUrl='avatar-10.png', access_type='1'),
-    User(firstname='Nathaniel', lastname='Wallace', email='nathaniel@mail.com', status=1, title='UX Designer', imgUrl='avatar-2.png', access_type='2'),
-    User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='4'),
-    User(firstname='Daniel', lastname='Saneel', email='daniel@mail.com', status=2, title='Marketing Guru', imgUrl='avatar-8.png', access_type='3'),
-    User(firstname='Ishie', lastname='Eswar', email='ishie@mail.com', status=2, title='CEO', imgUrl='avatar-6.png', access_type='999')
+    User(firstname='admin', lastname='sidenote', email='admin', admin_level='0', access_type='999'),
+    User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='0', access_type='2'),
+    User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, title='Tai\'s Girlfriend (Girl Bot)', imgUrl='avatar-10.png', access_type='10'),
+    User(firstname='Nathaniel', lastname='Wallace', email='nathaniel@mail.com', status=1, title='UX Designer', imgUrl='avatar-2.png', access_type='3'),
+    User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='5'),
+    User(firstname='Daniel', lastname='Saneel', email='daniel@mail.com', status=2, title='Marketing Guru', imgUrl='avatar-8.png', access_type='4'),
+    User(firstname='Ishie', lastname='Eswar', email='ishie@mail.com', status=2, title='CEO', imgUrl='avatar-6.png', access_type='1')
     ]
-    c1, c2, c3, c4, c5 = channels = [
+    c1, c2, c3, c4, c5, c6 = channels = [
     Channel(b64name='I0hvbWU=', owner_id='1', name='#Home', title='Main Lobby', access_type='0', imgUrl='lobby.png'),
-    Channel(b64name='I0VuZ2luZWVyLVRlYW0=', owner_id='1', name='#Engineer-Team', title='Engineer Lounge - coder only!', access_type='1', imgUrl='coder.png'),
-    Channel(b64name='I0Rlc2lnbi1UZWFt', owner_id='1', name='#Design-Team', title='UI & UX Designers House', access_type='2', imgUrl='ux.png'),
-    Channel(b64name='I01hcmtldGluZy1UZWFt', owner_id='1', name='#Marketing-Team', title='Killer Marketing Team - "essential"', access_type='3', imgUrl='marketing.png'),
-    Channel(b64name='I0h1bWFuLVJlc291cmNlcw==', owner_id='1', name='#Human-Resources', title='Gatekeeper of policy and guideline', access_type='4', imgUrl='hr.png')
+    Channel(b64name='I0VuZ2luZWVyLVRlYW0=', owner_id='1', name='#Engineer-Team', title='Engineer Lounge - coder only!', imgUrl='coder.png'),
+    Channel(b64name='I0Rlc2lnbi1UZWFt', owner_id='1', name='#Design-Team', title='UI & UX Designers House', imgUrl='ux.png'),
+    Channel(b64name='I01hcmtldGluZy1UZWFt', owner_id='1', name='#Marketing-Team', title='Killer Marketing Team - "essential"', imgUrl='marketing.png'),
+    Channel(b64name='I0h1bWFuLVJlc291cmNlcw==', owner_id='1', name='#Human-Resources', title='Gatekeeper of policy and guideline',  imgUrl='hr.png'),
+    Channel(b64name='I0V4ZWN1dGl2ZS1PZmZpY2U=', owner_id='1', name='#Executive-Office', title='The Office of the Executive', access_type='999', imgUrl='ceo.png')
     ]
     u1.set_password('1234')
     u2.set_password('1234')
@@ -621,12 +701,20 @@ def addadmin():
     try:
         db.session.add_all(users)
         db.session.add_all(channels)
+        u2.channels.append(ChannelRelationship(users=c2))
+        u2.channels.append(ChannelRelationship(users=c3))
+        u2.channels.append(ChannelRelationship(users=c4))
+        u2.channels.append(ChannelRelationship(users=c5))
         u2.friendships.append(Friend(friendee=u3))
         u2.friendships.append(Friend(friendee=u4))
         u2.friendships.append(Friend(friendee=u5))
         u3.friendships.append(Friend(friendee=u2))
         u4.friendships.append(Friend(friendee=u2))
+        u4.channels.append(ChannelRelationship(users=c3))
         u5.friendships.append(Friend(friendee=u2))
+        u5.channels.append(ChannelRelationship(users=c5))
+        u6.channels.append(ChannelRelationship(users=c4))
+        u7.channels.append(ChannelRelationship(users=c6))
         db.session.commit()
         
     except Exception as e:

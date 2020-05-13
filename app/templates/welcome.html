@@ -116,10 +116,21 @@
         }
 
         .section__title {
-          color: #3b3b58;
           text-align: center;
           font: 700 60px/1 "Dancing Script", cursive;
           padding-bottom: 3vh;
+          color: transparent;
+          background: #666666;
+          -webkit-background-clip: text;
+          -moz-background-clip: text;
+          background-clip: text;
+          text-shadow: 0px 3px 3px rgba(255,255,255,0.5);
+        }
+
+        .person-icon {
+            color: #FFFFFF;
+            background: #FFFFFF;
+            text-shadow: 0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
         }
 
         .footer {
@@ -161,7 +172,7 @@
                 <h2>Messaging for your Team</h2>
             </div>
             <div class="col s12 l4 offset-l1"><br /><br /><br /><br /></div>
-            <div class="col s12 l4 offset-l2 animated fadeIn">
+            <div class="col s12 l5 offset-l1 animated fadeIn" id="login-form">
                 <div class="card grey darken-4 box-glow">
                     <form method="post" action="/login" novalidate>
                         <div class="card-content center-align">
@@ -169,7 +180,7 @@
                                 Team 10<br />
                                 <!-- radio options and their labels-->
                                 <label id="label-si" for="sign-in" class="radio-label waves-effect waves-light btn-flat blue white-text darken-2"><input id="sign-in" type="radio" name="login-option" value="sign-in" checked />Sign In</label>
-                                {% if data and data.email %}<label id="label-su" for="sign-up" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="sign-up" type="radio" name="login-option" value="sign-up" />Sign Up</label>{% endif %}
+                                <label id="label-su" for="sign-up" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="sign-up" type="radio" name="login-option" value="sign-up" />Sign Up</label>
                                 <label id="label-rl" for="reset-login" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="reset-login" type="radio" name="login-option" value="reset-login" />Reset</label>
                             </span>
                             <div class="center-align indigo-text">
@@ -263,7 +274,7 @@
                     <div class="card-content center">
                         <p><i class="fa fa-mobile fa-3x blue-text"></i></p>
                         <span class="card-title blue-text text-darken-3">Design</span>
-                        <p>Material Design by Google framework provides a single underlying responsive system across all platformsallowing for a more unified user experience.</p>
+                        <p>Material Design by Google framework provides a single underlying responsive system across all platforms allowing for a more unified user experience.</p>
                     </div>
                     <div class="card-action center">
                         <a class="box__content" href="https://materializecss.com/" target="_blank">Read more</a>
@@ -292,8 +303,8 @@
             <div class="col s12 m3 l3">
                 <div class="card">
                     <div class="card-content center">
-                        <span class="blue-text text-darken-3">
-                            <i class="material-icons green-text">check</i> {{ item }}
+                        <span class="cyan-text text-darken-3">
+                            {{ item }}
                         </span>
                     </div>
                 </div>
@@ -308,10 +319,10 @@
                 <h2 class="section__title">Kumi's Developers</h2>
             </div>
             <div class="col s12 m3 center-align">
-                <div class="card small">
+                <div class="card medium z-depth-1">
                     <div class="card-content center">
-                        <p><i class="fa fa-user fa-3x green-text"></i></p>
-                        <h5 class="card-title blue-text text-darken-3">Tai Huynh</h5>
+                        <p><i class="fa fa-user-tie fa-3x person-icon"></i></p>
+                        <h5 class="card-title green-text text-darken-2">Tai Huynh</h5>
                         <h6><b>Project Manager</b></h6>
                         <p>
                             Took on a bulk of the backend/functionalities as well as facilitating the product's direction all while
@@ -321,20 +332,20 @@
                 </div>
             </div>
             <div class="col s12 m3 center-align">
-                <div class="card small">
+                <div class="card medium z-depth-1">
                     <div class="card-content center">
-                        <p><i class="fa fa-user fa-3x green-text"></i></p>
-                        <h5 class="card-title blue-text text-darken-3">Daniel Saneel</h5>
+                        <p><i class="fa fa-user-ninja fa-3x person-icon"></i></p>
+                        <h5 class="card-title green-text text-darken-2">Daniel Saneel</h5>
                         <h6><b>UI/UX Engineer</b></h6>
                         <p>Collaborated on frontend, specializing in creating a unique, simple, and elegant user experience.</p>
                     </div>
                 </div>
             </div>
             <div class="col s12 m3 center-align">
-                <div class="card small">
+                <div class="card medium z-depth-1">
                     <div class="card-content center">
-                        <p><i class="fa fa-user fa-3x green-text"></i></p>
-                        <h5 class="card-title blue-text text-darken-3">Tatsuya Hayashi</h5>
+                        <p><i class="fa fa-user-astronaut fa-3x person-icon"></i></p>
+                        <h5 class="card-title green-text text-darken-2">Tatsuya Hayashi</h5>
                         <h6><b>Frontend Engineer</b></h6>
                         <p>
                             Collaborated on frontend, particularly the branding of the project and the structure of the frontend as a
@@ -344,11 +355,11 @@
                 </div>
             </div>
             <div class="col s12 m3 center-align">
-                <div class="card small">
+                <div class="card medium z-depth-1">
                     <div class="card-content center">
-                        <p><i class="fa fa-user fa-3x green-text"></i></p>
-                        <h5 class="card-title blue-text text-darken-3">Nathaniel Wallace</h5>
-                        <h6><b>Devops/Infrastucture Engineer</b></h6>
+                        <p><i class="fa fa-user-secret fa-3x person-icon"></i></p>
+                        <h5 class="card-title green-text text-darken-2">Nathaniel Wallace</h5>
+                        <h6><b>Devops/Test Engineer</b></h6>
                         <p>
                             Contributed to backend as well as taking on a bulk of the testing which allowed for
                             continuous integration & development.
@@ -414,8 +425,8 @@
             // applies the apprproiate "submit" text based upon the selected radio/login option
             function applyButtonText(loginOption) {
                 $submitButton = $("#submit");
-                $("#email").prop('disabled', false).val('');
-                $("#email + label").css('display', 'block');
+                //$("#email").prop('disabled', false).val('');
+                //$("#email + label").css('display', 'block');
 
                 switch (loginOption.attr("id")) {
                     case "sign-in":
@@ -423,8 +434,9 @@
                         break;
                     case "sign-up":
                         $submitButton.val("Sign Up");
-                        $("#email + label").css('display', 'none');
-                        $("#email").prop('disabled', true).val("{% if data and data.email %}{{ data.email | safe }}{% endif %}");
+                        window.location.href = "#login-form"
+                        //$("#email + label").css('display', 'none');
+                        //$("#email").prop('disabled', true).val("{% if data and data.email %}{{ data.email | safe }}{% endif %}");
                         break;
                     case "reset-login":
                         $submitButton.val("Reset Password");
