@@ -48,7 +48,7 @@ def welcome():
 
     data = [
         'Log In / Out',
-        'Team Channel',
+        'Team Channels',
         'Messaging in Real Time',
         'Private Messaging',
         'Unsend Message',
@@ -621,22 +621,25 @@ def logout():
 @main.route('/db')
 @login_required
 def showdb():
-    if current_user.email == "admin" or current_user.id == 2:
+    if current_user.admin_level == 0 or current_user.id == 2:
         Users = User.query.all()
         Posts = Post.query.order_by(Post.id.desc()).all()
         Friends = Friend.query.all()
         Channels = Channel.query.all()
+        Channels_r = ChannelRelationship.query.all()
+
         for post in Posts:
             post.body = post.body[0:100]
 
-        return render_template('result.html', Users=Users, Posts=Posts, friends=Friends, channels=Channels)
+        return render_template('result.html', Users=Users, Posts=Posts, friends=Friends, channels=Channels, channels_r=Channels_r)
 
     return redirect(url_for('main.welcome'))
+
 # -------------------------------------------------------------------------------------------------------------------------
-@main.route('/delshareid/<int:id>', methods=['GET'])
+@main.route('/delfriend/<int:id>', methods=['GET'])
 @login_required
 def delShareId(id):
-    if current_user.email == "admin":
+    if current_user.admin_level == 0 or current_user.id == 2:
         shared = AllPosts.query.filter_by(id=id).first()
         if shared is None:
             return "id not found"
@@ -647,11 +650,12 @@ def delShareId(id):
         return redirect(url_for('main.showdb'))
 
     return redirect(url_for('main.welcome'))
+
 # -------------------------------------------------------------------------------------------------------------------------
 @main.route('/delid/<int:id>', methods=['GET'])
 @login_required
 def delID(id):
-    if current_user.email == "admin":
+    if current_user.admin_level == 0 or current_user.id == 2:
         user = User.query.filter_by(id=id).first()
         if user is None:
             return "id not found"
@@ -662,6 +666,18 @@ def delID(id):
         return redirect(url_for('main.showdb'))
 
     return redirect(url_for('main.welcome'))
+
+# -------------------------------------------------------------------------------------------------------------------------
+@main.route('/db_clearposts')
+@login_required
+def clearPosts():
+    if current_user.admin_level == 0 or current_user.id == 2:
+        Post.query.delete()
+        db.session.commit()
+        return redirect(url_for('main.showdb'))
+
+    return redirect(url_for('main.welcome'))
+
 # -------------------------------------------------------------------------------------------------------------------------
 @main.route('/db_init')
 def fillCheck():
@@ -719,36 +735,6 @@ def addadmin():
         
     except Exception as e:
         return "FAILED entry: "+str(e)
-# -------------------------------------------------------------------------------------------------------------------------
-@main.route('/db_clearposts')
-@login_required
-def clearPosts():
-    if current_user.email == "admin":
-        Post.query.delete()
-        db.session.commit()
-        return redirect(url_for('main.showdb'))
-
-    return redirect(url_for('main.welcome'))
-# -------------------------------------------------------------------------------------------------------------------------
-@main.route('/db_addposts')
-@login_required
-def addDB():
-    if current_user.email == "admin":
-        db.session.bulk_insert_mappings(
-            Post,
-            [
-                dict(
-                    body=genPosts(),
-                    user_id=current_user.id
-                )
-                for i in range(random.randint(10, 30))
-            ],
-        )
-        db.session.commit()
-
-        return redirect(url_for('main.showdb'))
-
-    return redirect(url_for('main.welcome'))
 # -------------------------------------------------------------------------------------------------------------------------
 
 

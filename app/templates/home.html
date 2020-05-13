@@ -411,10 +411,18 @@
             <li class="navigation-header">
                 <a class="navigation-header-text">Misc </a><i class="navigation-header-icon material-icons">more_horiz</i>
             </li>
-            {% if current_user.admin_level == 0 %}
-            <li class="bold"><a class="waves-effect waves-cyan modal-trigger" href="JavaScript:void(0)" data-target="manage-channel-modal"><i class="material-icons">dashboard</i><span class="menu-title" data-i18n="Support">Manage Channel</span></a></li>
-            {% endif %}
             <li class="bold"><a class="waves-effect waves-cyan sidenav-trigger" href="JavaScript:void(0)" data-target="theme-cutomizer-out"><i class="material-icons">chrome_reader_mode</i><span class="menu-title" data-i18n="Support">Theme</span></a></li>
+            {% if current_user.admin_level == 0 %}
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">format_list_bulleted</i><span class="menu-title" data-i18n="Dashboard">Admin Options</span></a>
+                <div class="collapsible-body">
+                    <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                        <li class="bold"><a class="waves-effect waves-cyan modal-trigger" href="JavaScript:void(0)" data-target="manage-channel-modal"><i class="material-icons">dashboard</i><span class="menu-title" data-i18n="Support">Channel Manager</span></a></li>
+                        <li class="bold"><a class="waves-effect waves-cyan" href="/db" target="_blank"><i class="material-icons">filter_drama</i><span class="menu-title" data-i18n="Support">Database Viewer</span></a></li>
+                    </ul>
+                </div>
+            </li>
+            {% endif %}
 
             <li><a class="waves-effect waves-block waves-light" href="/logout"><i class="material-icons">keyboard_tab</i><span class="menu-title" data-i18n="Support">Logout<span></a></li>
         </ul>
@@ -580,22 +588,22 @@
                                         <div class="activity">
                                             <p class="mt-5 mb-0 ml-5 font-weight-900">PENDING TASKS</p>
                                             <ul class="widget-timeline mb-0">
-                                                <li class="timeline-items timeline-icon-green active">
-                                                    <div class="timeline-time">Just now</div>
-                                                    <h6 class="timeline-title">High Fidelity Prototyping</h6>
-                                                    <p class="timeline-text">This task is assigned to Tai</p>
-                                                    <div class="timeline-content orange-text">Pending</div>
-                                                </li>
-                                                <li class="timeline-items timeline-icon-cyan active">
+                                                <li class="timeline-items timeline-icon-blue active">
                                                     <div class="timeline-time">3 days</div>
                                                     <h6 class="timeline-title">UI Design</h6>
                                                     <p class="timeline-text">This task is assigned to Daniel</p>
                                                     <div class="timeline-content blue-text">Urgent</div>
                                                 </li>
+                                                <li class="timeline-items timeline-icon-orange active">
+                                                    <div class="timeline-time">4 weeks</div>
+                                                    <h6 class="timeline-title">High Fidelity Prototyping</h6>
+                                                    <p class="timeline-text">This task is assigned to Tai and Tatsuya</p>
+                                                    <div class="timeline-content orange-text">Pending</div>
+                                                </li>
                                             </ul>
                                             <p class="mt-5 mb-0 ml-5 font-weight-900">ACTION REQUIRED</p>
                                             <ul class="widget-timeline mb-0">
-                                                <li class="timeline-items timeline-icon-green active">
+                                                <li class="timeline-items timeline-icon-orange active">
                                                     <div class="timeline-time">Just now</div>
                                                     <h6 class="timeline-title">New task assigned</h6>
                                                     <p class="timeline-text">Need to intergate backlog #16.4</p>
@@ -604,14 +612,14 @@
                                                 <li class="timeline-items timeline-icon-red active">
                                                     <div class="timeline-time">20 mins</div>
                                                     <h6 class="timeline-title">Database overloaded 89%</h6>
-                                                    <p class="timeline-text">Here are some news feed interactions concepts.</p>
+                                                    <p class="timeline-text">Database report auto-generated.</p>
                                                     <div class="timeline-content">
                                                         <img src="{{url_for('static', filename='images/icon/pdf.png')}}" alt="document" height="30" width="25"
                                                              class="mr-1">Database-log.doc
                                                     </div>
                                                     <div class="timeline-content red-text">Important</div>
                                                 </li>
-                                                <li class="timeline-items timeline-icon-cyan active">
+                                                <li class="timeline-items timeline-icon-blue active">
                                                     <div class="timeline-time">50 mins</div>
                                                     <h6 class="timeline-title">System restart needed</h6>
                                                     <p class="timeline-text">Heroku will auto-deploy latest commit of the master branch upon system restart</p>
@@ -626,7 +634,7 @@
                                             </ul>
                                             <p class="mt-5 mb-0 ml-5 font-weight-900">DOCUMENTS</p>
                                             <ul class="widget-timeline mb-0">
-                                                <li class="timeline-items timeline-icon-red active">
+                                                <li class="timeline-items timeline-icon-indigo active">
                                                     <div class="timeline-time">30 mins</div>
                                                     <h6 class="timeline-title">12 new users registered</h6>
                                                     <p class="timeline-text">Registration report auto-generated.</p>
@@ -653,7 +661,7 @@
                                                     <p class="timeline-text">Assigned to Tatsuya</p>
                                                     <div class="timeline-content green-text">Completed</div>
                                                 </li>
-                                                <li class="timeline-items timeline-icon-cyan">
+                                                <li class="timeline-items timeline-icon-green">
                                                     <div class="timeline-time">10 days</div>
                                                     <h6 class="timeline-title">UI Transition Diagram</h6>
                                                     <p class="timeline-text">Assigned to Daniel</p>
