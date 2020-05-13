@@ -67,7 +67,20 @@ def welcome():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
 
-    data = {}
+    data = [
+        'Log In / Out',
+        'Team Channel',
+        'Messaging in Real Time',
+        'Private Messaging',
+        'Unsend Message',
+        'Emoji Options',
+        'Send Files',
+        'Interactive Whiteboard',
+        'Member\'s Online Status',
+        'Friend Request',
+        'Theme Customization',
+        'Tasks',
+        ]
 
     form=LoginForm()
     #email = "admin@test.com"
