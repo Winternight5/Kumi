@@ -23,12 +23,14 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/vendors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/app-chat.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/app-kanban.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/jkanban.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/quill.snow.css')}}">
     <!-- Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/custom.css')}}">
     <!-- Animate CSS-->
     <link rel="stylesheet" href="{{url_for('static', filename='css/animate.css')}}">
     <style>
-        html, body {margin: 0; height: 100%; overflow: hidden}
         body {
             /* Disables pull-to-refresh but allows overscroll glow effects. */
             overscroll-behavior-y: none;
@@ -135,8 +137,18 @@
         }
 
         .slide-out-right-sidenav-chat {
+          height: 100vh;
+          width: 100vw;
+          overflow: scroll;
+          z-index: 1000; 
+          position: absolute;
+          background: white !important
+        }
+
+        .slide-out-right-sidenav-kanban {
           height: 100%;
           width: 100%;
+          overflow: scroll;
         }
 
         .slide-out-right-sidenav-chat canvas {
@@ -362,7 +374,6 @@
                 <a class="waves-effect profile-button" href="#" data-target="profile-dropdown"><i><span class="avatar-status avatar-{{ current_user.online_status }}"><img src="{{url_for('static', filename='images/avatar/'+current_user.imgUrl)}}" alt="avatar"><i></i></span></i><span class="menu-title" data-i18n="Support">{{ current_user.fullname }}</span></a>
             </li>
             <li class="bold hide-on-med-and-down"><a class="waves-effect waves-block waves-light sidenav-trigger tabs-activate" href="activity" data-target="slide-out-right"><i class="material-icons">move_to_inbox</i><span class="menu-title" data-i18n="Tasks" data-target="slide-out-right">Tasks</span><span class="badge badge pill orange float-right mr-10">2</span></a></li>
-            <li class="bold hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="/kanban" target="_blank"><i class="material-icons">assignment</i><span class="menu-title" data-i18n="Tasks" data-target="slide-out-right">Kanban</span></a></li>
 
             <!-- Channels -->
             <li class="navigation-header"><a class="navigation-header-text">Channels</a><i class="navigation-header-icon material-icons">more_horiz</i></li>
@@ -436,77 +447,107 @@
             <div class="content-wrapper-before"></div>
             <div class="col s12">
                 <div class="container">
-                    <div class="chat-application">
-                        <div class="app-chat">
-                            <div class="content-area content-right">
-                                <div class="app-wrapper">
-                                    <!-- Sidebar menu for small screen
-                                    <a href="#" data-target="chat-sidenav" class="sidenav-trigger hide-on-large-only">
-                                        <i class="material-icons">menu</i>
-                                    </a>
-                                    Sidebar menu for small screen -->
+                    <section id="kanban-wrapper" class="section">
+                        <div class="kanban-overlay"></div>
+                        <div class="row">
+                            <div class="col s12">
+                                <!-- New kanban board add button -->
+                                <button type="button" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
+                                    <i class='material-icons left'>add</i> Add New Board
+                                </button>
+                                <!-- kanban container -->
+                                <div id="kanban-app"></div>
+                            </div>
+                        </div>
 
-                                    <div class="card card card-default scrollspy border-radius-6 fixed-width">
-                                        <div class="card-content chat-content p-0">
-
-                                            <!-- Content Area -->
-                                            <div class="chat-content-area animate fadeUp">
-                                                <!-- Chat header -->
-                                                <div class="chat-header">
-                                                    <div class="row valign-wrapper">
-                                                        <div class="col media-image online pr-0">
-                                                            <img src="{% if current_channel[0] %}{{url_for('static', filename='images/avatar/'+current_channel[0].imgUrl)}}{% endif %}" alt="" class="circle z-depth-2 responsive-img white" id="chat-avatar">
-                                                        </div>
-                                                        <div class="col chat-content-header">
-                                                            <p class="m-0 font-weight-700" id="chat-name">{% if current_channel[0] %}{{ current_channel[0].name }}{% endif %}</p>
-                                                            <p class="m-0 truncate" style="font-size: x-small" id="chat-subtext">{% if current_channel[0] %}{{ current_channel[0].title }}{% endif %}</p>
-                                                        </div>
-                                                    </div>
-                                                    <span class="option-icon">
-                                                        <span class="hide" id="chat-add-friend" data-id="">
-                                                            <i class="material-icons">person_add</i>
-                                                        </span>
-                                                        <span class="sidenav-trigger tabs-activate hide-on-med-and-down" data-target="slide-out-chat"><i class="material-icons">launch</i></span>
-                                                        {% if current_user.admin_level == 0 %}<i class="material-icons notification-button" data-target="chat-option-dropdown" id="chat-options">more_vert</i>{% endif %}
-                                                        <!--<i class="material-icons hide-on-med-and-down hide" id="chat-delete">delete</i>-->
-                                                    </span>
-                                                </div>
-                                                <!--/ Chat header -->
-                                                <!-- Chat content area -->
-                                                <div class="chat-area">
-                                                    <div class="chats" id="chat-area">
-
-                                                    </div>
-                                                </div>
-                                                <!--/ Chat content area -->
-                                                <!-- Chat footer <-->
-                                                <div class="chat-footer">
-                                                    <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input" autocomplete="off" enctype="multipart/form-data">
-                                                        <!--<i class="mr-2 hide-on-med-and-up"><a class="waves-effect waves-block waves-light chat-input-tool notification-button" href="javascript:void(0);" data-target="chat-options-dropdown"><i class="material-icons mr-2">arrow_drop_down_circle</i></a></i>-->
-                                                        <i class="mr-2">
-                                                            <a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="attachment-dropdown">
-                                                                <i class="material-icons mr-2 hide-on-med-and-down">attachment</i>
-                                                                <i class="material-icons mr-2 hide-on-large-only">arrow_drop_down_circle</i>
-                                                            </a>
-                                                        </i>
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light chat-input-tool" href="javascript:void(0);" id="emoji-button"><i class="material-icons mr-2">face</i></a></i>
-
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:editorCmd('bold');"><i class="material-icons mr-2">format_bold</i></a></i>
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:editorCmd('italic');"><i class="material-icons mr-2">format_italic</i></a></i>
-                                                        <i class="mr-2 hide-on-med-and-down"><a class="waves-effect waves-block waves-light" href="javascript:editorCmd('underline');"><i class="material-icons mr-2">format_underlined</i></a></i>
-                                                        <div type="text" data-text="Type message here.." class="message grey-text text-darken-2 mb-0" id="chat-input" contentEditable=true></div>
-                                                        <a class="btn waves-effect waves-light send" onclick="enter_chat();">Send</a>
-                                                    </form>
-                                                </div>
-                                                <!--/ Chat footer -->
-                                            </div>
-                                            <!--/ Content Area -->
+                        <!-- User new mail right area -->
+                        <div class="kanban-sidebar">
+                            <div class="card quill-wrapper">
+                                <div class="card-content pt-0">
+                                    <div class="card-header display-flex pb-2">
+                                        <h3 class="card-title">Kanban Card</h3>
+                                        <div class="close close-icon">
+                                            <i class="material-icons">close</i>
                                         </div>
                                     </div>
+                                    <div class="divider"></div>
+                                    <!-- form start -->
+                                    <form class="edit-kanban-item mt-10 mb-10">
+                                        <div class="input-field">
+                                            <input type="text" class="edit-kanban-item-title validate" id="edit-item-title" placeholder="kanban Title">
+                                            <label for="edit-item-title">Card Title</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="MAY 13, 2020">
+                                            <label for="edit-item-date">Due Date</label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s6">
+                                                <div class="input-field mt-0">
+                                                    <small>Label</small>
+                                                    <select class="browser-default">
+                                                        <option class="blue-text">Blue</option>
+                                                        <option class="red-text">Red</option>
+                                                        <option class="green-text">Green</option>
+                                                        <option class="cyan-text">Cyan</option>
+                                                        <option class="orange-text">Orange </option>
+                                                        <option class="blue-grey-text">Blue-grey</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col s6">
+                                                <div class="input-field mt-0">
+                                                    <small>Member</small>
+                                                    <div class="display-flex">
+                                                        <div class="avatar ">
+                                                        </div>
+                                                        <a class="btn-floating btn-small pulse ml-10">
+                                                            <i class="material-icons">add</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="file-field input-field">
+                                            <div class="btn btn-file">
+                                                <span>File</span>
+                                                <input type="file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text">
+                                            </div>
+                                        </div>
+                                        <!-- Compose mail Quill editor -->
+                                        <div class="input-field">
+                                            <span>Comment</span>
+                                            <div class="snow-container mt-2">
+                                                <div class="compose-editor" style="max-height: 70px"></div>
+                                                <div class="compose-quill-toolbar">
+                                                    <span class="ql-formats mr-0">
+                                                        <button class="ql-bold"></button>
+                                                        <button class="ql-italic"></button>
+                                                        <button class="ql-underline"></button>
+                                                        <button class="ql-link"></button>
+                                                        <button class="ql-image"></button>
+                                                        <button class="btn btn-small cyan btn-comment waves-effect waves-light ml-25">Comment</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="card-action pl-0 pr-0">
+                                        <button type="reset" class="btn-small waves-effect waves-light delete-kanban-item mr-1">
+                                            <span>Delete</span>
+                                        </button>
+                                        <button class="btn-small blue waves-effect waves-light update-kanban-item">
+                                            <span>Save</span>
+                                        </button>
+                                    </div>
+                                    <!-- form start end-->
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
                     <!-- START RIGHT SIDEBAR NAV -->
                     <aside id="right-sidebar-nav">
@@ -862,6 +903,7 @@
             <a href="#!" class="modal-close waves-effect waves-red btn-flat red lighten-3">Decline</a>
         </div>
     </div>
+
     <!-- Modal Structure -->
     <div id="suspend-modal" class="modal modal-fixed-footer">
         <form id="suspension-form" onsubmit="return false">
@@ -922,17 +964,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="row">
-                    <div class="col s12 l12 input-field ">
-                        <h6>Members List:</h6>
-                        <select class="icons" name="user">
-                            <option value="" disabled selected>Select a memer</option>
-                            {% for member in members %}
-                            <option value="{{member.id}}" data-icon="{{url_for('static', filename='images/avatar/'+member.imgUrl)}}">{{member.fullname}} - {{member.title}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>-->
                 <div class="row">
                     <h6>Channel List:</h6>
                     <div id="channel-list">
@@ -977,6 +1008,301 @@
         var lastMsg = 0;
         var online_users = [];
         var allfriends = [];
+
+        var kanban_board_data = [
+            {
+                id: "1",
+                title: "TO DO",
+                headerBg: "blue",
+                item: [
+                    {
+                        id: "1_1",
+                        title: "Create installation guide",
+                        dueDate: "MAY 14, 2020",
+                        border: "light-blue",
+                        users: [
+                            "static/images/avatar/avatar-2.png",
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    },
+                    {
+                        id: "1_2",
+                        title: "Do we need to create a video of test cases?",
+                        border: "red",
+                        dueDate: "MAY 14, 2020",
+                        users: [
+                            "static/images/avatar/avatar-13.png",
+                            "static/images/avatar/avatar-8.png",
+                            "static/images/avatar/avatar-2.png",
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    },
+                ]
+            },
+            {
+                id: "2",
+                title: "IN PROGRESS",
+                headerBg: "orange",
+                item: [
+                    {
+                        id: "2_1",
+                        title: "Finalize Product Report",
+                        border: "light-blue",
+                        dueDate: "MAY 14, 2020",
+                        attachment: 1,
+                        users: [
+                            "static/images/avatar/avatar-13.png",
+                            "static/images/avatar/avatar-8.png",
+                            "static/images/avatar/avatar-2.png",
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "3",
+                title: "IN REVIEW",
+                headerBg: "red",
+                item: [
+                    {
+                        id: "3_2",
+                        title: "Admin Dashboard",
+                        border: "orange",
+                        dueDate: "MAY 13, 2020",
+                        badgeColor: "blue",
+                        users: [
+                            "static/images/avatar/avatar-8.png",
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    },
+                    {
+                        id: "3_3",
+                        title: "Fix Herokup server configuration",
+                        border: "red",
+                        dueDate: "MAY 13, 2020",
+                        users: [
+                            "static/images/avatar/avatar-13.png"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "4",
+                title: "COMPLETED",
+                headerBg: "green",
+                item: [
+                    {
+                        id: "4_1",
+                        title: "Guest Registration and User Log In/Out",
+                        border: "green",
+                        comment: 1.1,
+                        users: [
+                            "static/images/avatar/avatar-13.png"
+                        ]
+                    },
+                    {
+                        id: "4_2",
+                        title: "Add user to channel (Admin Panel)",
+                        border: "green",
+                        comment: 1.2,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-13.png"
+                        ]
+                    },
+                    {
+                        id: "4_3",
+                        title: "Add other user to friend list",
+                        border: "green",
+                        comment: 2.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-8.png"
+                        ]
+                    },
+                    {
+                        id: "4_4",
+                        title: "See other user online status",
+                        border: "green",
+                        comment: 2.2,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-8.png"
+                        ]
+                    },
+                    {
+                        id: "4_5",
+                        title: "Change online Status",
+                        border: "green",
+                        comment: 4.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-2.png"
+                        ]
+                    },
+                    {
+                        id: "4_6",
+                        title: "Interactively Whiteboard",
+                        border: "green",
+                        comment: 5.2,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-13.png"
+                        ]
+                    },
+                    {
+                        id: "4_7",
+                        title: "Upload files and share files to other user",
+                        border: "green",
+                        comment: 6.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-2.png"
+                        ]
+                    },
+                    {
+                        id: "4_8",
+                        title: "Upload files and share files to group chat",
+                        border: "green",
+                        comment: 6.2,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-2.png"
+                        ]
+                    },
+                    {
+                        id: "4_9",
+                        title: "Post image from user’s device or capture a picture",
+                        border: "green",
+                        comment: 6.3,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-2.png"
+                        ]
+                    },
+                    {
+                        id: "4_10",
+                        title: "Unsend message(s) (within 5 minutes)",
+                        border: "green",
+                        comment: 7.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-8.png"
+                        ]
+                    },
+                    {
+                        id: "4_11",
+                        title: "Send emojis",
+                        border: "green",
+                        comment: 9.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    },
+                    {
+                        id: "4_12",
+                        title: "Customize message font style (bold / italic / underscore / strikethrough)",
+                        border: "green",
+                        comment: 10.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    },
+                    {
+                        id: "4_13",
+                        title: "Customize user theme",
+                        border: "green",
+                        comment: 10.4,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    },
+                    {
+                        id: "4_14",
+                        title: "Customize chat background",
+                        border: "green",
+                        comment: 10.5,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-7.png"
+                        ]
+                    },
+                    {
+                        id: "4_15",
+                        title: "Leave channel ",
+                        border: "green",
+                        comment: 11.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-13.png"
+                        ]
+                    },
+                    {
+                        id: "4_16",
+                        title: "Remove user from channel (Admin Panel)",
+                        border: "green",
+                        comment: 12.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-13.png"
+                        ]
+                    },
+                    {
+                        id: "4_17",
+                        title: "Suspend user temporary",
+                        border: "green",
+                        comment: 12.3,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-8.png"
+                        ]
+                    },
+                    {
+                        id: "4_18",
+                        title: "Suspend user indefinitely ",
+                        border: "green",
+                        comment: 12.4,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-8.png"
+                        ]
+                    },
+                    {
+                        id: "4_19",
+                        title: "Change channel",
+                        border: "green",
+                        comment: 13.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-8.png"
+                        ]
+                    },
+                    {
+                        id: "4_20",
+                        title: "Search for person to talk",
+                        border: "green",
+                        comment: 13.2,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-8.png"
+                        ]
+                    },
+                    {
+                        id: "4_21",
+                        title: "See of upcoming tasks",
+                        border: "green",
+                        comment: 16.1,
+                        badgeColor: "green",
+                        users: [
+                            "static/images/avatar/avatar-2.png"
+                        ]
+                    },
+                ]
+            },
+        ];
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@2.12.1/dist/index.min.js"></script>
     <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
@@ -985,6 +1311,9 @@
     <script src="{{url_for('static', filename='js/search.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/customizer.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/app-chat.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jkanban.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/quill.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/app-kanban.js')}}"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>-->
     <!-- END JS-->
@@ -1013,22 +1342,6 @@
             options = { container: "body" }
             timepicker = M.Timepicker.init(elems, options);
         });
-
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-          const button = document.querySelector('#emoji-button');
-          const picker = new EmojiButton();
-
-          picker.on('emoji', emoji => {
-              $("#chat-input").html($("#chat-input").html() + emoji);
-            //document.querySelector('input').value += emoji;
-          });
-
-          button.addEventListener('click', () => {
-            picker.togglePicker(button);
-          });
-        });  
 
         function htmlEncode(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -1249,7 +1562,7 @@
             // Socket IO Stuff
             $('input.autocomplete').autocomplete({
                 data: {
-                {% for member in members %} 
+                {% for member in members %}
                 "{{member.fullname}}": "{{url_for('static', filename='images/avatar/'+member.imgUrl)}}",
                 {% endfor %}
                 },
@@ -1783,6 +2096,10 @@
                 $("#{{settings.chatarea}}").addClass('selected')
                 $("#{{settings.theme}}").addClass('selected')
 
+                $(".sidenav-main").removeClass("nav-lock")
+                $(".navbar-main.nav-collapsible").removeClass("sideNav-lock").addClass("nav-expanded")
+                $(".navbar-toggler i").html("radio_button_unchecked"), $("#main").addClass("main-full")
+                $(".sidenav-main.nav-collapsible, .navbar .brand-sidebar").trigger("mouseleave")
                 loadChannels();
 
                 //$('#loading').fadeOut();

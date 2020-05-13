@@ -177,6 +177,97 @@ def index():
                            friends=friends)
 
 # -------------------------------------------------------------------------------------------------------------------------
+# ----- Kanban
+# -------------------------------------------------------------------------------------------------------------------------
+@main.route('/kanban')
+@login_required
+def kanban():
+    '''Kanban home page
+
+    *login required*
+
+    :return: Display all of user's notes
+    '''
+
+    if current_user.block_login:
+        flash('Your account has been permanently suspended')
+        logout_user()
+        return redirect(url_for('main.welcome'))
+
+    if current_user.suspend_date is not None and current_user.suspend_date > datetime.utcnow():
+        flash('Your account has been temporary suspended until '+str(current_user.suspend_date.strftime('%b %d, %Y at %I:%M %p')))
+        logout_user()
+        return redirect(url_for('main.welcome'))
+
+    global theme, ALL_CHANNELS
+    get_all_channels()
+    current_user.fullname = current_user.firstname+' '+current_user.lastname
+    current_user.online_status = online_status(current_user.status)
+    members = []
+    friends = []
+    channels = []
+
+    current_channel = Channel.query.filter(Channel.id == 1).first()
+    current_channel.active = 'active'
+    channels.append(current_channel)
+
+    chats = getMessages(channels[0].b64name)
+    room = session['room'] = b64name_channel(channels[0].name)
+
+    channels_query = (Channel.query
+        .filter(Channel.users.any(ChannelRelationship.user_id == current_user.id))
+        .all())
+
+    for channel in channels_query:
+        channels.append(channel)
+    print(channels)
+    # Query friend database
+    # Retrieve all friends of current_user
+    friends_query = (User.query
+        .filter(User.friendships_of.any(Friend.user_id == current_user.id))
+        #.outerjoin(Post, db.and_(
+        #        u_alice.ID == Friendship.User_id,
+        #        User.ID == Friendship.Friend_id
+        #))
+        .order_by(User.access_type.asc())
+        .all())
+    
+    for friend in friends_query:
+        friend.fullname = friend.firstname+' '+friend.lastname
+        # string of online status
+        friend.online_status = online_status(friend.status)
+        # room name
+        friend.b64name = b64name_dm(current_user.email, friend.email)
+        #friend.active = 'active' if friend.id is 3 else ''
+        friends.append(friend)
+
+    # Query User database
+    # Retrieve all active members from last 6 months
+    last_6months = datetime.today() - timedelta(days = 180)
+    for member in User.query.order_by(User.firstname.asc()).filter(
+            User.email != 'admin', 
+            User.last_login >= last_6months
+        ).all():
+        member.fullname = member.firstname+' '+member.lastname
+        member.online_status = online_status(member.status)
+        member.b64name = b64name_dm(current_user.email, member.email)
+        members.append(member)
+
+    settings = json.loads(current_user.settings) if current_user.settings else theme
+    #print(settings)
+    return render_template('kanban.html', 
+                           title='Home',
+                           room=room,
+                           current_user=current_user,
+                           settings=settings,
+                           channels=channels,
+                           current_channel=current_channel,
+                           all_channels=ALL_CHANNELS,
+                           chats=chats,
+                           members=members,
+                           friends=friends)
+
+# -------------------------------------------------------------------------------------------------------------------------
 # ----- Helper functions
 # -------------------------------------------------------------------------------------------------------------------------
 def getMessages(id, offset = 0):
