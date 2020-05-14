@@ -1,5 +1,5 @@
 # Kumi
-### Team Messaging web application.
+### Team Messaging Web Application.
 
 Instant messaging applications have been a big part of our current social networking methods, both in social and professional settings. We designed a smart, sleek, and efficient messaging application where members can communicate in real time. Having a convenient messaging medium enables teams to communicate easily and effectively which in turn helps organizations function efficiently. We developed a web based application with the help of Materialize CSS and jQuery library for the front-end, Python - Flask as the back-end and PostgreSQL to store data.
 
