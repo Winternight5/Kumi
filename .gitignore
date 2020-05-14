@@ -1,5 +1,2 @@
 *.db
 *.pyc
-requirements_old.txt
-_test_main.py
-app/templates/post.html
