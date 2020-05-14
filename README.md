@@ -72,7 +72,7 @@ This repo is built with Heroku package and is ready for deployment. Please see H
 * **Tatsuya Hayashi** - *Front-End Engineer*
 * **Nathaniel Wallace** - *Devops/Infrastucture Engineer*
 
-List of [contributors]( https://github.com/Winternight5/Team4/graphs/contributors)
+List of [contributors]( https://github.com/Winternight5/Kumi/graphs/contributors)
 
 
 ## License
