@@ -6,6 +6,10 @@ Instant messaging applications have been a big part of our current social networ
 
 [Live Demo - http://kumix.herokuapp.com/](http://kumix.herokuapp.com/)
 
+## Known Issue
+
+*Dated May 15, 2020, Mac and iPhone Safari's browser is having compatility issue that prevent web socket to properly connect using Gunicorn version 18.0.0 on Heroku server. Running test on localhost should work without this issue.*
+
 
 ## Getting Started
 
