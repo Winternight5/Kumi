@@ -97,7 +97,6 @@ def index():
 
     :return: Display all of user's notes
     '''
-
     if current_user.block_login:
         flash('Your account has been permanently suspended')
         logout_user()
@@ -256,7 +255,7 @@ def kanban():
     settings = json.loads(current_user.settings) if current_user.settings else theme
     #print(settings)
     return render_template('kanban.html', 
-                           title='Home',
+                           title='Kanban',
                            room=room,
                            current_user=current_user,
                            settings=settings,
@@ -780,14 +779,15 @@ def fillCheck():
     return redirect(url_for('main.showdb'))
 
 def addadmin():
-    u1, u2, u3, u4, u5, u6, u7 = users = [
+    u1, u2, u3, u4, u5, u6, u7, u8 = users = [
     User(firstname='admin', lastname='sidenote', email='admin', admin_level='0', access_type='999'),
     User(firstname='Tai', lastname='Huynh', email='tai@mail.com', status=0, title='Project Architect', imgUrl='avatar-13.png', admin_level='0', access_type='2'),
     User(firstname='Alice', lastname='Hawker', email='alice@mail.com', status=0, title='Tai\'s Girlfriend (Girl Bot)', imgUrl='avatar-10.png', access_type='10'),
     User(firstname='Nathaniel', lastname='Wallace', email='nathaniel@mail.com', status=1, title='UX Designer', imgUrl='avatar-2.png', access_type='3'),
     User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='5'),
     User(firstname='Daniel', lastname='Saneel', email='daniel@mail.com', status=2, title='Marketing Guru', imgUrl='avatar-8.png', access_type='4'),
-    User(firstname='Ishie', lastname='Eswar', email='ishie@mail.com', status=2, title='CEO', imgUrl='avatar-6.png', access_type='1')
+    User(firstname='Ishie', lastname='Eswar', email='ishie@mail.com', status=2, title='CEO', imgUrl='avatar-6.png', access_type='1'),
+    User(firstname='Duy', lastname='Tran', email='duy@mail.com', status=2, title='Project Lead', imgUrl='avatar-16.png', access_type='0')
     ]
     c1, c2, c3, c4, c5, c6 = channels = [
     Channel(b64name='I0hvbWU=', owner_id='1', name='#Home', title='Main Lobby', access_type='0', imgUrl='lobby.png'),
@@ -804,6 +804,7 @@ def addadmin():
     u5.set_password('1234')
     u6.set_password('1234')
     u7.set_password('1234')
+    u8.set_password('1234')
     
     try:
         db.session.add_all(users)
@@ -812,6 +813,7 @@ def addadmin():
         u2.channels.append(ChannelRelationship(users=c3))
         u2.channels.append(ChannelRelationship(users=c4))
         u2.channels.append(ChannelRelationship(users=c5))
+        u2.channels.append(ChannelRelationship(users=c8))
         u2.friendships.append(Friend(friendee=u3))
         u2.friendships.append(Friend(friendee=u4))
         u2.friendships.append(Friend(friendee=u5))
@@ -822,6 +824,8 @@ def addadmin():
         u5.channels.append(ChannelRelationship(users=c5))
         u6.channels.append(ChannelRelationship(users=c4))
         u7.channels.append(ChannelRelationship(users=c6))
+        u8.friendships.append(Friend(friendee=u2))
+        u8.channels.append(ChannelRelationship(users=c2))
         db.session.commit()
         
     except Exception as e:
