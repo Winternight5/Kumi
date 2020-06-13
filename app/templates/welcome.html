@@ -180,7 +180,7 @@
                                 Team 10<br />
                                 <!-- radio options and their labels-->
                                 <label id="label-si" for="sign-in" class="radio-label waves-effect waves-light btn-flat blue white-text darken-2"><input id="sign-in" type="radio" name="login-option" value="sign-in" checked />Sign In</label>
-                                <label id="label-su" for="sign-up" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="sign-up" type="radio" name="login-option" value="sign-up" />Sign Up</label>
+                                <!--<label id="label-su" for="sign-up" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="sign-up" type="radio" name="login-option" value="sign-up" />Sign Up</label>-->
                                 <label id="label-rl" for="reset-login" class="radio-label waves-effect waves-light btn-flat white-text darken-2"><input id="reset-login" type="radio" name="login-option" value="reset-login" />Reset</label>
                             </span>
                             <div class="center-align indigo-text">
@@ -395,7 +395,7 @@
             // Radio options update
             $('input[type=radio]').on('change', function () {
                 var currentSelection = $(this).val()
-                $('.sign-in, .reset-login').slideUp(function () { //.sign-up, 
+                $('.sign-in, .sign-up, .reset-login').slideUp(function () {
                     $("." + currentSelection).slideDown(1000);
                 });
 
