@@ -395,7 +395,7 @@
             // Radio options update
             $('input[type=radio]').on('change', function () {
                 var currentSelection = $(this).val()
-                $('.sign-in, .sign-up, .reset-login').slideUp(function () {
+                $('.sign-in, .reset-login').slideUp(function () { //.sign-up, 
                     $("." + currentSelection).slideDown(1000);
                 });
 
