@@ -787,7 +787,7 @@ def addadmin():
     User(firstname='Tatsuya', lastname='Hayashi', email='tatsuya@mail.com', status=0, title='HR Specialist', imgUrl='avatar-7.png', access_type='5'),
     User(firstname='Daniel', lastname='Saneel', email='daniel@mail.com', status=2, title='Marketing Guru', imgUrl='avatar-8.png', access_type='4'),
     User(firstname='Ishie', lastname='Eswar', email='ishie@mail.com', status=2, title='CEO', imgUrl='avatar-6.png', access_type='1'),
-    User(firstname='Duy', lastname='Tran', email='duy@mail.com', status=2, title='Project Lead', imgUrl='avatar-16.png', access_type='0')
+    User(firstname='Duy', lastname='Tran', email='duy@mail.com', status=0, title='Project Lead', imgUrl='avatar-16.png', access_type='0')
     ]
     c1, c2, c3, c4, c5, c6 = channels = [
     Channel(b64name='I0hvbWU=', owner_id='1', name='#Home', title='Main Lobby', access_type='0', imgUrl='lobby.png'),
@@ -813,10 +813,10 @@ def addadmin():
         u2.channels.append(ChannelRelationship(users=c3))
         u2.channels.append(ChannelRelationship(users=c4))
         u2.channels.append(ChannelRelationship(users=c5))
-        u2.channels.append(ChannelRelationship(users=c8))
         u2.friendships.append(Friend(friendee=u3))
         u2.friendships.append(Friend(friendee=u4))
         u2.friendships.append(Friend(friendee=u5))
+        u2.friendships.append(Friend(friendee=u8))
         u3.friendships.append(Friend(friendee=u2))
         u4.friendships.append(Friend(friendee=u2))
         u4.channels.append(ChannelRelationship(users=c3))
